@@ -13,6 +13,27 @@ if( ! ldap_attrs[0] )
 end
 max_entries  = 50
 
+
+def ldap_authenticated?(login,password)
+  ldap_host = 'www.fichteportfolio.de'
+  ldap_port = LDAP::LDAP_PORT
+
+  begin
+    ldap_conn = LDAP::Conn.new(ldap_host, ldap_port)
+    #ldap_conn.set_option( LDAP::LDAP_OPT_PROTOCOL_VERSION, 3 )
+    ldap_conn.bind( login, password )
+    true
+    method=LDAP::LDAP_AUTH_SIMPLE
+  #rescue Exception => e
+  #  puts e.inspect
+  #  puts 
+  #  return false
+  end  
+end
+
+raise ldap_authenticated?("uid=schneijo,ou=accounts,dc=fichteportfolio,dc=de", ENV['JONASPW']).inspect
+
+
 def html_tag(attr, val)
   tagged_val = val
   case attr.downcase
