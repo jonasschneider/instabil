@@ -1,0 +1,3 @@
+[submodule "wikidate"]
+	path = wikidata
+        ignore = all
