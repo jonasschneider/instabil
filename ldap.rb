@@ -14,9 +14,24 @@ end
 max_entries  = 50
 
 
+
+require 'net/ldap'
+
+ldap = Net::LDAP.new :encryption => :simple_tls, :base_dn => 'uid=schneijo,ou=accounts,dc=fichteportfolio,dc=de'
+ldap.host = 'www.fichteportfolio.de'
+ldap.port = 636
+ldap.auth 'uid=schneijo,ou=accounts,dc=fichteportfolio,dc=de', ENV['JONASPW']
+puts  ldap.bind
+
+raise
+
+
+
 def ldap_authenticated?(login,password)
   ldap_host = 'www.fichteportfolio.de'
   ldap_port = LDAP::LDAP_PORT
+  
+  
 
   begin
     ldap_conn = LDAP::Conn.new(ldap_host, ldap_port)
@@ -31,7 +46,7 @@ def ldap_authenticated?(login,password)
   end  
 end
 
-raise ldap_authenticated?("uid=schneijo,ou=accounts,dc=fichteportfolio,dc=de", ENV['JONASPW']).inspect
+raise ldap_authenticated?("userid=schneijo,dc=fichteportfolio,dc=de", ENV['JONASPW']).inspect
 
 
 def html_tag(attr, val)
