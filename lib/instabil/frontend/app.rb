@@ -3,8 +3,8 @@ require 'sinatra'
 require 'gollum'
 require 'mustache/sinatra'
 
-require 'gollum/frontend/views/layout'
-require 'gollum/frontend/views/editable'
+require 'instabil/frontend/views/layout'
+require 'instabil/frontend/views/editable'
 
 module Precious
   class App < Sinatra::Base
@@ -14,7 +14,7 @@ module Precious
 
     # We want to serve public assets for now
 
-    set :public,    "#{dir}/public"
+    set :public_folder,    "#{dir}/public"
     set :static,    true
 
     set :mustache, {
@@ -28,10 +28,12 @@ module Precious
       :views => "#{dir}/views"
     }
 
+    enable :raise_errors
+    
     # Sinatra error handling
     configure :development, :staging do
-      enable :show_exceptions, :dump_errors
-      disable :raise_errors, :clean_trace
+     
+      disable :clean_trace
     end
 
     configure :test do
@@ -52,6 +54,10 @@ module Precious
       else
         mustache :create
       end
+    end
+    
+    post '/auth/fichte/callback' do
+      "hello, #{env['omniauth.auth'].info.name}"
     end
 
     post '/edit/*' do
@@ -180,6 +186,10 @@ module Precious
 
     get '/*' do
       show_page_or_file(params[:splat].first)
+    end
+    
+    get '/users' do
+      
     end
 
     def show_page_or_file(name)
