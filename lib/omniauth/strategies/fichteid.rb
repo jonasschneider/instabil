@@ -17,11 +17,8 @@ module OmniAuth
       
       def request_phase
         oidreq = consumer.begin options[:site]
-  
-        return_to = callback_url
-        realm = request.url
         
-        redirect oidreq.redirect_url(realm, return_to, false)
+        redirect oidreq.redirect_url("http://#{request.host_with_port}/", callback_url, false)
       end
       
       def callback_phase
