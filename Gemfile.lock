@@ -28,7 +28,6 @@ GEM
     hashie (1.2.0)
     mime-types (1.16)
     mustache (0.99.4)
-    net-ldap (0.2.2)
     nokogiri (1.5.0)
     posix-spawn (0.3.6)
     rack (1.3.5)
@@ -49,7 +48,6 @@ PLATFORMS
 
 DEPENDENCIES
   gollum
-  net-ldap
   omniauth!
   redcarpet
   ruby-openid
