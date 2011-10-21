@@ -3,18 +3,34 @@ require 'sinatra'
 require 'gollum'
 require 'mustache/sinatra'
 
-require 'instabil/frontend/views/layout'
-require 'instabil/frontend/views/editable'
+dir = File.dirname(File.expand_path(__FILE__))
+
+require "#{dir}/views/layout"
+require "#{dir}/views/editable"
+
+require 'omniauth/strategies/fichteid'
 
 module Precious
   class App < Sinatra::Base
     register Mustache::Sinatra
+    
+    use OmniAuth::Builder do
+      use Rack::Session::Cookie
+      
+      provider :fichteid
+      
+      configure do |c|
+        c.on_failure = Proc.new do |env|
+          [400, { 'Content-Type'=> 'text/html'}, [env["omniauth.error.type"]]]
+        end
+      end
+    end
 
     dir = File.dirname(File.expand_path(__FILE__))
 
     # We want to serve public assets for now
 
-    set :public_folder,    "#{dir}/public"
+    set :root, dir
     set :static,    true
 
     set :mustache, {
