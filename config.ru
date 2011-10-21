@@ -11,17 +11,16 @@ Precious::App.configure do |c|
 end
 
 
-require 'omniauth/strategies/fichte'
+require 'omniauth/strategies/fichteid'
 
 use OmniAuth::Builder do
   use Rack::Session::Cookie
   
-  provider :fichte
+  provider :fichteid
   
   configure do |c|
     c.on_failure = Proc.new do |env|
-      new_path = "#{OmniAuth.config.path_prefix}/fichte?error=#{env["omniauth.error.type"]}"
-      [302, {'Location' => "#{new_path}", 'Content-Type'=> 'text/html'}, []]
+      [400, { 'Content-Type'=> 'text/html'}, [env["omniauth.error.type"]]]
     end
   end
 end
