@@ -1,2 +1,5 @@
 .set_env
 tmp/
+*.aux
+*.log
+*.pdf
