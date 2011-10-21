@@ -21,7 +21,7 @@ module Precious
       
       configure do |c|
         c.on_failure = Proc.new do |env|
-          [400, { 'Content-Type'=> 'text/html'}, [env["omniauth.error.type"]]]
+          [400, { 'Content-Type'=> 'text/html'}, [env["omniauth.error.type"].inspect]]
         end
       end
     end

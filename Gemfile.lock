@@ -6,6 +6,12 @@ GIT
       hashie (~> 1.2)
       rack
 
+PATH
+  remote: ../fichteid-client
+  specs:
+    fichteid-client (0.0.1)
+      ruby-openid (~> 2.1.8)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -47,8 +53,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  fichteid-client!
   gollum
   omniauth!
   redcarpet
-  ruby-openid
   sinatra
