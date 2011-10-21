@@ -1,9 +1,6 @@
 require "./stub"
 require 'gollum'
 
-svc = BERTRPC::Service.new('localhost', 8000)
-puts "Test should be 3: "+svc.call.ext.add(1, 2).to_s
-
 #repo = Grit::Repo.new("/home/jonas/code/fis")
 #repo.git = Gitcloud::Stub.new("/home/jonas/code/fis/.git")
 

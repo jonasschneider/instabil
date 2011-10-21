@@ -1,11 +1,15 @@
 require 'rubygems'
 require 'ernie'
-require 'grit/git'
+require 'grit'
 
 module Gitcloud
-  def grit_call(git_path, method, arguments)
-    git = Grit::Git.new git_path
-    git.send method, *arguments
+  def grit_call(git_dir, method, arguments)
+    if git_dir == 'wikidata'
+      git = Grit::Git.new ENV['WIKIDATA_REPO']
+      git.send method, *arguments
+    else
+      raise "what repo is #{git_dir}? (not literally used as a folder)"
+    end
   end
   
   def add(a, b)

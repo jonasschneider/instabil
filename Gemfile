@@ -6,4 +6,4 @@ gem 'sinatra'
 gem 'bertrpc'
 
 gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git'
-gem 'fichteid-client', :path => '../fichteid-client'
+gem 'fichteid-client', :git => 'git://github.com/jonasschneider/fichteid-client.git'

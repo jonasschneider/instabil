@@ -27,6 +27,9 @@ module Precious
         end
       end
     end
+    
+    set :gollum_path, File.join(File.dirname(File.expand_path(__FILE__)), '..', 'tmp', 'wikidata-stubbed')
+    set :wiki_options, {}
 
     dir = File.dirname(File.expand_path(__FILE__))
 
@@ -46,13 +49,13 @@ module Precious
       :views => "#{dir}/views"
     }
     
-    error do
-      'bitter.'
-    end
-
     def load_wiki!
-      @wiki = Gollum::Wiki.new(settings.gollum_path, settings.wiki_options)
-      @wiki.repo.git = Gitcloud::Stub.new(@wiki.repo.git.git_dir)
+      begin
+        access = Gitcloud::GollumGitAccess.new 'wikidata', 'sokratesius.dyndns-free.com', 3501
+        @wiki = Gollum::Wiki.new(access, settings.wiki_options)
+      rescue Exception => e
+        e.inspect
+      end
     end
     
     before do 

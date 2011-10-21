@@ -6,8 +6,9 @@ GIT
       hashie (~> 1.2)
       rack
 
-PATH
-  remote: ../fichteid-client
+GIT
+  remote: git://github.com/jonasschneider/fichteid-client.git
+  revision: 7c6f48e47442033e5496602ced49c4ab5ee522fc
   specs:
     fichteid-client (0.0.1)
       ruby-openid (~> 2.1.8)

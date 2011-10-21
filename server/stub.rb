@@ -1,44 +1,33 @@
 require 'bertrpc'
 require 'grit'
-
+require 'gollum'
 
 module Gitcloud
-  class Arbiter
-    def initialize real, fake
-      @real = real
-      @fake = fake
-    end
-    
-    def method_missing method, *args
-      print "calling: #{method} with #{args.inspect}"
-      fake_res = nil
-      begin
-        res = @real.send method, *args
-        #puts res.inspect
-        fake_res = @fake.send method, *args
-      rescue Exception => e
-        puts ' -> error: '+e.inspect
-        raise e
-      else
-        if res == fake_res
-          puts " -> #{res.inspect}"
-          res
-        else
-          puts " -> mismatch! expected #{res.inspect}, got #{fake_res.inspect}"
-          res
-        end
-      end
+  class StubbedRepo < Grit::Repo
+    def initialize path, git
+      self.path = path
+      self.git = git
     end
   end
-
-  class Stub
-    def initialize git_dir
-      @svc = BERTRPC::Service.new('localhost', 8000)
+  
+  class GollumGitAccess < Gollum::GitAccess
+    def initialize git_dir, hostname, port
+      git = GritGitStub.new git_dir, hostname, port
+      @page_file_dir = nil
+      @path = git_dir
+      @repo = StubbedRepo.new git_dir, git
+      clear
+    end
+  end
+  
+  class GritGitStub
+    def initialize git_dir, hostname, port
+      @svc = BERTRPC::Service.new(hostname, port)
       @git_dir = git_dir
     end
     
     def method_missing method, *args
-      @svc.call.ext.grit_call @git_dir, method, args
+      @svc.call.gitcloud.grit_call @git_dir, method, args
     end
   end
 end
