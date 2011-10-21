@@ -58,6 +58,10 @@ module Precious
       end
     end
     
+    def get_page(name, *args)
+      @wiki.page CGI.unescape(name), *args
+    end
+    
     before do 
       load_wiki!
     end
@@ -66,12 +70,8 @@ module Precious
       enable :logging, :raise_errors, :dump_errors
     end
     
-    get '/test' do
-      begin
-        @wiki.page('Home').inspect
-      rescue Exception => e
-        e.message + e.inspect
-      end
+    get '/test/:page' do
+      get_page params[:page]
     end
 
     get '/' do
@@ -81,7 +81,7 @@ module Precious
     get '/edit/*' do
       @name = params[:splat].first
       
-      if page = @wiki.page(@name)
+      if page = get_page(@name)
         @page = page
         @content = page.raw_data
         mustache :edit
@@ -95,7 +95,7 @@ module Precious
     end
 
     post '/edit/*' do
-      page = @wiki.page(params[:splat].first)
+      page = get_page(params[:splat].first)
       name = params[:rename] || page.name
       committer = Gollum::Committer.new(@wiki, commit_message)
       commit    = {:committer => committer}
@@ -125,7 +125,7 @@ module Precious
 
     post '/revert/:page/*' do
       @name = params[:page]
-      @page = @wiki.page(@name)
+      @page = get_page(@name)
       shas  = params[:splat].first.split("/")
       sha1  = shas.shift
       sha2  = shas.shift
@@ -152,7 +152,7 @@ module Precious
 
     get '/history/:name' do
       @name     = params[:name]
-      @page     = @wiki.page(@name)
+      @page     = get_page(@name)
       @page_num = [params[:page].to_i, 1].max
       @versions = @page.versions :page => @page_num
       mustache :history
@@ -173,7 +173,7 @@ module Precious
     get '/compare/:name/:version_list' do
       @name     = params[:name]
       @versions = params[:version_list].split(/\.{2,3}/)
-      @page     = @wiki.page(@name)
+      @page     = get_page(@name)
       diffs     = @wiki.repo.diff(@versions.first, @versions.last, @page.path)
       @diff     = diffs.first
       mustache :compare
@@ -185,7 +185,7 @@ module Precious
 
     get %r{/(.+?)/([0-9a-f]{40})} do
       name = params[:captures][0]
-      if page = @wiki.page(name, params[:captures][1])
+      if page = get_page(name, params[:captures][1])
         @page = page
         @name = name
         @content = page.formatted_data
@@ -215,7 +215,7 @@ module Precious
 
     def show_page_or_file(name)
       puts "Showing #{name} from #{@wiki.inspect}"
-      if page = @wiki.page(name)
+      if page = get_page(name)
         puts "got it!"
         @page = page
         @name = name
