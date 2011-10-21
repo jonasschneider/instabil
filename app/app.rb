@@ -17,7 +17,7 @@ module Precious
     use OmniAuth::Builder do
       use Rack::Session::Cookie
       
-      provider :fichteid
+      provider :fichteid, :key => ENV['FICHTE_HMAC_SECRET'] || 'mypw'
       
       configure do |c|
         c.on_failure = Proc.new do |env|
