@@ -14,8 +14,8 @@ module Gitcloud
     def initialize git_dir, hostname, port
       git = GritGitStub.new git_dir, hostname, port
       @page_file_dir = nil
-      @path = git_dir
-      @repo = StubbedRepo.new git_dir, git
+      @path = Dir.mktmpdir
+      @repo = StubbedRepo.new @path, git
       clear
     end
   end
@@ -27,7 +27,10 @@ module Gitcloud
     end
     
     def method_missing method, *args
-      @svc.call.gitcloud.grit_call @git_dir, method, args
+      print "calling #{method} with #{args.inspect}"
+      res = @svc.call.gitcloud.grit_call @git_dir, method, args
+      puts " -> #{res.inspect}"
+      res
     end
   end
 end

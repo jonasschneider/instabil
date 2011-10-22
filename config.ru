@@ -5,4 +5,4 @@ $:.unshift 'lib'
 require 'instabil'
 require './app/app'
 
-run Precious::App
+run Instabil::App
