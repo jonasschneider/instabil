@@ -1,0 +1,24 @@
+{
+  uid: "schneijo",
+  email: 'mail@jonasschneider.com'
+  name: "Jonas Schneider",
+  
+  page: {
+    kurs: 5,
+    g8: true
+    
+    lks: "Bio, Molekularspaß mit Hr Kaindl",
+    bio: "Selbstbeschreibung-bla. Twitter-style in 140 Zeichen."
+    foto: 'http://instabil.heroku.com/leute/schneijo/bild.png',
+    
+    text: "Blablabla",
+    
+    tags: [
+      "wtf",
+      "sport-noob",
+      "seltsamer kerl"
+    ],
+    
+    by: 'kramerlu'
+  }
+}
