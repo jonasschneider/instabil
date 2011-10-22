@@ -16,17 +16,7 @@ module Precious
   class App < Sinatra::Base
     register Mustache::Sinatra
     
-    use OmniAuth::Builder do
-      use Rack::Session::Cookie
-      
-      provider :fichteid, :key => ENV['FICHTE_HMAC_SECRET'] || 'mypw'
-      
-      configure do |c|
-        c.on_failure = Proc.new do |env|
-          [400, { 'Content-Type'=> 'text/html'}, [env["omniauth.error.type"].inspect]]
-        end
-      end
-    end
+    
 
     set :gollum_path, File.join(File.dirname(File.expand_path(__FILE__)), '..', 'tmp', 'wikidata-stubbed')
     set :wiki_options, {}
