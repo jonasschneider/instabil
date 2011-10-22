@@ -1,4 +1,4 @@
-{
+[{
   uid: "schneijo",
   email: 'mail@jonasschneider.com'
   name: "Jonas Schneider",
@@ -12,13 +12,12 @@
     foto: 'http://instabil.heroku.com/leute/schneijo/bild.png',
     
     text: "Blablabla",
+    text_by: 'Lukas Kramer',
     
     tags: [
       "wtf",
       "sport-noob",
       "seltsamer kerl"
-    ],
-    
-    by: 'kramerlu'
+    ] 
   }
-}
+}, ...]
