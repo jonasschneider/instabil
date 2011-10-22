@@ -1,1 +1,1 @@
-./.set_env
+source .set_env
