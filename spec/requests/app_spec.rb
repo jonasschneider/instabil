@@ -39,12 +39,12 @@ describe "authing" do
 end
 
 describe "The app" do
-  describe "logged in" do
+  describe "logged in as atmos" do
     let(:user) { 'atmos' }
     let(:name) { 'Atmos' }
     
     before :each do
-      post '/auth/developer/callback', :username => user, :name => name, :group_ids => app.settings.authorized_group_id
+      login(user, name)
     end
 
     describe "visiting /people/schneijo/page/edit" do
@@ -74,7 +74,7 @@ describe "The app" do
         
         it "updates the attributes" do
           post '/people/schneijo/page', { :page => { :kurs => '5' } }
-          Person.first.page.kurs.should == 5
+          Person.find('schneijo').page.kurs.should == 5
         end
       end
     end

@@ -1,0 +1,11 @@
+%h1= @person.name
+- @page.fields.each do |field, data|
+  - next if field[0] == '_'
+  %p
+    %label{ :for => "page[#{field}]" }== #{field.capitalize}:
+    - if field == 'text'
+      = @page.read_attribute(field)
+    - elsif data.type == String || data.type == Integer
+      = @page.read_attribute(field)
+    - elsif data.type == Boolean
+      = @page.read_attribute(field) == true ? 'ja' : 'nein'

@@ -12,4 +12,6 @@ class Page
   field :text_by, type: String
   
   field :tags, type: Array
+  
+  embedded_in :person
 end

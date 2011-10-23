@@ -39,12 +39,24 @@ class Instabil::App < Sinatra::Base
     haml :edit_page
   end
   
+  get '/people/:uid/page' do
+    authenticate!
+    @person = Person.find(params[:uid])
+    @page = @person.page || @person.build_page
+    haml :page
+  end
+  
   post '/people/:uid/page' do
     authenticate!
     @person = Person.find(params[:uid])
     @page = @person.page || @person.build_page
     @page.update_attributes params[:page]
-    flash[:notice] = "Seite aktualisiert."
-    haml :page
+    if @page.save && @person.save
+      flash[:notice] = "Seite aktualisiert."
+      redirect "/people/#{params[:uid]}/page"
+    else
+      flash.now[:error] = "Fehler beim Speichern."
+      haml :edit_page
+    end
   end
 end

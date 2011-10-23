@@ -15,6 +15,10 @@
     %script{:src => "/javascript/editor/gollum.editor.js", :type => "text/javascript"}
     %title instABIl
   %body
+    - if flash[:error]
+      .flash#error= flash[:error]
+    - if flash[:notice]
+      .flash#notice= flash[:notice]
     #wiki-wrapper
       #head
         %h1 instABIl

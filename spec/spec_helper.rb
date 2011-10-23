@@ -25,8 +25,8 @@ Rspec.configure do |config|
     Instabil::App
   end
   
-  def login(username, password)
-    post '/sso/login', :username => username, :password => password
+  def login(username, name)
+    post '/auth/developer/callback', :username => username, :name => name, :group_ids => app.settings.authorized_group_id
   end
 
   config.include(Rack::Test::Methods)
