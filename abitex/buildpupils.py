@@ -14,21 +14,13 @@ for pupil in j :
 	print pupil["uid"]
 	pupillist.append(pupil["uid"])
 	#print "tex/pupils/" + pupil["uid"] + ".tex"
-	#page = page.replace("__name", pupil["name"])
 	content["name"] = pupil["name"]
-	#page = page.replace("__kurs", str(content["kurs"]))
-	if eval(str(content["g8"])) :
+	if content["g8"]==1 :
 		content["g8"] = "G8"
 	else :
 		content["g8"] = "G9"
 	content["tags"] = "\//\/".join(content["tags"])
 	
-	""""page = page.replace("__g8", g8)
-	page = page.replace("__bio", content["bio"])
-	page = page.replace("__text_by", content["text_by"])
-	page = page.replace("__text", content["text"])
-	page = page.replace("__bio", content["bio"])
-	page = page.replace("__tags", "+++".join(content["tags"]))"""
 	out = page.substitute(content)
 	f =  open("tex/pupils/" + pupil["uid"] + ".tex", "w")
 	f.write(out.encode("utf-8"))

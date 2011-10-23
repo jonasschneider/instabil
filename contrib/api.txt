@@ -1,23 +1,46 @@
 [{
-  uid: "schneijo",
-  email: 'mail@jonasschneider.com'
-  name: "Jonas Schneider",
+  "uid": "schneijo",
+  "email": "mail@jonasschneider.com",
+  "name": "Jonas Schneider",
   
-  page: {
-    kurs: 5,
-    g8: true
+  "page": {
+    "kurs": 5,
+    "g8": 1,
     
-    lks: "Bio, Molekularspaß mit Hr Kaindl",
-    bio: "Selbstbeschreibung-bla. Twitter-style in 140 Zeichen."
-    foto: 'http://instabil.heroku.com/leute/schneijo/bild.png',
+    "lks": "Bio, Molekularspaß mit Hr Kaindl",
+    "bio": "Selbstbeschreibung-bla. Twitter-style in 140 Zeichen.",
+    "foto": "http://instabil.heroku.com/leute/schneijo/bild.png",
     
-    text: "Blablabla",
-    text_by: 'Lukas Kramer',
+    "text": "Es war einmal Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "text_by": "Lukas Kramer",
     
-    tags: [
+    "tags": [
       "wtf",
       "sport-noob",
       "seltsamer kerl"
-    ] 
+    ]
   }
-}, ...]
+},
+{
+  "uid": "kramerlu",
+  "email": "lu@0x83.eu",
+  "name": "Lukas Kramer",
+  
+  "page": {
+    "kurs": 5,
+    "g8": 1,
+    
+    "lks": "Bio, Physik",
+    "bio": "Selbstbeschreibung-bla. Twitter-style in 140 Zeichen.",
+    "foto": "http://instabil.heroku.com/leute/krmaerlu/bild.png",
+    
+    "text": "Blablabla",
+    "text_by": "Jonas Schneider",
+    
+    "tags": [
+      "binäruhr",
+      "komischer GTR"
+    ]
+  }
+}
+]

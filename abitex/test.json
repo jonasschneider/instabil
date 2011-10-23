@@ -5,7 +5,7 @@
   
   "page": {
     "kurs": 5,
-    "g8": "True",
+    "g8": 1,
     
     "lks": "Bio, Molekularspaß mit Hr Kaindl",
     "bio": "Selbstbeschreibung-bla. Twitter-style in 140 Zeichen.",
@@ -28,7 +28,7 @@
   
   "page": {
     "kurs": 5,
-    "g8": "True",
+    "g8": 1,
     
     "lks": "Bio, Physik",
     "bio": "Selbstbeschreibung-bla. Twitter-style in 140 Zeichen.",
