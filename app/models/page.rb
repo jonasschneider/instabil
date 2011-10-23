@@ -34,4 +34,8 @@ class Page
       att['foto'] = nil
     end
   end
+  
+  def date
+    updated_at || created_at
+  end
 end

@@ -5,6 +5,7 @@
     %link{:href => "/css/gollum.css", :media => "all", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "/css/editor.css", :media => "all", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "/css/dialog.css", :media => "all", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "/css/mine.css", :media => "all", :rel => "stylesheet", :type => "text/css"}
     %link{:href => "/css/template.css", :media => "all", :rel => "stylesheet", :type => "text/css"}
     /[if IE 7]
       <link rel="stylesheet" type="text/css" href="/css/ie7.css" media="all">
@@ -28,7 +29,10 @@
           %li.minibutton
             %a{ :href => '/' } Startseite
           %li.minibutton
-            %a{ :href => "/people/#{current_user.uid}/page" } Meine Seite
+            %a{ :href => "/people/#{current_user.uid}/page" }
+              Meine Seite
+              == (#{current_user.name})
+                
           = section :nav
       
       #wiki-content
@@ -36,6 +40,4 @@
           #wiki-body
             #template= yield
       #footer
-        %p#last-edit Last edited by <b>{{author}}</b>, {{date}}
-        Angemeldet als
-        %span.user_name= current_user.name
+        = section :footer

@@ -12,7 +12,7 @@ describe "authing" do
       post '/auth/developer/callback', :username => user, :name => name, :group_ids => group_ids
       last_response.headers['Location'].should == 'http://example.org/'
       follow_redirect!
-      last_response.body.should have_selector('.user_name', :content => name)
+      last_response.body.should include(name)
     end
   end
   
@@ -23,7 +23,7 @@ describe "authing" do
       post '/auth/developer/callback', :username => user, :name => name, :group_ids => group_ids
       last_response.headers['Location'].should == 'http://example.org/'
       follow_redirect!
-      last_response.body.should have_selector('.user_name', :content => name)
+      last_response.body.should include(name)
     end
   end
   
@@ -33,7 +33,7 @@ describe "authing" do
     it 'fails' do
       post '/auth/developer/callback', :username => user, :name => name, :group_ids => group_ids
       last_response.status.should == 403
-      last_response.body.should =~ /nicht berechtigt/
+      last_response.body.should include('nicht berechtigt')
     end
   end
 end
@@ -81,17 +81,21 @@ describe "The app" do
     
     describe "visiting /people/<uid>/page" do
       describe "when the person has a page" do
-        let(:anna) { Person.create! name: "Anna", uid: "winteran", page: { bio: 'Ich halt.', lks: 'Musik', author: jonas } }
+        let(:anna) do
+          Person.create!(name: "Anna", uid: "winteran").tap do |anna|
+            anna.create_page bio: 'Ich halt.', lks: 'Musik', author: jonas
+          end
+        end
         
         it "displays the page info" do
           get "/people/#{anna.uid}/page"
-          last_response.body.should =~ /#{anna.page.bio}/
-          last_response.body.should =~ /#{anna.page.lks}/
+          last_response.body.should include(anna.page.bio)
+          last_response.body.should include(anna.page.lks)
         end
         
         it "displays the author's name" do
           get "/people/#{anna.uid}/page"
-          last_response.body.should have_selector('.user_name', :content => jonas.name)
+          last_response.body.should have_selector('#last-edit .user_name', :content => jonas.name)
         end
       end
     end
