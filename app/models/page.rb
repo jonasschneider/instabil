@@ -1,6 +1,7 @@
 class Page
   include Mongoid::Document
   include Mongoid::Versioning
+  include Mongoid::Timestamps
   
   field :kurs, type: Integer
   field :g8, type: Boolean
@@ -11,9 +12,11 @@ class Page
   
   field :text, type: String
   field :text_by, type: String
-  belongs_to :author, class_name: 'Person'
   
   field :tags, type: Array
+  
+  belongs_to :author, class_name: 'Person', inverse_of: nil
+  validates_presence_of :author
   
   embedded_in :person
   

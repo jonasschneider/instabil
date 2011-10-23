@@ -78,6 +78,22 @@ describe "The app" do
     before :each do
       login(user, name)
     end
+    
+    describe "visiting /people/schneijo/page" do
+      describe "when there is a matching person" do
+        let(:bio) { 'Ich halt.' }
+        let(:lks) { 'Chemie' }
+        before :each do
+          Person.create name: "Jonas S.", uid: "schneijo", page: { bio: bio, lks: lks }
+        end
+        
+        it "displays the page info" do
+          get '/people/schneijo/page'
+          last_response.body.should =~ /#{bio}/
+          last_response.body.should =~ /#{lks}/
+        end
+      end
+    end
 
     describe "visiting /people/schneijo/page/edit" do
       describe "when there is a matching person" do
