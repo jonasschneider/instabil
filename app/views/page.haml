@@ -12,3 +12,7 @@
       = @page.read_attribute(field)
     - elsif data.type == Boolean
       = @page.read_attribute(field) == true ? 'ja' : 'nein'
+      
+%strong
+  Zuletzt bearbeitet von
+  %span.user_name= @page.author.name

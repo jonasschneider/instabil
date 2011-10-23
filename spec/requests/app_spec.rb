@@ -39,6 +39,9 @@ describe "authing" do
 end
 
 describe "The app" do
+  let(:jonas) { Person.create! name: "Jonas Schneider", uid: "schneijo" }
+  let(:lukas) { Person.create! name: "Lukas", uid: "kramerlu" }
+  
   describe "'s API endpoint" do
     let(:key) { 'secret' }
     
@@ -61,7 +64,7 @@ describe "The app" do
       end
       
       it 'returns something when there are people' do
-        Person.create! name: "Jonas Schneider", uid: "schneijo", page: { kurs: 5, g8: true }
+        jonas
         
         get '/api', :key => key
         
@@ -71,39 +74,33 @@ describe "The app" do
     end
   end
   
-  describe "logged in as atmos" do
-    let(:user) { 'atmos' }
-    let(:name) { 'Atmos' }
-    
+  describe "viewed as lukas" do
     before :each do
-      login(user, name)
+      login(lukas.uid, lukas.name)
     end
     
-    describe "visiting /people/schneijo/page" do
-      describe "when there is a matching person" do
-        let(:bio) { 'Ich halt.' }
-        let(:lks) { 'Chemie' }
-        before :each do
-          Person.create name: "Jonas S.", uid: "schneijo", page: { bio: bio, lks: lks }
-        end
+    describe "visiting /people/<uid>/page" do
+      describe "when the person has a page" do
+        let(:anna) { Person.create! name: "Anna", uid: "winteran", page: { bio: 'Ich halt.', lks: 'Musik', author: jonas } }
         
         it "displays the page info" do
-          get '/people/schneijo/page'
-          last_response.body.should =~ /#{bio}/
-          last_response.body.should =~ /#{lks}/
+          get "/people/#{anna.uid}/page"
+          last_response.body.should =~ /#{anna.page.bio}/
+          last_response.body.should =~ /#{anna.page.lks}/
+        end
+        
+        it "displays the author's name" do
+          get "/people/#{anna.uid}/page"
+          last_response.body.should have_selector('.user_name', :content => jonas.name)
         end
       end
     end
 
-    describe "visiting /people/schneijo/page/edit" do
-      describe "when there is a matching person" do
-        before :each do
-          Person.create :name => "Jonas S.", :uid => "schneijo"
-        end
-        
+    describe "visiting /people/<uid>/page/edit" do
+      describe "when the person exists" do
         it "displays a form" do
-          get '/people/schneijo/page/edit'
-          form = 'form[action="/people/schneijo/page"][method=post]'
+          get "/people/#{lukas.uid}/page/edit"
+          form = "form[action=\"/people/#{lukas.uid}/page\"][method=post]"
           last_response.should have_selector form
           last_response.should have_selector form + ' input[name="page[kurs]"][type=text]'
           last_response.should have_selector form + ' input[name="page[g8]"][type=checkbox]'
@@ -114,15 +111,18 @@ describe "The app" do
       end
     end
     
-    describe "POSTing to /people/schneijo/page" do
-      describe "when there is a matching person" do
+    describe "POSTing to /people/<uid>/page" do
+      describe "when there is a matching person that has no page yet" do
         before :each do
-          Person.create :name => "Jonas S.", :uid => "schneijo"
+          post "/people/#{jonas.uid}/page", { :page => { :kurs => '5' } }
         end
         
-        it "updates the attributes" do
-          post '/people/schneijo/page', { :page => { :kurs => '5' } }
-          Person.find('schneijo').page.kurs.should == 5
+        it "creates the page with given attributes" do
+          jonas.reload.page.kurs.should == 5
+        end
+        
+        it "sets the page author" do
+          jonas.reload.page.author.should == lukas
         end
       end
     end

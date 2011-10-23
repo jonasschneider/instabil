@@ -73,6 +73,8 @@ class Instabil::App < Sinatra::Base
     @person = Person.find(params[:uid])
     @page = @person.page || @person.build_page
     @page.update_attributes params[:page]
+    @page.author = current_user
+    
     if @page.save && @person.save
       flash[:notice] = "Seite aktualisiert."
       redirect "/people/#{params[:uid]}/page"
