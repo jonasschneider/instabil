@@ -21,15 +21,15 @@
       .flash#notice= flash[:notice]
     #wiki-wrapper
       #head
-        %h1 instABIl
+        %h1
+          %a{ href: '/' } instABIl
         %ul.actions
           %li.minibutton
             %a{ :href => '/' } Startseite
           %li.minibutton
-            %a{ :href => "/people/#{current_user.uid}/page/edit" } Meine Seite bearbeiten
+            %a{ :href => "/people/#{current_user.uid}/page" } Meine Seite
       
       #wiki-content
-        
         .wrap
           #wiki-body
             #template= yield

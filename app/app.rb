@@ -26,7 +26,16 @@ class Instabil::App < Sinatra::Base
   register Instabil::Auth
   
   use Rack::Flash
-  
+
+  def section(key, *args, &block)
+    @sections ||= Hash.new{ |k,v| k[v] = [] }
+    if block_given?
+      @sections[key] << block
+    else
+      @sections[key].inject(''){ |content, block| content << capture_haml(&block) } if @sections.keys.include?(key)
+    end
+  end
+
   get '/' do
     authenticate!
     haml 'home page'
