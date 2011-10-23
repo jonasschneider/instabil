@@ -20,7 +20,12 @@ class Instabil::App < Sinatra::Base
     end
   end
   
+  use Rack::Session::Cookie
+  
+  set :authorized_group_id, 10095
   register Instabil::Auth
+  
+  use Rack::Flash
   
   get '/' do
     authenticate!

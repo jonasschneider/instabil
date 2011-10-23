@@ -2,8 +2,6 @@ module Instabil::Auth
   def self.registered(app)
     app.class_eval do
       use OmniAuth::Builder do
-        use Rack::Session::Cookie
-        
         provider :fichteid, :key => ENV['FICHTE_HMAC_SECRET'] || 'mypw'
         
         if app.development? || app.test?
@@ -16,7 +14,7 @@ module Instabil::Auth
           end
         end
       end
-    
+
       use Warden::Manager do |manager|
         manager.failure_app = Proc.new do |env|
             [301, { 'Location' => '/auth/fichteid', 'Content-Type'=> 'text/plain' }, ['Log in please.']]
@@ -43,19 +41,11 @@ module Instabil::Auth
         warden.authenticate!
       end
       
-      post '/auth/developer/callback' do
-        info = env['omniauth.auth'].info
-        user = Person.find_or_initialize_by uid: info.username
+      def authenticate_with_info!(info)
+        unless info.group_ids.split(',').include? settings.authorized_group_id.to_s
+          halt 403, haml(:authfail, :layout => false)
+        end
         
-        user.name ||= info.name
-        user.save!
-        
-        warden.set_user user
-        redirect "/"
-      end
-      
-      get '/auth/fichteid/callback' do
-        info = env['omniauth.auth'].info
         user = Person.find_or_initialize_by uid: info.username
         
         unless user.name 
@@ -63,9 +53,18 @@ module Instabil::Auth
           user.save!
         end
         
-        # GROUP AUTH
         warden.set_user user
         redirect "/"
+      end
+      
+      if development? || test?
+        post '/auth/developer/callback' do
+          authenticate_with_info! env['omniauth.auth'].info
+        end
+      end
+      
+      get '/auth/fichteid/callback' do
+        authenticate_with_info! env['omniauth.auth'].info
       end
     end
   end

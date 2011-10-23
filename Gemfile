@@ -2,6 +2,7 @@ source :rubygems
 
 gem 'sinatra'
 gem 'haml'
+gem 'rack-flash'
 
 gem 'mongoid', '< 2.3'
 gem 'bson_ext'

@@ -17,8 +17,7 @@ watch("spec/.*/*_spec\.rb") do |match|
   spec(match[0])
 end
 
-watch("lib/(.*/.*)\.rb") do |match|
-  puts(match[1])
-  spec("spec/unit/#{match[1]}_spec.rb")
-  spec("spec/functional/#{match[1]}_spec.rb")
+watch("app/(.*)\.rb") do |match|
+  puts(match)
+  spec("spec/requests/#{match[1]}_spec.rb")
 end
