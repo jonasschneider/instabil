@@ -21,3 +21,7 @@ watch("app/(.*)\.rb") do |match|
   puts(match)
   spec("spec/requests/#{match[1]}_spec.rb")
 end
+
+watch("app/views/*") do
+  spec("spec/requests/app_spec.rb")
+end

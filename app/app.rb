@@ -34,7 +34,17 @@ class Instabil::App < Sinatra::Base
   
   get '/people/:uid/page/edit' do
     authenticate!
-    @page = Person.find(params[:uid]).page
-    haml :edit_page, :layout => 'layout'
+    @person = Person.find(params[:uid])
+    @page = @person.page || @person.build_page
+    haml :edit_page
+  end
+  
+  post '/people/:uid/page' do
+    authenticate!
+    @person = Person.find(params[:uid])
+    @page = @person.page || @person.build_page
+    @page.update_attributes params[:page]
+    flash[:notice] = "Seite aktualisiert."
+    haml :page
   end
 end

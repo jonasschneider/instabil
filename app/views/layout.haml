@@ -1,4 +1,35 @@
-HAI THERE,
-%span.user_name= current_user.name
-
-= yield
+!!!
+%html
+  %head
+    %meta{:content => "text/html;charset=utf-8", "http-equiv" => "Content-type"}
+    %link{:href => "/css/gollum.css", :media => "all", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "/css/editor.css", :media => "all", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "/css/dialog.css", :media => "all", :rel => "stylesheet", :type => "text/css"}
+    %link{:href => "/css/template.css", :media => "all", :rel => "stylesheet", :type => "text/css"}
+    /[if IE 7]
+      <link rel="stylesheet" type="text/css" href="/css/ie7.css" media="all">
+    %script{:src => "/javascript/jquery.js", :type => "text/javascript"}
+    %script{:src => "/javascript/gollum.js", :type => "text/javascript"}
+    %script{:src => "/javascript/gollum.dialog.js", :type => "text/javascript"}
+    %script{:src => "/javascript/gollum.placeholder.js", :type => "text/javascript"}
+    %script{:src => "/javascript/editor/gollum.editor.js", :type => "text/javascript"}
+    %title instABIl
+  %body
+    #wiki-wrapper
+      #head
+        %h1 instABIl
+        %ul.actions
+          %li.minibutton
+            %a{ :href => '/' } Startseite
+          %li.minibutton
+            %a{ :href => "/people/#{current_user.uid}/page/edit" } Meine Seite bearbeiten
+      
+      #wiki-content
+        
+        .wrap
+          #wiki-body
+            #template= yield
+      #footer
+        %p#last-edit Last edited by <b>{{author}}</b>, {{date}}
+        Angemeldet als
+        %span.user_name= current_user.name
