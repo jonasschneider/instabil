@@ -3,7 +3,7 @@ source :rubygems
 gem 'sinatra'
 gem 'haml'
 
-gem 'mongoid'
+gem 'mongoid', '~> 2.2'
 gem 'bson_ext'
 
 gem 'warden'

@@ -56,7 +56,7 @@ DEPENDENCIES
   bson_ext
   fichteid-client!
   haml
-  mongoid
+  mongoid (~> 2.2)
   omniauth!
   redcarpet
   sinatra
