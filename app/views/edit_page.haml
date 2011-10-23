@@ -9,6 +9,7 @@
       - elsif data.type == String || data.type == Integer
         %input{ name: "page[#{field}]", value: @page.read_attribute(field), type: 'text' }
       - elsif data.type == Boolean
-        %input{ name: "page[#{field}]", value: @page.read_attribute(field), type: 'checkbox' }
+        %input{ name: "page[#{field}]", type: 'hidden', :value => 'false' }
+        %input{ name: "page[#{field}]", type: 'checkbox', :value => 'true', checked: @page.read_attribute(field) }
 
   %input{ type: 'submit', value: 'Speichern' }
