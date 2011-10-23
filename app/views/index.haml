@@ -1,0 +1,8 @@
+%ul
+  - Person.all.each do |person|
+    %li
+      - if person.page
+        %a{ :href => "/people/#{person.uid}/page" }= person.name
+      - else
+        = person.name
+        (noch keine Seite)

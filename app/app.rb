@@ -38,7 +38,7 @@ class Instabil::App < Sinatra::Base
 
   get '/' do
     authenticate!
-    haml 'home page'
+    haml :index
   end
   
   get '/people/:uid/page/edit' do
