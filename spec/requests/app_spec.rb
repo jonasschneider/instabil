@@ -98,6 +98,13 @@ describe "The app" do
           last_response.body.should have_selector('#last-edit .user_name', :content => jonas.name)
         end
       end
+      
+      describe "when the person does not yet have a page" do
+        it "redirects to the edit page" do
+          get "/people/#{jonas.uid}/page"
+          last_response.status.should == 302
+        end
+      end
     end
 
     describe "visiting /people/<uid>/page/edit" do
@@ -130,6 +137,5 @@ describe "The app" do
         end
       end
     end
-    
   end
 end

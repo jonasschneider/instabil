@@ -64,8 +64,12 @@ class Instabil::App < Sinatra::Base
   get '/people/:uid/page' do
     authenticate!
     @person = Person.find(params[:uid])
-    @page = @person.page || @person.build_page
-    haml :page
+    if @page = @person.page
+      haml :page
+    else
+      flash[:notice] = "#{@person.name} hat noch keine Seite. Du kannst sie erstellen."
+      redirect "/people/#{@person.uid}/page/edit"
+    end
   end
   
   post '/people/:uid/page' do
