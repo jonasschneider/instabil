@@ -39,6 +39,38 @@ describe "authing" do
 end
 
 describe "The app" do
+  describe "'s API endpoint" do
+    let(:key) { 'secret' }
+    
+    describe "without a proper key" do
+      it "is inaccessible" do
+        get '/api', :key => key
+        last_response.status.should == 403
+      end
+    end
+    
+    describe "with a valid key" do
+      before :all do
+        app.set :api_key, key
+      end
+      
+      it 'returns [] without any people' do
+        get '/api', :key => key
+        last_response.status.should == 200
+        last_response.body.should == '[]'
+      end
+      
+      it 'returns something when there are people' do
+        Person.create! name: "Jonas Schneider", uid: "schneijo", page: { kurs: 5, g8: true }
+        
+        get '/api', :key => key
+        
+        last_response.status.should == 200
+        last_response.body.should_not == '[]'
+      end
+    end
+  end
+  
   describe "logged in as atmos" do
     let(:user) { 'atmos' }
     let(:name) { 'Atmos' }

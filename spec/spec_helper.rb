@@ -1,4 +1,5 @@
 ENV["RACK_ENV"] = 'test'
+ENV["API_KEY"] = 'random_string'
 
 require 'pp'
 require 'rubygems'
@@ -17,7 +18,7 @@ Webrat.configure do |config|
 end
 
 Rspec.configure do |config|
-  before :each do
+  config.before :each do
     Person.delete_all
   end
   

@@ -23,6 +23,14 @@ class Instabil::App < Sinatra::Base
   use Rack::Session::Cookie
   
   set :authorized_group_id, 10095
+  
+  if ENV['API_KEY']
+    set :api_key, ENV['API_KEY']
+  else
+    puts "WARNING: No API key set."
+    set :api_key, "1234"
+  end
+  
   register Instabil::Auth
   
   use Rack::Flash
@@ -39,6 +47,11 @@ class Instabil::App < Sinatra::Base
   get '/' do
     authenticate!
     haml :index
+  end
+  
+  get '/api' do
+    halt 403, 'Forbidden' unless params[:key] == settings.api_key
+    Person.all.to_json
   end
   
   get '/people/:uid/page/edit' do
