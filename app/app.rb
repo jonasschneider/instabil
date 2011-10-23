@@ -9,7 +9,14 @@ require "#{dir}/models/person"
 
 class Instabil::App < Sinatra::Base
   Mongoid.configure do |config|
-    config.master = Mongo::Connection.new.db("instabil_development")
+    config.master = begin
+      if ENV['MONGOHQ_URL']
+        uri = URI.parse(ENV['MONGOHQ_URL'])
+        Mongo::Connection.from_uri(ENV['MONGOHQ_URL']).db(uri.path.gsub(/^\//, ''))
+      else
+        Mongo::Connection.new.db("instabil_development")
+      end
+    end
   end
   
   register Instabil::Auth
