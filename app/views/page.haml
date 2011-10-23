@@ -1,6 +1,6 @@
 - section :nav do
   %li.minibutton
-    %a{ :href => "/people/#{current_user.uid}/page/edit" } Bearbeiten
+    %a{ :href => "/people/#{@person.uid}/page/edit" } Bearbeiten
 %h1= @person.name
 - @page.fields.each do |field, data|
   - next if field[0] == '_'
