@@ -1,15 +1,31 @@
 %h1= @person.name
 %form{ action: "/people/#{@person.uid}/page", method: 'post' }
-  - @page.fields.each do |field, data|
-    - next if field[0] == '_'
-    %p
-      %label{ :for => "page[#{field}]" }== #{field.capitalize}:
-      - if field == 'text'
-        %textarea{ name: "page[#{field}]"}= @page.read_attribute(field)
-      - elsif data.type == String || data.type == Integer
-        %input{ name: "page[#{field}]", value: @page.read_attribute(field), type: 'text' }
-      - elsif data.type == Boolean
-        %input{ name: "page[#{field}]", type: 'hidden', :value => 'false' }
-        %input{ name: "page[#{field}]", type: 'checkbox', :value => 'true', checked: @page.read_attribute(field) }
-
-  %input{ type: 'submit', value: 'Speichern' }
+  %h2 Steckbrief
+  %p
+    Kurs:
+    = precede "K2." do
+      %input{ name: "page[kurs]", value: @page.kurs, type: 'text', :size => 1, :placeholder => 'z.B. 5' }
+    %br
+    
+    %input{:checked => "checked", :name => "page[g8]", :type => "checkbox", :value => "true" }/
+    %label{:for => "page[g8]"} G8?
+    %br
+    
+    %label{:for => "page[lks]"} vierstündige Kurse:
+    %input{ name: "page[lks]", value: @page.lks, type: 'text', :placeholder => 'z.B. "Molekularspaß mit Hr Kaindl"', :size => 40 }
+    %br
+    
+    %label{:for => "page[bio]"} Kurzbeschreibung:
+    %input{ name: "page[bio]", value: @page.bio, type: 'text', :maxsize => 140, :placeholder => "z.B. ein Zitat, ein Erlebnis" }
+    (Maximal 140 Zeichen!)
+  
+  %h2 Text
+  %p
+    %textarea{:name => "page[text]", :cols => 80, :rows => 15 }= @page.text
+  
+  %h2 Tags
+  %p
+    Tags: noch keine
+  
+  %p
+    %input{ type: 'submit', value: 'Speichern' }
