@@ -1,5 +1,6 @@
 class Page
   include Mongoid::Document
+  include Mongoid::Versioning
   
   field :kurs, type: Integer
   field :g8, type: Boolean
@@ -10,6 +11,7 @@ class Page
   
   field :text, type: String
   field :text_by, type: String
+  belongs_to :author, class_name: 'Person'
   
   field :tags, type: Array
   
@@ -25,6 +27,7 @@ class Page
           att[field] = read_attribute(field)
         end
       end
+      att['author'] = self.author && author.name
       att['foto'] = nil
     end
   end
