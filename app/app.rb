@@ -1,8 +1,9 @@
 require 'sinatra'
 require 'omniauth/strategies/fichteid'
 
-dir = File.dirname(File.expand_path(__FILE__))
+require 'instabil'
 
+dir = File.dirname(File.expand_path(__FILE__))
 require "#{dir}/auth"
 require "#{dir}/models/page"
 require "#{dir}/models/person"
@@ -14,7 +15,7 @@ class Instabil::App < Sinatra::Base
         uri = URI.parse(ENV['MONGOHQ_URL'])
         Mongo::Connection.from_uri(ENV['MONGOHQ_URL']).db(uri.path.gsub(/^\//, ''))
       else
-        Mongo::Connection.new.db("instabil_development")
+        Mongo::Connection.new.db("instabil_#{environment}")
       end
     end
   end

@@ -6,7 +6,9 @@ module Instabil::Auth
         
         provider :fichteid, :key => ENV['FICHTE_HMAC_SECRET'] || 'mypw'
         
-        provider :developer, :fields => [:username, :name, :group_ids], :uid_field => :username
+        if app.development? || app.test?
+          provider :developer, :fields => [:username, :name, :group_ids], :uid_field => :username
+        end
         
         configure do |c|
           c.on_failure = Proc.new do |env|
