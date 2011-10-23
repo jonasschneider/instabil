@@ -11,4 +11,14 @@ class Person
   validates_presence_of :name
   
   embeds_one :page
+  
+  def api_attributes
+    {}.tap do |att|
+      fields.keys.each do |field|
+        next if field[0] == '_'
+        att[field] = read_attribute(field)
+      end
+      att['page'] = (page || build_page).api_attributes
+    end
+  end
 end

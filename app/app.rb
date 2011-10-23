@@ -51,10 +51,7 @@ class Instabil::App < Sinatra::Base
   
   get '/api' do
     halt 403, 'Forbidden' unless params[:key] == settings.api_key
-    Person.all.map do |person|
-      person.page ||= person.build_page
-      person
-    end.to_json
+    Person.all.map{ |p| p.api_attributes }.to_json
   end
   
   get '/people/:uid/page/edit' do
