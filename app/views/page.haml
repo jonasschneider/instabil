@@ -4,20 +4,22 @@
 
 - section :footer do
   %p#last-edit 
-    Zuletzt bearbeitet von
+    == Version #{@page.version}, zuletzt bearbeitet von
     %span.user_name= @page.author.name
     am
     = @page.date.strftime("%d.%m.%y um %H:%M")
     
 
 %h1= @person.name
-- @page.fields.each do |field, data|
-  - next if field[0] == '_'
-  %p
-    %label{ :for => "page[#{field}]" }== #{field.capitalize}:
-    - if field == 'text'
-      = @page.read_attribute(field)
-    - elsif data.type == String || data.type == Integer
-      = @page.read_attribute(field)
-    - elsif data.type == Boolean
-      = @page.read_attribute(field) == true ? 'ja' : 'nein'
+%h2== Kurs K2.#{@page.kurs}, #{@page.zug}
+%p
+  Vierstündig:
+  = @page.lks
+  %br
+
+  Kurzinfo:
+  = @page.bio
+
+%p= @page.text
+
+%p Tags.. TODO

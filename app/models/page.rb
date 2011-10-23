@@ -11,7 +11,6 @@ class Page
   #field :foto, type: String
   
   field :text, type: String
-  field :text_by, type: String
   
   field :tags, type: Array
   
@@ -37,5 +36,9 @@ class Page
   
   def date
     updated_at || created_at
+  end
+  
+  def zug
+    g8 ? 'G8' : 'G9'
   end
 end
