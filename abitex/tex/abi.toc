@@ -1,0 +1,6 @@
+\select@language {ngerman}
+\contentsline {section}{\numberline {1}Sch\IeC {\"u}ler}{3}
+\contentsline {subsection}{Jonas Schneider}{4}
+\contentsline {subsection}{Lukas Kramer}{5}
+\contentsline {section}{\numberline {2}Kursberichte}{7}
+\contentsline {section}{\numberline {3}Memoiren}{9}

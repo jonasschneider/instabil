@@ -1,0 +1,15 @@
+{
+	uid :"kramerlu",
+	firstname :"Lukas",
+	lastname:"Kramer",
+	course : 5,
+	courses : ["Bio", "Physik"],
+	info:[
+		["Ich hätte das Abi nicht geschafft ohne", "den Edeka"],
+		["Ich vergaß", "foo"]
+	],
+	text : "Hallo Welt",
+	by : "Jonas S."
+	tags : ["foo", "bar", "1337"]
+	g8 : true
+}

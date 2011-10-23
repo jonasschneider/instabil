@@ -1,0 +1,42 @@
+\documentclass[11pt,a4paper,twoside]{article}	% einseitig, da so vorgegeben :-(
+\usepackage{minitoc}
+%\usepackage{a4}	% LOKAL erforderlich! soll angeblich nicht mehr benutzt werden
+\usepackage[ngerman]{babel} 		% deutsche Silbentrennung
+\usepackage[utf8]{inputenc} 	% wegen deutschen Umlauten
+\usepackage{graphicx}						% für die Abb.: Einbindung Graphiken!
+\usepackage[T1]{fontenc}
+\usepackage[margin=2cm]{geometry}
+%\usepackage[light,math]{iwona}
+\usepackage{fixltx2e}
+\usepackage{multicol}
+%\usepackage[showboxes]{textpos}
+\usepackage{textpos}
+%\nostcpagenumbers
+\nostcrule
+\setlength{\stcindent}{-10pt}
+\renewcommand{\stctitle}{}
+\dosecttoc
+%\usepackage[colorlinks=true,
+	%pdftitle={carrotCardioGraph},
+	%pdfauthor={Lukas Kramer},
+	%pdfsubject={Langzeit-EKG-Rekorder ohne Patientenbeeintraechtigung},
+	%pdfkeywords = {Jugend Forscht 2011},
+	%bookmarks = true,
+	%pdfstartview = {FitH},
+	%pdfpagelayout = {OneColumn},
+	%linkcolor = blue,
+	%citecolor = blue,
+	%urlcolor = blue
+%]{hyperref}											% Hyperlinks
+%\usepackage[all]{hypcap}
+\pagestyle{headings}
+\begin{document}
+\input{title.tex}
+\setcounter{tocdepth}{1}
+\tableofcontents
+\newpage
+\input{pupils.tex}
+\input{coursereports.tex}
+\input{memoirs.tex}
+
+\end{document}

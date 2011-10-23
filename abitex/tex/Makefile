@@ -1,9 +1,6 @@
 SRC = abi
 all:
-	./buildpupils.py
-	./tex.sh
-	#cd tex
-	#make
+	pdflatex --file-line-error-style $(SRC).tex
 	#bibtex $(SRC).aux
 	#bibtex $(SRC).aux
 	#pdflatex --file-line-error-style $(SRC).tex
