@@ -7,7 +7,8 @@
       %input{ name: "page[kurs]", value: @page.kurs, type: 'text', :size => 1, :placeholder => 'z.B. 5' }
     %br
     
-    %input{:checked => "checked", :name => "page[g8]", :type => "checkbox", :value => "true" }/
+    %input{:name => "page[g8]", :type => "hidden", :value => "false" }/
+    %input{:checked => @page.g8, :name => "page[g8]", :type => "checkbox", :value => "true" }/
     %label{:for => "page[g8]"} G8?
     %br
     
