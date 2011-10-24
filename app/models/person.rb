@@ -11,6 +11,7 @@ class Person
   validates_presence_of :name
   
   embeds_one :page
+  attr_protected :uid
   
   def api_attributes
     {}.tap do |att|

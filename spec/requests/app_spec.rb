@@ -79,6 +79,47 @@ describe "The app" do
       login(lukas.uid, lukas.name)
     end
     
+    describe "visiting /" do
+      before :each do
+        get "/"
+      end
+      
+      it "shows a link to the user's profile" do
+        last_response.body.should have_selector("a[href='/people/#{lukas.uid}/page']")
+      end
+      
+      it "shows a link to the user's preferences" do
+        last_response.body.should have_selector("a[href='/preferences']")
+      end
+    end
+    
+    describe "visiting /preferences" do
+      it "shows a form for the user to edit name and email" do
+        lukas.update_attributes(name: 'Asdfname', email: 'test@example.com')
+        lukas.save!
+        get "/preferences"
+        form = "form[action='/preferences'][method=post]"
+        last_response.should have_selector form
+        last_response.should have_selector form + ' input[name="preferences[name]"][type=text][value=Asdfname]'
+        last_response.should have_selector form + ' input[name="preferences[email]"][type=text][value="test@example.com"]'
+        last_response.should have_selector form + ' input[type=submit]'
+      end
+    end
+    
+    describe "POSTing to /preferences" do
+      let(:new_name) { 'Laggas' }
+      let(:new_email) { 'test@0x83.eu' }
+      let(:old_uid) { lukas.uid }
+      
+      it "updates the users name and email" do
+        old_uid
+        post "/preferences", preferences: { name: new_name, email: new_email }
+        lukas.reload.name.should == new_name
+        lukas.email.should == new_email
+        lukas.uid.should == old_uid
+      end
+    end
+    
     describe "visiting /people/<uid>/page" do
       describe "when the person has a page" do
         let(:anna) do
@@ -87,15 +128,21 @@ describe "The app" do
           end
         end
         
-        it "displays the page info" do
+        before :each do
           get "/people/#{anna.uid}/page"
+        end
+        
+        it "displays the page info" do
           last_response.body.should include(anna.page.bio)
           last_response.body.should include(anna.page.lks)
         end
         
         it "displays the author's name" do
-          get "/people/#{anna.uid}/page"
           last_response.body.should have_selector('#last-edit .user_name', :content => jonas.name)
+        end
+        
+        it 'displays an edit button' do
+          last_response.body.should have_selector("a[href='/people/#{anna.uid}/page/edit']")
         end
       end
       

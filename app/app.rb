@@ -54,6 +54,19 @@ class Instabil::App < Sinatra::Base
     Person.all.map{ |p| p.api_attributes }.to_json
   end
   
+  get '/preferences' do
+    authenticate!
+    @preferences = current_user
+    haml :preferences
+  end
+  
+  post '/preferences' do
+    authenticate!
+    current_user.update_attributes params[:preferences]
+    flash[:notice] = "Einstellungen gespeichert."
+    redirect '/'
+  end
+  
   get '/people/:uid/page/edit' do
     authenticate!
     @person = Person.find(params[:uid])

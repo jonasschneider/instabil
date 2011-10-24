@@ -1,7 +1,3 @@
-- section :nav do
-  %li.minibutton
-    %a{ :href => "/people/#{@person.uid}/page/edit" } Bearbeiten
-
 - section :footer do
   %p#last-edit 
     == Version #{@page.version}, zuletzt bearbeitet von
@@ -23,3 +19,7 @@
 %p= @page.text
 
 %p Tags.. TODO
+
+%ul.actions
+  %li.minibutton
+    %a{ :href => "/people/#{@person.uid}/page/edit" } Seite bearbeiten

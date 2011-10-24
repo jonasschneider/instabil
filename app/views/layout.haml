@@ -32,8 +32,9 @@
             %a{ :href => "/people/#{current_user.uid}/page" }
               Meine Seite
               == (#{current_user.name})
-                
-          = section :nav
+          %li.minibutton
+            %a{ :href => "/preferences" }
+              Einstellungen
       
       #wiki-content
         .wrap

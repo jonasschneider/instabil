@@ -1,0 +1,12 @@
+%form{ action: "/preferences", method: 'post' }
+  %h2 Einstellungen
+  %p
+    %label{:for => "preferences[name]"} Angezeigter Name:
+    %input{ name: "preferences[name]", value: @preferences.name, type: 'text', :size => 40 }
+
+  %p
+    %label{:for => "preferences[email]"} E-Mail-Addresse
+    %input{ name: "preferences[email]", value: @preferences.email, type: 'text', :placeholder => '(für Benachrichtigungen)', :size => 40 }
+  
+  %p
+    %input{ type: 'submit', value: 'Speichern' }

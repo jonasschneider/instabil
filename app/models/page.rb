@@ -19,6 +19,8 @@ class Page
   
   embedded_in :person
   
+  attr_protected :author
+  
   def api_attributes
     {}.tap do |att|
       fields.keys.each do |field|
