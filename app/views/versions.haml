@@ -1,0 +1,11 @@
+= haml :page, :layout => false
+
+%ul.changes
+  %li
+    == Version #{@page.version}:
+    = haml :diff, :layout => false, :locals => { :old_version => @page.version-1, :new_version => @page.version, :page => @page }
+
+  - @versions.reverse.each do |version|
+    %li
+      == Version #{version.version}:
+      = haml :diff, :layout => false, :locals => { :old_version => version.version-1, :new_version => version.version, :page => @page }

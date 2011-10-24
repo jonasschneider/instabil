@@ -10,7 +10,7 @@ class Person
   validates_presence_of :uid
   validates_presence_of :name
   
-  embeds_one :page
+  references_one :page, validate: false
   attr_protected :uid
   
   def api_attributes

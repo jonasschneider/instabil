@@ -5,6 +5,7 @@ require 'instabil'
 
 dir = File.dirname(File.expand_path(__FILE__))
 require "#{dir}/auth"
+require "#{dir}/versions"
 require "#{dir}/models/page"
 require "#{dir}/models/person"
 
@@ -32,6 +33,7 @@ class Instabil::App < Sinatra::Base
   end
   
   register Instabil::Auth
+  register Instabil::Versions
   
   use Rack::Flash
 
@@ -89,11 +91,11 @@ class Instabil::App < Sinatra::Base
     authenticate!
     @person = Person.find(params[:uid])
     @page = @person.page || @person.build_page
-    @page.update_attributes params[:page]
+    @page.write_attributes params[:page]
     @page.author = current_user
     
     if @page.save && @person.save
-      flash[:notice] = "Seite aktualisiert."
+      flash[:notice] = "Seite aktualisiert. #{@page.inspect}"
       redirect "/people/#{params[:uid]}/page"
     else
       flash.now[:error] = "Fehler beim Speichern."

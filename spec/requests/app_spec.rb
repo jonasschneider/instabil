@@ -13,6 +13,16 @@ describe "The app" do
     end
   end
   
+  let(:anna) do
+    Person.create!(name: "Anna") do |anna|
+      anna.uid = "winteran"
+    end.tap do |anna|
+      anna.build_page bio: 'Ich halt.', lks: 'Musik'
+      anna.page.author = jonas
+      anna.page.save!
+    end
+  end
+
   describe "'s API endpoint" do
     let(:key) { 'secret' }
     
@@ -93,16 +103,6 @@ describe "The app" do
     
     describe "visiting /people/<uid>/page" do
       describe "when the person has a page" do
-        let(:anna) do
-          Person.create!(name: "Anna") do |anna|
-            anna.uid = "winteran"
-          end.tap do |anna|
-            anna.build_page bio: 'Ich halt.', lks: 'Musik'
-            anna.page.author = jonas
-            anna.page.save!
-          end
-        end
-        
         before :each do
           get "/people/#{anna.uid}/page"
         end
@@ -156,6 +156,30 @@ describe "The app" do
         
         it "sets the page author" do
           jonas.reload.page.author.should == lukas
+        end
+      end
+      
+      describe "when there is a matching person that already has a page" do
+        let(:new_bio) { 'Immer noch ich.' }
+        
+        before :each do
+          post "/people/#{anna.uid}/page", { :page => { :bio => new_bio } }
+        end
+        
+        it "redirects to the page" do
+          last_response.status.should == 302
+        end
+        
+        it "updates the page" do
+          anna.reload.page.bio.should == new_bio
+        end
+        
+        it "sets the page author" do
+          anna.reload.page.author.should == lukas
+        end
+        
+        it "versions the page" do
+          anna.reload.page.version.should == 2
         end
       end
     end

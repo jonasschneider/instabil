@@ -1,0 +1,15 @@
+- old_version_attr = page.get_version_attributes old_version
+- new_version_obj = page.versions.detect{ |v| v.version == new_version } || page
+%ul
+  - page.compare(old_version, new_version).each do |field, new_value|
+    %li
+      %strong= new_version_obj.author.name
+      änderte
+      %strong= field
+      von
+      - if new_version == 1
+        %em (nichts)
+      - else
+        %strong== "#{old_version_attr[field]}"
+      zu
+      %strong== "#{new_value}"
