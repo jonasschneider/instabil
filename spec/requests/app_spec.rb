@@ -1,46 +1,17 @@
 require File.expand_path(File.dirname(__FILE__)+'/../spec_helper')
 
-describe "authing" do
-  let(:user) { 'atmos' }
-  let(:name) { 'Atmos' }
-  let(:correct_id) { app.settings.authorized_group_id }
-
-  describe 'with the correct group id' do
-    let(:group_ids) { "#{correct_id}" }
-    
-    it 'works' do
-      post '/auth/developer/callback', :username => user, :name => name, :group_ids => group_ids
-      last_response.headers['Location'].should == 'http://example.org/'
-      follow_redirect!
-      last_response.body.should include(name)
-    end
-  end
-  
-  describe 'with a set of groups including the correct group id' do
-    let(:group_ids) { "#{correct_id+1},#{correct_id}" }
-    
-    it 'works' do
-      post '/auth/developer/callback', :username => user, :name => name, :group_ids => group_ids
-      last_response.headers['Location'].should == 'http://example.org/'
-      follow_redirect!
-      last_response.body.should include(name)
-    end
-  end
-  
-  describe 'with an unauthorized group id' do
-    let(:group_ids) { "#{correct_id+1}" }
-    
-    it 'fails' do
-      post '/auth/developer/callback', :username => user, :name => name, :group_ids => group_ids
-      last_response.status.should == 403
-      last_response.body.should include('nicht berechtigt')
-    end
-  end
-end
-
 describe "The app" do
-  let(:jonas) { Person.create! name: "Jonas Schneider", uid: "schneijo" }
-  let(:lukas) { Person.create! name: "Lukas", uid: "kramerlu" }
+  let(:jonas) do
+    Person.create! name: "Jonas Schneider" do |p|
+      p.uid = "schneijo"
+    end
+  end
+  
+  let(:lukas) do
+    Person.create! name: "Lukas" do |p|
+      p.uid = "kramerlu"
+    end
+  end
   
   describe "'s API endpoint" do
     let(:key) { 'secret' }
@@ -123,8 +94,12 @@ describe "The app" do
     describe "visiting /people/<uid>/page" do
       describe "when the person has a page" do
         let(:anna) do
-          Person.create!(name: "Anna", uid: "winteran").tap do |anna|
-            anna.create_page bio: 'Ich halt.', lks: 'Musik', author: jonas
+          Person.create!(name: "Anna") do |anna|
+            anna.uid = "winteran"
+          end.tap do |anna|
+            anna.build_page bio: 'Ich halt.', lks: 'Musik'
+            anna.page.author = jonas
+            anna.page.save!
           end
         end
         

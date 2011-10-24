@@ -47,6 +47,7 @@ module Instabil::Auth
         end
         
         user = Person.find_or_initialize_by uid: info.username
+        user.uid = info.username
         
         unless user.name 
           user.name = info.name
