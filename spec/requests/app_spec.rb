@@ -116,8 +116,12 @@ describe "The app" do
           last_response.body.should have_selector('#last-edit .user_name', :content => jonas.name)
         end
         
-        it 'displays an edit button' do
+        it 'displays a link to edit the page' do
           last_response.body.should have_selector("a[href='/people/#{anna.uid}/page/edit']")
+        end
+        
+        it 'displays a link to view the page versions' do
+          last_response.body.should have_selector("a[href='/people/#{anna.uid}/page/versions']")
         end
       end
       

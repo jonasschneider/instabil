@@ -4,6 +4,9 @@
     %span.user_name= @page.author.name
     am
     = @page.date.strftime("%d.%m.%y um %H:%M")
+    —
+    %strong
+      %a{ :href => "/people/#{@person.uid}/page/versions" } Alle Versionen anzeigen
     
 
 %h1= @person.name

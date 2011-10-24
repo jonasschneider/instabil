@@ -1,11 +1,9 @@
-= haml :page, :layout => false
+%h1= @person.name
 
-%ul.changes
-  %li
-    == Version #{@page.version}:
-    = haml :diff, :layout => false, :locals => { :old_version => @page.version-1, :new_version => @page.version, :page => @page }
+%p
+  %a{ :href => "/people/#{@person.uid}/page" } Zurück
 
-  - @versions.reverse.each do |version|
-    %li
-      == Version #{version.version}:
-      = haml :diff, :layout => false, :locals => { :old_version => version.version-1, :new_version => version.version, :page => @page }
+= haml :diff, :layout => false, :locals => { :old_version => @page.version-1, :new_version => @page.version, :page => @page }
+
+- @versions.reverse.each do |version|
+  = haml :diff, :layout => false, :locals => { :old_version => version.version-1, :new_version => version.version, :page => @page }
