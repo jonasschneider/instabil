@@ -4,3 +4,4 @@ tmp/
 *.log
 *.pdf
 .bundle
+abitex/mongourl
