@@ -1,6 +1,7 @@
 SRC = abi
 all:
 	./buildpupils.py
+	./memoirs.py > tex/mems.tex
 	./tex.sh
 	#cd tex
 	#make

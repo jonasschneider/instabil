@@ -4,7 +4,6 @@ import json, os
 from string import Template
 f = open("test.json")
 blah = f.read()
-#print blah
 j = json.loads(blah)
 temp = open("temp/pupil.tex").read()
 pupillist = []
@@ -19,8 +18,11 @@ for pupil in j :
 		content["g8"] = "G8"
 	else :
 		content["g8"] = "G9"
-	content["tags"] = "\//\/".join(content["tags"])
-	
+	#print type(content["tags"])
+	if content["tags"] != None :
+		content["tags"] = "\//\/".join(content["tags"])
+	else : 
+		content["tags"] = ""
 	out = page.substitute(content)
 	f =  open("tex/pupils/" + pupil["uid"] + ".tex", "w")
 	f.write(out.encode("utf-8"))
