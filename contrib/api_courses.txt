@@ -1,0 +1,17 @@
+GET /api/courses.json?key=asdf
+
+
+[{
+    "fach": "Bio",
+    "typo": "gefühlt 10-stündig",
+    "lehrer": "Fr. Kunz",
+    
+    "text": "asdf",
+    
+    "author": "Jonas Schneider und Lukas Kramer ",
+    
+    "tags" : [
+        "foo",
+        "bar"
+    ]
+}]

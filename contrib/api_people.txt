@@ -1,3 +1,6 @@
+GET /api/people.json?key=asdf
+
+
 [{
   "uid": "schneijo",
   "email": "mail@jonasschneider.com",
