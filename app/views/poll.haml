@@ -29,3 +29,13 @@
     %input{ name: "answer[name]", type: 'text', :size => 60}
 
     %input{ type: 'submit', value: 'Speichern' }
+
+%p
+  %a{ :href => '/polls' } Zurück zu den anderen Umfragen
+
+- section :footer do
+  %p#last-edit 
+    == Erstellt von
+    %span.user_name= @poll.creator.name
+    am
+    = @poll.created_at.strftime("%d.%m.%y um %H:%M")

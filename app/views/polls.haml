@@ -1,6 +1,6 @@
 %h2 Umfragen
 %ul
-- @polls.sort{|p|p.votes.length}.each do |poll|
+- @polls.sort{|p|p.votes.length}.reverse.each do |poll|
   %li.poll-info
     %a.poll-name{:href => "/polls/#{poll.id}" }= poll.title
     von
