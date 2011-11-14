@@ -2,6 +2,7 @@ class Answer
   include Mongoid::Document
   
   field :name, type: String
+  validates_uniqueness_of :name
   
   embedded_in :poll
   

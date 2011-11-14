@@ -1,0 +1,16 @@
+%h2 Umfragen
+%ul
+- @polls.each do |poll|
+  %li
+    %a{:href => "/polls/#{poll.id}" }= poll.title
+    von
+    = poll.creator.name
+
+%h2 Neue Umfrage
+%form{ action: "/polls", method: 'post' }
+  %p
+    Titel:
+    %input{ name: "poll[title]", type: 'text', :size => 50, :placeholder => 'z.B. "Welches Abimotto fändet ihr am Besten?"' }
+
+  %p
+    %input{ type: 'submit', value: 'Umfrage erstellen' }

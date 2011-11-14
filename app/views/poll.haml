@@ -1,0 +1,22 @@
+%h2= @poll.title
+
+%table.answers-table
+  %tbody
+    - @poll.answers.each do |answer|
+      %tr.answer
+        %td.name
+          = answer.name
+          %br
+          %span.creator
+            von
+            = answer.creator.name
+        %td
+          %span.votes= answer.vote_count
+          %span.info Stimmen
+
+%h2 Neue Antwortmöglichkeit
+%form{ action: "/polls/#{@poll.id}/answers", method: 'post' }
+  %p
+    %input{ name: "answer[name]", type: 'text', :size => 60}
+
+    %input{ type: 'submit', value: 'Speichern' }

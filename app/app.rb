@@ -6,6 +6,8 @@ require 'instabil'
 dir = File.dirname(File.expand_path(__FILE__))
 require "#{dir}/auth"
 require "#{dir}/versions"
+require "#{dir}/polls"
+
 require "#{dir}/models/page"
 require "#{dir}/models/person"
 require "#{dir}/models/answer"
@@ -37,6 +39,7 @@ class Instabil::App < Sinatra::Base
   
   register Instabil::Auth
   register Instabil::Versions
+  register Instabil::Polls
   
   use Rack::Flash
 

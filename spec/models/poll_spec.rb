@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__)+'/../spec_helper')
 
 describe "Poll" do
   let(:me) { Person.create! name: 'Jonas' do |p| p.uid = 'schneijo'; end }
-  let(:poll) { Poll.create! name: 'Meine Umfrage', creator: me }
+  let(:poll) { Poll.create! title: 'Meine Umfrage', creator: me }
   
   let(:answer) { poll.answers.create name: "Ich bin cool" }
   let(:another_answer) { poll.answers.create name: "Hey there" }
