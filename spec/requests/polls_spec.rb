@@ -56,16 +56,38 @@ describe "Polls" do
     
     it "shows the answers" do
       poll.answers.create name: 'Nein.', creator: lukas
-      poll.cast_vote! lukas, poll.answers.first
       get "/polls/#{poll.id}"
       last_response.body.should include('Nein.')
-      last_response.body.should have_selector '.votes', content: '1'
+      last_response.body.should have_selector '.votes', content: '0'
+    end
+    
+    it "shows a button to vote for an answer" do
+      a = poll.answers.create name: 'Ja', creator: lukas
+      b = poll.answers.create name: 'Nein', creator: lukas
+      get "/polls/#{poll.id}"
+      
+      form = "form[action='/polls/#{poll.id}/vote'][method=post]"
+      last_response.should have_selector form + " input[name='vote[answer_id]'][value='#{a.id}']"
+      last_response.should have_selector form + " input[name='vote[answer_id]'][value='#{b.id}']"
+      
+      #last_response.should have_selector form + " input[name='vote[answer_id]']', content: a.id.to_s
     end
     
     it "shows a form to add an answer" do
       form = "form[action='/polls/#{poll.id}/answers'][method=post]"
       last_response.should have_selector form
       last_response.should have_selector form + ' input[name="answer[name]"][type=text]'
+    end
+  end
+  
+  describe 'POST /polls/<id>/vote' do
+    let(:poll) { Poll.create title: 'Meine Umfrage', creator: lukas }
+    let(:answer) { poll.answers.create name: 'Ja', creator: lukas }
+    
+    it "casts a vote" do
+      post "/polls/#{poll.id}/vote", vote: { answer_id: answer.id }
+      poll.reload.vote_for(lukas).should_not be_nil
+      poll.reload.answers.first.vote_count.should == 1
     end
   end
   

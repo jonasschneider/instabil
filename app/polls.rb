@@ -39,6 +39,16 @@ module Instabil::Polls
         end
       end
       
+      post '/polls/:id/vote' do
+        authenticate!
+        @poll = Poll.find params[:id]
+        @answer = @poll.answers.find params[:vote][:answer_id]
+        @poll.cast_vote! current_user, @answer
+        
+        flash[:notice] = "Deine Stimme wurde gespeichert."
+        redirect "/polls/#{@poll.id}"
+      end
+      
     end
   end
 end

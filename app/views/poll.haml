@@ -12,7 +12,16 @@
             = answer.creator.name
         %td
           %span.votes= answer.vote_count
-          %span.info Stimmen
+          %span.info= answer.vote_count == 1 ? 'Stimme' : 'Stimmen'
+          
+        %td
+          %form.vote{ action: "/polls/#{@poll.id}/vote", method: 'post' }
+            %input{ name: "vote[answer_id]", type: 'hidden', :value => answer.id }
+            - if @poll.vote_for(current_user).answer == answer
+              %input.choice{ type: 'submit', value: 'Dafür stimmst du!' }
+            - else
+              %input.alternative{ type: 'submit', value: 'Dafür stimmen' }
+            
 
 %h2 Neue Antwortmöglichkeit
 %form{ action: "/polls/#{@poll.id}/answers", method: 'post' }

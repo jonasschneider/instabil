@@ -1,10 +1,13 @@
 %h2 Umfragen
 %ul
-- @polls.each do |poll|
-  %li
-    %a{:href => "/polls/#{poll.id}" }= poll.title
+- @polls.sort{|p|p.votes.length}.each do |poll|
+  %li.poll-info
+    %a.poll-name{:href => "/polls/#{poll.id}" }= poll.title
     von
     = poll.creator.name
+    = surround '(', ')' do
+      = poll.votes.length
+      Teilnehmer
 
 %h2 Neue Umfrage
 %form{ action: "/polls", method: 'post' }
