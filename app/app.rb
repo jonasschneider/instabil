@@ -8,6 +8,9 @@ require "#{dir}/auth"
 require "#{dir}/versions"
 require "#{dir}/models/page"
 require "#{dir}/models/person"
+require "#{dir}/models/answer"
+require "#{dir}/models/vote"
+require "#{dir}/models/poll"
 
 class Instabil::App < Sinatra::Base
   Mongoid.configure do |config|
