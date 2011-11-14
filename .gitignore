@@ -5,3 +5,4 @@ tmp/
 *.pdf
 .bundle
 abitex/mongourl
+abitex/tex/mems.tex
