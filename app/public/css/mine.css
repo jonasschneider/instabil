@@ -80,3 +80,23 @@
 .answer .alternative {
   background: #838A62;
 }
+
+#template #splash {
+  margin: 20px auto 50px;
+  text-align: center;
+}
+
+#splash li {
+  display: inline-block;
+  width: 20%;
+  background: #ddd;
+  padding: 20px;
+  margin: 0 20px;
+  border-radius: 15px;
+  border: 0;
+  box-shadow: 0 0 20px #999;
+}
+
+#splash li.disabled a {
+   color: #aaa;
+}

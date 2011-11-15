@@ -1,3 +1,23 @@
+%h1 Was zur Hölle ist das hier?
+%p Eine Seite für die Planung unserer Abisachen, insbesondere der Abizeitung.
+
+%ul#splash
+  %li
+    %a{ :href => '/'}
+      %img{ :src => '/images/icons/id_card.png' }
+      %h3 Steckbriefe
+  
+  %li.disabled
+    %a{ :href => '/'}
+      %img{ :src => '/images/icons/page_full.png' }
+      %h3 Kursberichte (bald)
+  
+  %li
+    %a{ :href => '/polls'}
+      %img{ :src => '/images/icons/world.png' }
+      %h3 Umfragen
+
+%h1 Neue Benutzer
 %ul
   - Person.all.each do |person|
     %li
