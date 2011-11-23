@@ -29,6 +29,8 @@ describe "Polls" do
         form = "form[action='/polls'][method=post]"
         last_response.should have_selector form
         last_response.should have_selector form + ' input[name="poll[title]"][type=text]'
+        last_response.should have_selector form + ' input[name="poll[serious]"][type=checkbox]'
+        last_response.should have_selector form + ' input[name="poll[end_date]"][type=text]'
       end
     end
   end
@@ -40,6 +42,15 @@ describe "Polls" do
       p = Poll.first
       p.title.should == 'Ohai'
       p.creator.should == lukas
+    end
+    
+    it "creates a serious poll" do
+      post '/polls', poll: { title: 'Ohai', serious: true, end_date: '11/01/2011' }
+      last_response.headers["Location"].should == "http://example.org/polls/#{Poll.first.id}"
+      p = Poll.first
+      p.title.should == 'Ohai'
+      p.creator.should == lukas
+      p.end_date.should == Date.new(2011, 11, 1)
     end
   end
   
@@ -77,6 +88,23 @@ describe "Polls" do
       form = "form[action='/polls/#{poll.id}/answers'][method=post]"
       last_response.should have_selector form
       last_response.should have_selector form + ' input[name="answer[name]"][type=text]'
+    end
+    
+    it "does not mention serious polls" do
+      last_response.body.should_not include('Abstimmung')
+    end
+    
+    describe "with a serious poll" do
+      before :each do
+        poll.end_date = Date.today + 2
+        poll.serious = true
+        poll.save!
+      end
+      
+      it "shows the fact that this is a serious poll" do
+        get "/polls/#{poll.id}"
+        last_response.body.should include('Abstimmung')
+      end
     end
   end
   

@@ -1,5 +1,15 @@
 %h2= @poll.title
 
+- if @poll.serious
+  .serious-info
+    Dies ist eine
+    - append '.' do
+    %strong.serious Abstimmung.
+    Sie endet am
+    - append ',' do
+      %strong.end_date= @poll.end_date.strftime("%d.%m.%y")
+    nur der Ersteller kann Antwortmöglichkeiten hinzufügen, und es ist nicht möglich, seine Wahl zu ändern.
+
 %table.answers-table
   %tbody
     - @poll.answers.each do |answer|

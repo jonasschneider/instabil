@@ -16,4 +16,19 @@
     %input{ name: "poll[title]", type: 'text', :size => 50, :placeholder => 'z.B. "Welches Abimotto fändet ihr am Besten?"' }
 
   %p
+    %input{ name: "poll[serious]", id: "new_poll_serious", type: 'checkbox', value: 'true' }
+    'echte' Abstimmung (festes Enddatum, nur du kannst Antworten hinzufügen, jeder kann nur einmal abstimmen)
+    #end_date
+      Enddatum: 
+      %input{ name: "poll[end_date]", id: "new_poll_end_date", type: 'text', :size => 10, :placeholder => 'Hier klicken' }
+    :javascript
+      $("#new_poll_end_date").datepicker();
+      $("#new_poll_serious").click(function() {
+        $("#end_date").show()
+      })
+      $("#end_date").hide()
+      
+    
+    
+  %p
     %input{ type: 'submit', value: 'Umfrage erstellen' }

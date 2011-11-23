@@ -25,6 +25,13 @@ describe "Poll" do
     end
   end
   
+  describe "#end_date=" do
+    it "accepts jquery-formatted dates" do
+      poll.end_date = '11/14/2011'
+      poll.end_date.should == Date.new(2011, 11, 14)
+    end
+  end
+  
   describe "#cast_vote!(user, answer)" do
     it "creates a vote" do
       poll.cast_vote! me, answer
@@ -58,6 +65,11 @@ describe "Poll" do
       poll.serious = true
       poll.end_date = end_date
       poll.save!
+    end
+    
+    it "requires an end date" do
+      poll.end_date = nil
+      answer.should_not be_valid
     end
     
     it "invalidates answers that are not created by the poll's creator" do
