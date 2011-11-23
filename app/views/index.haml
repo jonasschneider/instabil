@@ -3,7 +3,7 @@
 
 %ul#splash
   %li
-    %a{ :href => '/'}
+    %a{ :href => '/#newusers'}
       %img{ :src => '/images/icons/id_card.png' }
       %h3 Steckbriefe
   
@@ -19,6 +19,7 @@
       %h3 Umfragen/Abstimmungen
 
 %h1 Neue Benutzer
+%a{ name: 'newusers' }
 %ul
   - Person.all.each do |person|
     %li
