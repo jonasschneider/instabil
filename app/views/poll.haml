@@ -3,10 +3,10 @@
 - if @poll.serious
   .serious-info
     Dies ist eine
-    - append '.' do
-    %strong.serious Abstimmung.
+    = succeed '.' do
+      %strong.serious Abstimmung.
     Sie endet am
-    - append ',' do
+    = succeed ',' do
       %strong.end_date= @poll.end_date.strftime("%d.%m.%y")
     nur der Ersteller kann Antwortmöglichkeiten hinzufügen, und es ist nicht möglich, seine Wahl zu ändern.
 
@@ -25,20 +25,21 @@
           %span.info= answer.vote_count == 1 ? 'Stimme' : 'Stimmen'
           
         %td
-          %form.vote{ action: "/polls/#{@poll.id}/vote", method: 'post' }
-            %input{ name: "vote[answer_id]", type: 'hidden', :value => answer.id }
-            - if @poll.vote_for(current_user).answer == answer
-              %input.choice{ type: 'submit', value: 'Dafür stimmst du!' }
-            - else
-              %input.alternative{ type: 'submit', value: 'Dafür stimmen' }
+          - if !@poll.serious || (@poll.vote_for(current_user).new_record? && Date.today < @poll.end_date)
+            %form.vote{ action: "/polls/#{@poll.id}/vote", method: 'post' }
+              %input{ name: "vote[answer_id]", type: 'hidden', :value => answer.id }
+              - if @poll.vote_for(current_user).answer == answer
+                %input.choice{ type: 'submit', value: 'Dafür stimmst du!' }
+              - else
+                %input.alternative{ type: 'submit', value: 'Dafür stimmen' }
             
-
-%h2 Neue Antwortmöglichkeit
-%form{ action: "/polls/#{@poll.id}/answers", method: 'post' }
-  %p
-    %input{ name: "answer[name]", type: 'text', :size => 60}
-
-    %input{ type: 'submit', value: 'Speichern' }
+- if !@poll.serious || @poll.creator == current_user
+  %h2 Neue Antwortmöglichkeit
+  %form{ action: "/polls/#{@poll.id}/answers", method: 'post' }
+    %p
+      %input{ name: "answer[name]", type: 'text', :size => 60}
+  
+      %input{ type: 'submit', value: 'Speichern' }
 
 %p
   %a{ :href => '/polls' } Zurück zu den anderen Umfragen

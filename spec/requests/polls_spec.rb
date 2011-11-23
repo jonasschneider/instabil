@@ -6,6 +6,11 @@ describe "Polls" do
       p.uid = "kramerlu"
     end
   end
+  let(:me) do
+    Person.create! name: "Jonas" do |p|
+      p.uid = "schneijo"
+    end
+  end
   
   before :each do
     login(lukas.uid, lukas.name)
@@ -90,12 +95,15 @@ describe "Polls" do
       last_response.should have_selector form + ' input[name="answer[name]"][type=text]'
     end
     
-    it "does not mention serious polls" do
+    it "does not mention the poll being serious" do
       last_response.body.should_not include('Abstimmung')
     end
     
     describe "with a serious poll" do
+      let(:answer) { poll.answers.create name: 'Ja', creator: lukas }
+      
       before :each do
+        answer
         poll.end_date = Date.today + 2
         poll.serious = true
         poll.save!
@@ -104,6 +112,47 @@ describe "Polls" do
       it "shows the fact that this is a serious poll" do
         get "/polls/#{poll.id}"
         last_response.body.should include('Abstimmung')
+      end
+      
+      it "only shows the answer creation to the poll creator" do
+        login(lukas.uid, lukas.name)
+        get "/polls/#{poll.id}"
+        last_response.should have_selector 'input[name="answer[name]"][type=text]'
+        
+        login(me.uid, me.name)
+        get "/polls/#{poll.id}"
+        last_response.should_not have_selector 'input[name="answer[name]"][type=text]'
+      end
+      
+      it "allows voting" do
+        get "/polls/#{poll.id}"
+        
+        last_response.should have_selector "form[action='/polls/#{poll.id}/vote']"
+      end
+      
+      describe "when the user has already voted" do
+        before :each do
+          poll.cast_vote! lukas, answer
+        end
+        
+        it "does not allow voting" do
+          get "/polls/#{poll.id}"
+          
+          last_response.should_not have_selector "form[action='/polls/#{poll.id}/vote']"
+        end
+      end
+      
+      describe "when the poll has ended" do
+        before :each do
+          poll.end_date = Date.today - 2
+          poll.save!
+        end
+        
+        it "does not allow voting" do
+          get "/polls/#{poll.id}"
+          
+          last_response.should_not have_selector "form[action='/polls/#{poll.id}/vote']"
+        end
       end
     end
   end
