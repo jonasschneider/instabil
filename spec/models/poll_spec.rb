@@ -2,6 +2,8 @@ require File.expand_path(File.dirname(__FILE__)+'/../spec_helper')
 
 describe "Poll" do
   let(:me) { Person.create! name: 'Jonas' do |p| p.uid = 'schneijo'; end }
+  let(:somebody) { Person.create! name: 'Lukas' do |p| p.uid = 'kramerlu'; end }
+  
   let(:poll) { Poll.create! title: 'Meine Umfrage', creator: me }
   
   let(:answer) { poll.answers.create name: "Ich bin cool" }
@@ -13,6 +15,14 @@ describe "Poll" do
     poll.votes.should be_empty
     
     answer.vote_count.should == 0
+  end
+  
+  describe "#vote_for(user)" do
+    it "returns the vote" do
+      poll.vote_for(me).answer.should == nil
+      poll.cast_vote! me, answer
+      poll.vote_for(me).answer.should == answer
+    end
   end
   
   describe "#cast_vote!(user, answer)" do
@@ -41,11 +51,43 @@ describe "Poll" do
     end
   end
   
-  describe "#vote_for(user)" do
-    it "returns the vote" do
-      poll.vote_for(me).answer.should == nil
-      poll.cast_vote! me, answer
-      poll.vote_for(me).answer.should == answer
+  describe "with serious set to true" do
+    let(:end_date) { Time.now+1.days }
+    
+    before :each do
+      poll.serious = true
+      poll.end_date = end_date
+      poll.save!
+    end
+    
+    it "invalidates answers that are not created by the poll's creator" do
+      answer = poll.answers.build name: 'Test', creator: somebody
+      answer.should_not be_valid
+    end
+    
+    describe "#cast_vote!(user, answer)" do
+      it "creates a vote" do
+        poll.cast_vote! me, answer
+        
+        poll.votes.length.should == 1
+        answer.vote_count.should == 1
+      end
+      
+      it "raises when trying to vote again" do
+        poll.cast_vote! me, answer
+        
+        lambda do
+          poll.cast_vote! me, another_answer
+        end.should raise_error
+      end
+    
+      it "raises when voting after the end date" do
+        Timecop.travel(end_date+2.days) do
+          lambda do
+            poll.cast_vote! me, answer
+          end.should raise_error
+        end
+      end
     end
   end
 end
