@@ -1,6 +1,6 @@
-%h2 Umfragen/Abstimmungen
+%h2 Abstimmungen
 %ul
-- @polls.sort{|p|p.votes.length}.reverse.each do |poll|
+- @polls.select{|p|p.serious}.sort{|p|p.votes.length}.reverse.each do |poll|
   %li.poll-info
     %a.poll-name{:href => "/polls/#{poll.id}" }= poll.title
     von
@@ -9,7 +9,19 @@
       = poll.votes.length
       Teilnehmer
 
-%h2 Neue Umfrage
+%h2 Umfragen
+%ul
+- @polls.select{|p|!p.serious}.sort{|p|p.votes.length}.reverse.each do |poll|
+  %li.poll-info
+    %a.poll-name{:href => "/polls/#{poll.id}" }= poll.title
+    von
+    = poll.creator.name
+    = surround '(', ')' do
+      = poll.votes.length
+      Teilnehmer
+
+
+%h2 Neue Umfrage/Abstimmung
 %form{ action: "/polls", method: 'post' }
   %p
     Titel:
@@ -17,7 +29,7 @@
 
   %p
     %input{ name: "poll[serious]", id: "new_poll_serious", type: 'checkbox', value: 'true' }
-    'echte' Abstimmung (festes Enddatum, nur du kannst Antworten hinzufügen, jeder kann nur einmal abstimmen)
+    'richtige' Abstimmung (festes Enddatum, nur du kannst Antworten hinzufügen, jeder kann nur einmal abstimmen)
     #end_date
       Enddatum: 
       %input{ name: "poll[end_date]", id: "new_poll_end_date", type: 'text', :size => 10, :placeholder => 'Hier klicken' }
