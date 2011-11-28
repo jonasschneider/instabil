@@ -19,31 +19,34 @@
       %h3 Umfragen/Abstimmungen
 
 %h2 Chat
+%a{ name: 'chat' }
+%form{ action: '/messages', method: 'post' }
+  %input{ type: 'text', name: 'message[body]', size: 40, placeholder: 'Nachricht hier eingeben' }
+  %input{ type: 'submit', value: 'Senden' }
 %ul#chat
-  %li
-    %span.author Jonas
-    %span.time (19:30)
-    %span.message Hai
-  %li
-    %span.author Lukas
-    %span.time (19:31)
-    %span.message Su Plox
-
-:javascript
-  var pusher = new Pusher('37555e9a66ad61ff5dc8');
+  :javascript
+    var pusher = new Pusher('#{Pusher.key}');
+    
+    function renderMessage(msg) {
+      var a = $("<li>")
+        .append("<span class=author>"+msg.author+"</span>")
+        .append(" <span class=time>("+msg.created_at+")</span>: ")
+        .append(" <span class=message>"+msg.body+"</span>")
+      $("#chat").prepend(a);
+      return a;
+    }
   
-  function renderMessage(msg) {
-    var a = $("<li>")
-      .append("<span class=author>"+msg.author+"</span>")
-      .append(" <span class=time>("+msg.created_at+")</span>: ")
-      .append(" <span class=message>"+msg.body+"</span>")
-    $("#chat").append(a)
-  }
-
-  var thingChannel = pusher.subscribe('chat');
-  thingChannel.bind('message', function(message) {
-    renderMessage(message)
-  });
+    var thingChannel = pusher.subscribe('chat');
+    thingChannel.bind('message', function(message) {
+      var el = renderMessage(message);
+      $(el).effect("highlight", {}, 3000);
+    });
+    
+    var latestMessages = JSON.parse('#{Message.all.map(&:client_attributes).to_json}')
+    
+    $.each(latestMessages, function() {
+      renderMessage(this)
+    })
 
 %h2 Neue Benutzer
 %a{ name: 'newusers' }

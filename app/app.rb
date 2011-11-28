@@ -15,6 +15,8 @@ require "#{dir}/models/answer"
 require "#{dir}/models/vote"
 require "#{dir}/models/poll"
 
+Pusher.url = ENV['PUSHER_URL'] || "http://9c903bcb2ab8ded787c1:9feb791ebc2ce7bf9143@api.pusherapp.com/apps/11445"
+
 class Instabil::App < Sinatra::Base
   Mongoid.configure do |config|
     config.master = begin
@@ -74,6 +76,15 @@ class Instabil::App < Sinatra::Base
     current_user.update_attributes params[:preferences]
     flash[:notice] = "Einstellungen gespeichert."
     redirect '/'
+  end
+  
+  post '/messages' do
+    authenticate!
+    msg = Message.new author: current_user, body: params[:message][:body]
+    if msg.save
+      Pusher['chat'].trigger :message, msg.client_attributes
+    end
+    redirect '/#chat'
   end
   
   get '/people/:uid/page/edit' do

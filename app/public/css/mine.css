@@ -100,3 +100,16 @@
 #splash li.disabled a {
    color: #aaa;
 }
+
+#chat li {
+  list-style-type: none;
+}
+
+#chat li .author {
+  color: #555;
+}
+
+#chat li .time {
+  color: #777;
+  font-size: 80%;
+}

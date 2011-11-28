@@ -72,6 +72,29 @@ describe "The app" do
       it "shows a link to the user's preferences" do
         last_response.body.should have_selector("a[href='/preferences']")
       end
+      
+      it "shows a form to chat" do
+        last_response.should have_selector 'form[action="/messages"][method=post] input[name="message[body]"]'
+      end
+      
+      it "shows the last chat messages" do
+        Message.create author: lukas, body: 'hai there'
+        get "/"
+        last_response.body.should include('hai there')
+      end
+    end
+    
+    describe "POSTing to /messages" do
+      it "creates a message" do
+        post '/messages', message: { body: 'Hai' }
+        Message.first.author.should == lukas
+        Message.first.body.should == 'Hai'
+      end
+      
+      it "pushes" do
+        Pusher['chat'].should_receive(:trigger)
+        post '/messages', message: { body: 'Hai' }
+      end
     end
     
     describe "visiting /preferences" do

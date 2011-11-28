@@ -10,4 +10,11 @@ describe "Message" do
       message.client_attributes.should == { author: 'Jonas', created_at: message.created_at.strftime('%H:%M'), body: 'Hi!' }
     end
   end
+  
+  it "is capped" do
+    200.times do
+      Message.create! author: me, body: 'Hi!'
+    end
+    Message.count.should == Message.CAP
+  end
 end
