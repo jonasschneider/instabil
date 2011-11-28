@@ -42,7 +42,7 @@
       $(el).effect("highlight", {}, 3000);
     });
     
-    var latestMessages = JSON.parse('#{Message.all.map(&:client_attributes).to_json.gsub("'", "")}')
+    var latestMessages = JSON.parse('#{Message.newest.reverse.map(&:client_attributes).to_json.gsub("'", "")}')
     
     $('#chat_form').ajaxForm()
     

@@ -2,9 +2,8 @@ class Message
   include Mongoid::Document
   include Mongoid::Timestamps
   
-  CAP = 50
-  
-  store_in :messages, capped: true, size: 10000, max: CAP
+  CAP = 20
+  scope :newest, order_by(:created_at, :desc).limit(CAP)
   
   field :body, type: String
   

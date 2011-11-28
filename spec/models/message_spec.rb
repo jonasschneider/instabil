@@ -17,9 +17,9 @@ describe "Message" do
   end
   
   it "is capped" do
-    200.times do
+    50.times do
       Message.create! author: me, body: 'Hi!'
     end
-    Message.count.should == Message::CAP
+    Message.newest.to_a.length.should == Message::CAP
   end
 end
