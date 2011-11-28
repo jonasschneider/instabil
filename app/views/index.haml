@@ -18,8 +18,36 @@
       %img{ :src => '/images/icons/bars.png' }
       %h3 Umfragen/Abstimmungen
 
-%h1 Neue Benutzer
+%h2 Chat
+%ul#chat
+  %li
+    %span.author Jonas
+    %span.time (19:30)
+    %span.message Hai
+  %li
+    %span.author Lukas
+    %span.time (19:31)
+    %span.message Su Plox
+
+:javascript
+  var pusher = new Pusher('37555e9a66ad61ff5dc8');
+  
+  function renderMessage(msg) {
+    var a = $("<li>")
+      .append("<span class=author>"+msg.author+"</span>")
+      .append(" <span class=time>("+msg.created_at+")</span>: ")
+      .append(" <span class=message>"+msg.body+"</span>")
+    $("#chat").append(a)
+  }
+
+  var thingChannel = pusher.subscribe('chat');
+  thingChannel.bind('message', function(message) {
+    renderMessage(message)
+  });
+
+%h2 Neue Benutzer
 %a{ name: 'newusers' }
+%p Klicken auf den Namen führt zur Benutzerseite des jeweiligen Menschen.
 %ul
   - Person.all.each do |person|
     %li
