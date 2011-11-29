@@ -56,8 +56,19 @@
 
 %h2 Neue Benutzer
 %a{ name: 'newusers' }
-%p Klicken auf den Namen führt zur Benutzerseite des jeweiligen Menschen.
+%p Für diese Leute hat noch keiner eine Seite erstellt.
+%p.small Es werden nur Leute angezeigt, die sich schon mal hier angemeldet haben! Das sind also nicht alle Schüler außer denen, die schon eine Seite haben.
 %ul
-  - Person.all.each do |person|
+  - Person.without_page.each do |person|
     %li
       %a{ :href => "/people/#{person.uid}" }= person.name
+
+%h2 Benutzer mit Seite
+%p Für diese Leute hat schon jemand eine Seite erstellt.
+%ul
+  - Person.with_page.each do |person|
+    %li
+      %a{ :href => "/people/#{person.uid}" }= person.name
+      (Seite von
+      = succeed ')' do
+        = person.page.author.name

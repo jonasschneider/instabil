@@ -110,7 +110,7 @@ class Instabil::App < Sinatra::Base
     
     if @page.save && @person.save
       flash[:notice] = "Seite aktualisiert. #{@page.inspect}"
-      redirect "/people/#{params[:uid]}/page"
+      redirect "/people/#{params[:uid]}"
     else
       flash.now[:error] = "Fehler beim Speichern."
       raise @page.errors.inspect + @person.errors.inspect

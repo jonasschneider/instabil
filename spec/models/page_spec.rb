@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__)+'/../spec_helper')
 
 describe "Page" do
   let(:me) { Person.create! name: 'Jonas' do |p| p.uid = 'schneijo'; end }
-  let(:page) { me.create_page kurs: 5, g8: true, author: me }
+  let(:page) { me.create_page(kurs: 5, g8: true, author: me).tap{ me.save! } }
   
   describe "author" do
     it "is displayed by name in #api_attributes" do

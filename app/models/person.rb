@@ -5,6 +5,15 @@ class Person
   field :name, type: String
   field :email, type: String
   
+  def self.with_page # HACK
+    all.select{|p| p.page.present? }
+  end
+  
+  def self.without_page # HACK
+    all.select{|p| p.page.nil? }
+  end
+
+  
   key :uid
   
   validates_presence_of :uid

@@ -27,7 +27,11 @@
       %a{ :href => "/people/#{@person.uid}/page/edit" } Seite bearbeiten
 
 - else
-  %p== #{@person.name} hat noch keine Seite. Du kannst sie erstellen.
+  %p
+    == #{@person.name} hat noch keine Seite. Du kannst sie erstellen.
+    Damit wirst du eingetragen als der/die
+    %strong Verantwortliche
+    für diese Seite. Andere können sie immer noch bearbeiten, aber du solltest schauen, dass kein Mist gebaut wird.
 
   %ul.actions
     %li.minibutton
