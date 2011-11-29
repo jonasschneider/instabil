@@ -14,7 +14,7 @@ body, html {
 #wiki-wrapper {
   margin: 0 auto;
   overflow: visible;
-  width: 80%;
+  width: 960px;
 }
 
 a:link {
