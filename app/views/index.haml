@@ -60,4 +60,4 @@
 %ul
   - Person.all.each do |person|
     %li
-      %a{ :href => "/people/#{person.uid}/page" }= person.name
+      %a{ :href => "/people/#{person.uid}" }= person.name

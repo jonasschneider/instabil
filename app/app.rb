@@ -87,22 +87,18 @@ class Instabil::App < Sinatra::Base
     redirect '/#chat'
   end
   
+  get '/people/:uid' do
+    authenticate!
+    @person = Person.find(params[:uid])
+    
+    haml :person
+  end
+  
   get '/people/:uid/page/edit' do
     authenticate!
     @person = Person.find(params[:uid])
     @page = @person.page || @person.build_page
     haml :edit_page
-  end
-  
-  get '/people/:uid/page' do
-    authenticate!
-    @person = Person.find(params[:uid])
-    if @page = @person.page
-      haml :page
-    else
-      flash[:notice] = "#{@person.name} hat noch keine Seite. Du kannst sie erstellen."
-      redirect "/people/#{@person.uid}/page/edit"
-    end
   end
   
   post '/people/:uid/page' do
@@ -117,6 +113,7 @@ class Instabil::App < Sinatra::Base
       redirect "/people/#{params[:uid]}/page"
     else
       flash.now[:error] = "Fehler beim Speichern."
+      raise @page.errors.inspect + @person.errors.inspect
       haml :edit_page
     end
   end

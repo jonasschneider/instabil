@@ -26,13 +26,37 @@
           
         %td
           - if !@poll.serious || (@poll.vote_for(current_user).new_record? && Date.today < @poll.end_date)
-            %form.vote{ action: "/polls/#{@poll.id}/vote", method: 'post' }
+            %form.voteform{ action: "/polls/#{@poll.id}/vote", method: 'post' }
               %input{ name: "vote[answer_id]", type: 'hidden', :value => answer.id }
               - if @poll.vote_for(current_user).answer == answer
-                %input.choice{ type: 'submit', value: 'Dafür stimmst du!' }
+                %input.vote-button.vote.choice{ type: 'submit', value: 'Dafür stimmst du!' }
               - else
-                %input.alternative{ type: 'submit', value: 'Dafür stimmen' }
-            
+                %input.vote-button.vote.alternative{ type: 'submit', value: 'Dafür stimmen' }
+              - if @poll.serious
+                %input.confirm.vote-button{ type: 'submit', value: 'Sicher? Bitte nochmal klicken!', style: 'display:none' }
+                %input.cancel.vote-button{ type: 'submit', value: 'Abbrechen', style: 'display:none' }
+                
+- if @poll.serious
+  :javascript
+    $(".vote").click(function(e) {
+      $(this).parents("tr").siblings().hide()
+      $(this).siblings(".confirm").show()
+      $(this).siblings(".cancel").show()
+      $(this).parents("tr").find(".vote").hide()
+      
+      e.preventDefault()
+    })
+    
+    $(".cancel").click(function(e) {
+      $(this).parents("tr").siblings().show()
+      $(this).parents("tr").find(".confirm").hide()
+      $(this).parents("tr").find(".cancel").hide()
+      $(this).parents("tr").find(".vote").show()
+      
+      e.preventDefault()
+    })
+
+
 - if !@poll.serious || @poll.creator == current_user
   %h2 Neue Antwortmöglichkeit
   %form{ action: "/polls/#{@poll.id}/answers", method: 'post' }

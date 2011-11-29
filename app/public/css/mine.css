@@ -65,7 +65,7 @@
   display: inline-block;
 }
 
-.answer .choice, .answer .alternative {
+.vote-button {
   border: 0;
   padding: 10px;
   color: white;
@@ -73,11 +73,11 @@
   cursor: pointer;
 }
 
-.answer .choice {
+.answer .choice, .answer .confirm {
   background: #00963F;
 }
 
-.answer .alternative {
+.answer .alternative, .answer .cancel {
   background: #838A62;
 }
 

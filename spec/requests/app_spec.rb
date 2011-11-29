@@ -66,7 +66,7 @@ describe "The app" do
       end
       
       it "shows a link to the user's profile" do
-        last_response.body.should have_selector("a[href='/people/#{lukas.uid}/page']")
+        last_response.body.should have_selector("a[href='/people/#{lukas.uid}']")
       end
       
       it "shows a link to the user's preferences" do
@@ -124,10 +124,10 @@ describe "The app" do
       end
     end
     
-    describe "visiting /people/<uid>/page" do
+    describe "visiting /people/<uid>" do
       describe "when the person has a page" do
         before :each do
-          get "/people/#{anna.uid}/page"
+          get "/people/#{anna.uid}"
         end
         
         it "displays the page info" do
@@ -149,9 +149,9 @@ describe "The app" do
       end
       
       describe "when the person does not yet have a page" do
-        it "redirects to the edit page" do
-          get "/people/#{jonas.uid}/page"
-          last_response.status.should == 302
+        it "shows a link to create the pge" do
+          get "/people/#{jonas.uid}"
+          last_response.body.should have_selector("a[href='/people/#{jonas.uid}/page/edit']")
         end
       end
     end

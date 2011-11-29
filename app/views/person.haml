@@ -1,0 +1,34 @@
+%h1= @person.name
+- if page = @person.page
+  - section :footer do
+    %p#last-edit 
+      == Version #{page.version}, zuletzt bearbeitet von
+      %span.user_name= page.author.name
+      am
+      = page.date.strftime("%d.%m.%y um %H:%M")
+      —
+      %strong
+        %a{ :href => "/people/#{@person.uid}/page/versions" } Alle Versionen anzeigen
+  %h2== Kurs K2.#{page.kurs}, #{page.zug}
+  %p
+    Vierstündig:
+    = page.lks
+    %br
+  
+    Kurzinfo:
+    = page.bio
+  
+  %p= page.text
+  
+  %p Tags.. TODO
+  
+  %ul.actions
+    %li.minibutton
+      %a{ :href => "/people/#{@person.uid}/page/edit" } Seite bearbeiten
+
+- else
+  %p== #{@person.name} hat noch keine Seite. Du kannst sie erstellen.
+
+  %ul.actions
+    %li.minibutton
+      %a{ :href => "/people/#{@person.uid}/page/edit" } Seite erstellen
