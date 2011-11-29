@@ -1,8 +1,15 @@
 SRC = abi
-all:
+all: pupils memoirs pdftex
+
+pupils:
 	./buildpupils.py
+
+memoirs:
 	./memoirs.py > tex/mems.tex
-	./tex.sh
+ 
+pdftex:
+	make -C tex
+	#./tex.sh
 	#cd tex
 	#make
 	#bibtex $(SRC).aux
