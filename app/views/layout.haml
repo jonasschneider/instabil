@@ -47,6 +47,14 @@
             #template= yield
       #footer
         = section :footer
+        %hr
+        %p
+          Bei Problemen schreibt bitte eine Mail an
+          %a{ href: "mailto:instabil@jonasschneider.com" } Jonas
+          oder
+          = succeed '.' do
+            %a{ href: "mailto:lu@0x83.eu" } Lukas
+    
     :javascript
       var clicky_site_ids = clicky_site_ids || [];
       clicky_site_ids.push(66505064);
