@@ -2,7 +2,8 @@
 
 import json, os
 from string import Template
-f = open("test.json")
+import subprocess
+f = open("pupils.json")
 blah = f.read()
 j = json.loads(blah)
 temp = open("temp/pupil.tex").read()
@@ -23,6 +24,8 @@ for pupil in j :
 		content["tags"] = "\//\/".join(content["tags"])
 	else : 
 		content["tags"] = ""
+	proc = subprocess.Popen("./md2tex.sh", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+	content["text"] = proc.communicate(content["text"])[0].replace("\\n", "\n")
 	out = page.substitute(content)
 	f =  open("tex/pupils/" + pupil["uid"] + ".tex", "w")
 	f.write(out.encode("utf-8"))

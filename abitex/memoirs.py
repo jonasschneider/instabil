@@ -36,6 +36,8 @@ def beautiy_quotation(text) :
 def parse_memoir(mem) :
 	print ""
 	print "\\vspace{3mm}"
+	#print "\\rule{1cm}{}"
+	#print "\\vspace{1.5mm}"
 	#print mem["text"].encode("utf-8")
 	left = True
 	text = mem["text"].splitlines()

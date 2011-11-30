@@ -1,5 +1,10 @@
 SRC = abi
-all: pupils memoirs pdftex
+all: fetchpupils pupils memoirs pdf
+
+fast : pupils pdf
+
+fetchpupils:
+	./fetchpupils.sh
 
 pupils:
 	./buildpupils.py
@@ -7,7 +12,7 @@ pupils:
 memoirs:
 	./memoirs.py > tex/mems.tex
  
-pdftex:
+pdf:
 	make -C tex
 	#./tex.sh
 	#cd tex
