@@ -7,7 +7,7 @@ describe "Message" do
   
   describe "#client_attributes" do
     it "works" do
-      message.client_attributes.should == { author: 'Jonas', created_at: message.created_at.strftime('%H:%M'), body: 'Hi!' }
+      message.client_attributes.should == { author: 'Jonas', created_at: message.created_at.strftime('%d.%m. %H:%M'), body: 'Hi!' }
     end
     
     it "strips tags" do

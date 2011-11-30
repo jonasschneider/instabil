@@ -11,6 +11,6 @@ class Message
   validates_presence_of :author
   
   def client_attributes
-    { author: author.name, created_at: created_at.strftime('%H:%M'), body: CGI.escapeHTML(body) }
+    { author: author.name, created_at: created_at.strftime('%d.%m. %H:%M'), body: CGI.escapeHTML(body) }
   end
 end
