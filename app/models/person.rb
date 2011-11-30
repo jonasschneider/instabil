@@ -3,7 +3,12 @@ class Person
   
   field :uid, type: String
   field :name, type: String
+  field :original_name, type: String
   field :email, type: String
+  
+  before :create do
+    original_name = name
+  end
   
   def self.with_page # HACK
     all.select{|p| p.page.present? }

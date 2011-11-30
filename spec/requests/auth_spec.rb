@@ -14,6 +14,14 @@ describe "Authentication" do
       follow_redirect!
       last_response.body.should include(name)
     end
+    
+    it "creates a person" do
+      post '/auth/developer/callback', :username => user, :name => name, :group_ids => group_ids
+      Person.first.uid.should == 'atmos'
+      Person.first.name.should == 'Atmos'
+      Person.first.original_name.should == 'Atmos'
+      Person.first.email.should == nil
+    end
   end
   
   describe 'with a set of groups including the correct group id' do
