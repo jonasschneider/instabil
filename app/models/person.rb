@@ -1,15 +1,6 @@
 class Person
   include Mongoid::Document
   
-  field :uid, type: String
-  field :name, type: String
-  field :original_name, type: String
-  field :email, type: String
-  
-  before :create do
-    original_name = name
-  end
-  
   def self.with_page # HACK
     all.select{|p| p.page.present? }
   end
@@ -18,6 +9,13 @@ class Person
     all.select{|p| p.page.nil? }
   end
 
+  
+  field :uid, type: String
+  field :name, type: String
+  field :original_name, type: String
+  field :email, type: String
+  
+  before_create :set_original_name
   
   key :uid
   
@@ -35,5 +33,9 @@ class Person
       end
       att['page'] = (page || build_page).api_attributes
     end
+  end
+  
+  def set_original_name
+    self.original_name = name
   end
 end
