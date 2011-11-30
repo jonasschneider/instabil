@@ -1,12 +1,12 @@
-require 'sinatra'
-require 'omniauth/strategies/fichteid'
-
 require 'instabil'
 
 dir = File.dirname(File.expand_path(__FILE__))
+require "#{dir}/boot" 
 require "#{dir}/auth"
 require "#{dir}/versions"
 require "#{dir}/polls"
+
+
 
 require "#{dir}/models/page"
 require "#{dir}/models/person"

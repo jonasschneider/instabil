@@ -6,7 +6,8 @@ end
 
 def spec(file)
   if File.exists?(file)
-    run("bundle exec rspec --fail-fast #{file}")
+    run("./spin push #{file}")
+    #run("bundle exec rspec --fail-fast #{file}")
   else
     puts("Spec: #{file} does not exist.")
   end
