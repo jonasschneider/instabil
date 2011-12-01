@@ -69,6 +69,10 @@ describe "The app" do
         last_response.body.should have_selector("a[href='/people/#{lukas.uid}']")
       end
       
+      it "shows a link to logout" do
+        last_response.body.should have_selector("a[href='/logout']")
+      end
+      
       it "shows a link to the user's preferences" do
         last_response.body.should have_selector("a[href='/preferences']")
       end

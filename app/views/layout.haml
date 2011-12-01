@@ -35,11 +35,13 @@
             %a{ :href => '/' } Startseite
           %li.minibutton
             %a{ :href => "/people/#{current_user.uid}" }
-              Meine Seite
-              == (#{current_user.name})
+              Deine Seite
           %li.minibutton
             %a{ :href => "/preferences" }
               Einstellungen
+          %li.minibutton
+            %a{ :href => "/logout" }
+              Abmelden
       
       #wiki-content
         .wrap
