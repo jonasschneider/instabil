@@ -32,6 +32,13 @@ describe "Poll" do
     end
   end
   
+  describe "#popularity" do
+    it "returns an index of popularity based on number of votes and answers" do
+      poll.cast_vote! me, answer
+      poll.popularity.should > Poll.new.popularity
+    end
+  end
+  
   describe "#cast_vote!(user, answer)" do
     it "creates a vote" do
       poll.cast_vote! me, answer

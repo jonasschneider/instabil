@@ -21,7 +21,7 @@ Die Wahl des Abimottos läuft in drei Phasen ab:
 
 %h2 Alle Umfragen
 %ul
-- @polls.select{|p|!p.serious}.sort{|p|p.votes.length}.reverse.each do |poll|
+- @polls.select{|p|!p.serious}.sort{|p|p.popularity}.reverse.each do |poll|
   %li.poll-info
     %a.poll-name{:href => "/polls/#{poll.id}" }= poll.title
     von

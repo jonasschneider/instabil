@@ -27,6 +27,10 @@ class Poll
     vote.save!
   end
   
+  def popularity
+    votes.count + 3 * (answers.map{|a|a.creator}.uniq.count)
+  end
+  
   alias_method :raw_end_date=, :end_date=
   
   def end_date=(date) 
