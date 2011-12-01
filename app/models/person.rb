@@ -64,6 +64,7 @@ class Person
   def create_page(*att)
     self.page = Page.create *att
     self.save!
+    self.page
   end
   
   def set_original_name

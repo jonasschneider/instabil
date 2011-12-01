@@ -10,13 +10,6 @@ class Page
   
   has_one :person
   
-  def api_attributes
-    { 
-      text: self.text,
-      author: (self.author && author.name)
-    }
-  end
-  
   def date
     updated_at || created_at
   end
