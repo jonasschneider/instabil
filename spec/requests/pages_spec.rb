@@ -23,11 +23,14 @@ describe "The app" do
   
   describe "visiting /pages/new?for_person=<uid>" do
     it "displays a form" do
-      get "/pages/new?for_person=#{jonas.id}"
+      get "/pages/new?for_person=#{anna.id}"
+      
+      last_response.body.should include("Anna")
+      
       form = "form[action=\"/pages\"][method=post]"
       last_response.should have_selector form
       last_response.should have_selector form + ' textarea[name="page[text]"]'
-      last_response.should have_selector form + ' input[type=hidden][name=for_person][value=schneijo]'
+      last_response.should have_selector form + ' input[type=hidden][name=for_person][value=winteran]'
       last_response.should have_selector form + ' input[type=submit]'
     end
   end

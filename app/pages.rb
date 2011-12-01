@@ -11,6 +11,7 @@ module Instabil::Pages
       get '/pages/new' do
         authenticate!
         @page = Page.new
+        @target = Person.find params[:for_person]
         haml :page_new
       end
       
