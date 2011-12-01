@@ -44,4 +44,16 @@ describe "Authentication" do
       last_response.body.should include('nicht berechtigt')
     end
   end
+  
+  describe 'GET /logout' do
+    before :each do
+      get '/logout'
+    end
+    
+    it 'redirects to the fichteID logout page' do
+      last_response.headers["Location"].should == 'http://fichteid.heroku.com/sso/logout'
+    end
+    
+    it "clears the session"
+  end
 end

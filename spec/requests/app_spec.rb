@@ -17,7 +17,7 @@ describe "The app" do
     Person.create!(name: "Anna") do |anna|
       anna.uid = "winteran"
     end.tap do |anna|
-      anna.build_page bio: 'Ich halt.', lks: 'Musik'
+      anna.build_page bio: 'Ich halt.', lks: 'Musik', text: 'Text'
       anna.page.author = jonas
       anna.page.save!
     end
@@ -133,6 +133,15 @@ describe "The app" do
         it "displays the page info" do
           last_response.body.should include(anna.page.bio)
           last_response.body.should include(anna.page.lks)
+          last_response.body.should include(anna.page.text)
+        end
+        
+        it "renders the text as markdown" do
+          anna.page.text = '*mytext*'
+          anna.page.save!
+          anna.save!
+          get "/people/#{anna.uid}"
+          last_response.body.should have_selector('em', content: 'mytext')
         end
         
         it "displays the author's name" do

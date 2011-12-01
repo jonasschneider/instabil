@@ -67,6 +67,10 @@ module Instabil::Auth
       get '/auth/fichteid/callback' do
         authenticate_with_info! env['omniauth.auth'].info
       end
+      
+      get '/logout' do
+        redirect 'http://fichteid.heroku.com/sso/logout' 
+      end
     end
   end
 end

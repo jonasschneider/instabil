@@ -1,5 +1,7 @@
 require 'instabil'
 
+require 'redcarpet'
+
 dir = File.dirname(File.expand_path(__FILE__))
 require "#{dir}/boot" 
 require "#{dir}/auth"
@@ -28,7 +30,7 @@ class Instabil::App < Sinatra::Base
       end
     end
   end
-  
+    
   use Rack::Session::Cookie
   
   set :authorized_group_id, 10095
@@ -53,6 +55,11 @@ class Instabil::App < Sinatra::Base
     else
       @sections[key].inject(''){ |content, block| content << capture_haml(&block) } if @sections.keys.include?(key)
     end
+  end
+  
+  def markdown(text)
+    @markdown ||= Redcarpet::Markdown.new Redcarpet::Render::HTML
+    @markdown.render text
   end
 
   get '/' do

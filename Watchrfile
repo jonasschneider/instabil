@@ -4,10 +4,14 @@ def run(cmd)
   system cmd
 end
 
+def run_spec(args)
+  run("./spin push #{args}")
+  #run("bundle exec rspec --fail-fast #{args}")
+end
+
 def spec(file)
   if File.exists?(file)
-    run("./spin push #{file}")
-    #run("bundle exec rspec --fail-fast #{file}")
+    run_spec(file)
   else
     puts("Spec: #{file} does not exist.")
   end
@@ -16,6 +20,10 @@ end
 watch("spec/.*/*_spec\.rb") do |match|
   puts(match[0])
   spec(match[0])
+end
+
+watch("config.ru") do |match|
+  run_spec(Dir["spec/**/*_spec.rb"].join(" "))
 end
 
 watch("app/(.*)\.rb") do |match|

@@ -1,5 +1,4 @@
 require File.expand_path(File.join(File.dirname(__FILE__), 'boot'))
-ENV["RACK_ENV"] = 'test'
 ENV["API_KEY"] = 'random_string'
 
 project_root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
@@ -12,17 +11,25 @@ Webrat.configure do |config|
   config.application_port = 4567
 end
 
-Rspec.configure do |config|
+RSpec.configure do |config|
   config.before :each do
     Mongoid.master.collections.select do |collection| 
       collection.name !~ /system/ 
     end.each(&:drop) 
+    Pusher::Channel.stub(:trigger).and_return(true)
   end
   
   def app
     Instabil::App
   end
   
+  config.before :all do
+    app.configure do
+      disable :show_exceptions
+      enable :raise_errors
+    end
+  end
+
   def login(username, name)
     post '/auth/developer/callback', :username => username, :name => name, :group_ids => app.settings.authorized_group_id
   end
