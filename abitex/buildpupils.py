@@ -24,8 +24,11 @@ for pupil in j :
 		content["tags"] = "\//\/".join(content["tags"])
 	else : 
 		content["tags"] = ""
-	proc = subprocess.Popen("./md2tex.sh", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-	content["text"] = proc.communicate(content["text"])[0].replace("\\n", "\n")
+	
+	if content["text"] != None :
+		proc = subprocess.Popen("./md2tex.sh", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+		content["text"] = proc.communicate(content["text"].encode("utf-8"))[0].decode("utf-8")
+	#proc.kill()
 	out = page.substitute(content)
 	f =  open("tex/pupils/" + pupil["uid"] + ".tex", "w")
 	f.write(out.encode("utf-8"))
