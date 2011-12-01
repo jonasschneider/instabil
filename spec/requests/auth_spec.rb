@@ -46,14 +46,27 @@ describe "Authentication" do
   end
   
   describe 'GET /logout' do
-    before :each do
-      get '/logout'
+    describe "when logged in" do
+      let(:lukas) do
+        Person.create! name: "Lukas" do |p|
+          p.uid = "kramerlu"
+        end
+      end
+      
+      before :each do
+        login(lukas.uid, lukas.name)
+        get '/logout'
+      end
+      
+      it 'redirects to the fichteID logout page' do
+        last_response.headers["Location"].should == 'http://fichteid.heroku.com/sso/logout'
+      end
+      
+      it "clears the session" do
+        get '/'
+        last_response.status.should == 301
+      end
     end
-    
-    it 'redirects to the fichteID logout page' do
-      last_response.headers["Location"].should == 'http://fichteid.heroku.com/sso/logout'
-    end
-    
-    it "clears the session"
+   
   end
 end
