@@ -67,6 +67,5 @@ describe "Authentication" do
         last_response.status.should == 301
       end
     end
-   
   end
 end
