@@ -42,7 +42,7 @@ describe "Polls" do
   
   describe 'POST /polls' do
     it "creates a poll" do
-      post '/polls', poll: { title: 'Ohai' }
+      post '/polls', poll: { title: 'Ohai', serious: 'false', end_date: '' }
       last_response.headers["Location"].should == "http://example.org/polls/#{Poll.first.id}"
       p = Poll.first
       p.title.should == 'Ohai'

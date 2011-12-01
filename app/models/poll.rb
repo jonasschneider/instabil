@@ -30,6 +30,7 @@ class Poll
   alias_method :raw_end_date=, :end_date=
   
   def end_date=(date) 
+    return if date.kind_of?(String) && date.empty?
     date = date.split("/").tap{|x| x[0], x[1] = x[1], x[0] }.join("/") if date.kind_of? String
     self.raw_end_date = date
   end 
