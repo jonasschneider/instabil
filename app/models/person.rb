@@ -62,7 +62,7 @@ class Person
   end
   
   def create_page(*att)
-    self.page = Page.create *att
+    self.page = Page.create! *att
     self.save!
     self.page
   end

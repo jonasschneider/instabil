@@ -7,6 +7,7 @@ require "#{dir}/boot"
 require "#{dir}/auth"
 require "#{dir}/versions"
 require "#{dir}/polls"
+require "#{dir}/pages"
 
 
 
@@ -45,6 +46,7 @@ class Instabil::App < Sinatra::Base
   register Instabil::Auth
   register Instabil::Versions
   register Instabil::Polls
+  register Instabil::Pages
   
   use Rack::Flash
 
@@ -74,13 +76,13 @@ class Instabil::App < Sinatra::Base
   
   get '/preferences' do
     authenticate!
-    @preferences = current_user
+    @person = current_user
     haml :preferences
   end
   
   post '/preferences' do
     authenticate!
-    current_user.update_attributes params[:preferences]
+    current_user.update_attributes params[:person]
     flash[:notice] = "Einstellungen gespeichert."
     redirect '/'
   end
@@ -99,29 +101,5 @@ class Instabil::App < Sinatra::Base
     @person = Person.find(params[:uid])
     
     haml :person
-  end
-  
-  get '/people/:uid/page/edit' do
-    authenticate!
-    @person = Person.find(params[:uid])
-    @page = @person.page || @person.build_page
-    haml :edit_page
-  end
-  
-  post '/people/:uid/page' do
-    authenticate!
-    @person = Person.find(params[:uid])
-    @page = @person.page || @person.build_page
-    @page.write_attributes params[:page]
-    @page.author = current_user
-    
-    if @page.save && @person.save
-      flash[:notice] = "Seite aktualisiert. #{@page.inspect}"
-      redirect "/people/#{params[:uid]}"
-    else
-      flash.now[:error] = "Fehler beim Speichern."
-      raise @page.errors.inspect + @person.errors.inspect
-      haml :edit_page
-    end
   end
 end

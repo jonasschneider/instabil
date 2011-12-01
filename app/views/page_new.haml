@@ -1,0 +1,4 @@
+%h1 Neue Seite
+%form{ action: "/pages", method: 'post' }
+  %input{ type: 'hidden', name: 'for_person', value: params[:for_person] }
+  = haml :page_form, locals: { page: @page }
