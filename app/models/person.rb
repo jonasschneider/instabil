@@ -15,6 +15,16 @@ class Person
   field :original_name, type: String
   field :email, type: String
   
+  field :kurs, type: Integer
+  field :g8, type: Boolean
+  
+  field :lks, type: String
+  field :bio, type: String
+  #field :foto, type: String
+  
+  
+  field :tags, type: Array
+  
   before_create :set_original_name
   
   key :uid
@@ -22,17 +32,39 @@ class Person
   validates_presence_of :uid
   validates_presence_of :name
   
-  references_one :page, validate: false
+  belongs_to :page, validate: false
   attr_protected :uid
   
   def api_attributes
-    {}.tap do |att|
-      fields.keys.each do |field|
-        next if field[0] == '_'
-        att[field] = read_attribute(field)
-      end
-      att['page'] = (page || build_page).api_attributes
-    end
+    {
+      "uid" => self.uid,
+      "email" => self.email,
+      "name" => self.name,
+      
+      "page" => {
+        "kurs" => self.kurs,
+        "g8" => self.g8 ? 1 : 0,
+        
+        "lks" => self.lks,
+        "bio" => self.bio,
+        "foto" => nil,
+        
+        "text" => (page || Page.new).text,
+        "author" => (page && page.author.name) || '',
+        
+        "tags" => [ ]
+      }
+    }
+  end
+  
+  def zug
+    g8 ? 'G8' : 'G9'
+  end
+  
+  def create_page(*att)
+    self.page = Page.create! *att
+    self.save!
+    self.page
   end
   
   def set_original_name

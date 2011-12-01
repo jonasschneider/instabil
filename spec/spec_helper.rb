@@ -33,7 +33,7 @@ RSpec.configure do |config|
   def login(username, name)
     post '/auth/developer/callback', :username => username, :name => name, :group_ids => app.settings.authorized_group_id
   end
-
+  
   config.include(Rack::Test::Methods)
   config.include(Webrat::Methods)
   config.include(Webrat::Matchers)

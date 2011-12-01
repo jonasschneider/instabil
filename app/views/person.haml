@@ -1,4 +1,15 @@
 %h1= @person.name
+%h2== Kurs K2.#{@person.kurs}, #{@person.zug}
+%p
+  Vierstündig:
+  = @person.lks
+  %br
+
+  Kurzinfo:
+  = @person.bio
+  
+  %p Tags.. TODO
+
 - if page = @person.page
   - section :footer do
     %p#last-edit 
@@ -8,23 +19,13 @@
       = page.date.strftime("%d.%m.%y um %H:%M")
       —
       %strong
-        %a{ :href => "/people/#{@person.uid}/page/versions" } Alle Versionen anzeigen
-  %h2== Kurs K2.#{page.kurs}, #{page.zug}
-  %p
-    Vierstündig:
-    = page.lks
-    %br
-  
-    Kurzinfo:
-    = page.bio
-  
+        %a{ :href => "/pages/#{page.id}/versions" } Alle Versionen anzeigen
+
   %p= markdown page.text
-  
-  %p Tags.. TODO
   
   %ul.actions
     %li.minibutton
-      %a{ :href => "/people/#{@person.uid}/page/edit" } Seite bearbeiten
+      %a{ :href => "/pages/#{page.id}/edit" } Seite bearbeiten
 
 - else
   %p
@@ -35,4 +36,4 @@
 
   %ul.actions
     %li.minibutton
-      %a{ :href => "/people/#{@person.uid}/page/edit" } Seite erstellen
+      %a{ :href => "/pages/new?for_person=#{@person.uid}" } Seite erstellen

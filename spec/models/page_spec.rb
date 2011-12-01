@@ -2,13 +2,14 @@ require File.expand_path(File.dirname(__FILE__)+'/../spec_helper')
 
 describe "Page" do
   let(:me) { Person.create! name: 'Jonas' do |p| p.uid = 'schneijo'; end }
-  let(:page) { me.create_page(kurs: 5, g8: true, author: me).tap{ me.save! } }
+  let(:page) { Page.create(kurs: 5, g8: true, author: me) }
+  
+  it "is valid" do
+    page.should be_valid
+    page.errors.should be_empty
+  end
   
   describe "author" do
-    it "is displayed by name in #api_attributes" do
-      page.api_attributes['author'].should == 'Jonas'
-    end
-    
     it "is required" do
       p = Page.new
       p.should_not be_valid
@@ -26,7 +27,6 @@ describe "Page" do
       
       page.save!
       
-      page = me.reload.page
       page.versions.length.should == 1
       page.version.should == 2
       

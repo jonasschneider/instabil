@@ -16,10 +16,10 @@ describe "The app" do
   let(:anna) do
     Person.create!(name: "Anna") do |anna|
       anna.uid = "winteran"
+      anna.bio = 'Bla'
+      anna.lks = "ENDLICH!"
     end.tap do |anna|
-      anna.build_page bio: 'Ich halt.', lks: 'Musik', text: 'Text'
-      anna.page.author = jonas
-      anna.page.save!
+      anna.create_page text: 'Text', author: jonas
     end
   end
 
@@ -108,9 +108,13 @@ describe "The app" do
         get "/preferences"
         form = "form[action='/preferences'][method=post]"
         last_response.should have_selector form
-        last_response.should have_selector form + ' input[name="preferences[name]"][type=text][value=Asdfname]'
-        last_response.should have_selector form + ' input[name="preferences[email]"][type=text][value="test@example.com"]'
+        last_response.should have_selector form + ' input[name="person[name]"][type=text][value=Asdfname]'
+        last_response.should have_selector form + ' input[name="person[email]"][type=text][value="test@example.com"]'
         last_response.should have_selector form + ' input[type=submit]'
+        
+        last_response.should have_selector form + ' input[name="person[kurs]"][type=text]'
+        last_response.should have_selector form + ' input[name="person[g8]"][type=checkbox]'
+        last_response.should have_selector form + ' input[name="person[bio]"][type=text]'
       end
     end
     
@@ -119,12 +123,54 @@ describe "The app" do
       let(:new_email) { 'test@0x83.eu' }
       let(:old_uid) { lukas.uid }
       
-      it "updates the users name and email" do
+      it "updates the users attributes" do
         old_uid
-        post "/preferences", preferences: { name: new_name, email: new_email }
+        post "/preferences", person: { name: new_name, email: new_email, bio: 'testing' }
         lukas.reload.name.should == new_name
         lukas.email.should == new_email
         lukas.uid.should == old_uid
+        lukas.bio.should == 'testing'
+      end
+    end
+    
+    describe "visiting /people/<uid>" do
+      describe "when the person has a page" do
+        before :each do
+          get "/people/#{anna.uid}"
+        end
+        
+        it "displays the page info" do
+          last_response.body.should include(anna.bio)
+          last_response.body.should include(anna.lks)
+          last_response.body.should include(anna.page.text)
+        end
+        
+        it "renders the text as markdown" do
+          anna.page.text = '*mytext*'
+          anna.page.save!
+          anna.save!
+          get "/people/#{anna.uid}"
+          last_response.body.should have_selector('em', content: 'mytext')
+        end
+        
+        it "displays the author's name" do
+          last_response.body.should have_selector('#last-edit .user_name', :content => jonas.name)
+        end
+        
+        it 'displays a link to edit the page' do
+          last_response.body.should have_selector("a[href='/pages/#{anna.page.id}/edit']")
+        end
+        
+        it 'displays a link to view the page versions' do
+          last_response.body.should have_selector("a[href='/pages/#{anna.page.id}/versions']")
+        end
+      end
+      
+      describe "when the person does not yet have a page" do
+        it "shows a link to create the page" do
+          get "/people/#{jonas.uid}"
+          last_response.body.should have_selector("a[href='/pages/new?for_person=#{jonas.id}']")
+        end
       end
     end
   end
