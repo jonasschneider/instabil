@@ -152,3 +152,70 @@
   color: #777;
   font-size: 80%;
 }
+
+#abimotto-flow {
+  margin: 20px 0 50px 0 !important;
+}
+
+#abimotto-flow li {
+  margin: 0 30px;
+  background-color: #93C494;
+  padding: 30px;
+  box-shadow: inset 0 0 12px #444, 0 0 15px #444;
+  list-style-type: none;
+  color: #637563;
+}
+
+#abimotto-flow li .phase {
+  color: #7EA67F;
+  text-transform: uppercase;
+  font-size: 500%;
+  float: right;
+  font-weight: lighter;
+  opacity: .5;
+  font-family: "Lucida Sans Unicode", "Lucida Grande";
+  text-shadow: 0 0 .2em #71BF72;
+}
+
+#abimotto-flow h3 {
+  margin: .4em 0;
+  text-transform: uppercase;
+  font-weight: normal;
+  padding: 0;
+  text-shadow: 0 0 .2em #71BF72;
+  color: #90A691;
+  font-size: 150%;
+}
+
+
+#abimotto-flow li.active .phase {
+  color: #8CCF8E;
+  opacity: .3;
+}
+
+#abimotto-flow li.active {
+  background-color: #298A2B;
+}
+
+#abimotto-flow li.active h3 {
+  color: #8BE88D;
+}
+
+
+
+#abimotto-flow strong {
+  display: block;
+  background-color: #1E5E1F;
+  width: 50%;
+  text-align: center;
+  margin: 1em auto;
+  padding: 5px;
+}
+
+#abimotto-flow a {
+  color: #CCE8CD;
+}
+
+#abimotto-flow a:hover {
+  text-decoration: none
+}
