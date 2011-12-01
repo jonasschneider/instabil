@@ -6,23 +6,36 @@ describe "Person" do
        me.uid = "schneijo"
      end
      p.tap do |p|
+       p.kurs = 5
+       p.g8 = true
+       p.lks = 'lks'
        p.save!
      end
   end
-  let(:page) { jonas.create_page kurs: 5, g8: true, author: jonas }
+  
+  let(:page) do
+    jonas.create_page text: 'asdf', author: jonas
+  end
   
   describe "#api_attributes" do
     it "returns a hash of attributes" do
-      jonas.api_attributes['name'].should == "Jonas Schneider"
       jonas.api_attributes['uid'].should == "schneijo"
       jonas.api_attributes['email'].should == nil
+      jonas.api_attributes['name'].should == "Jonas Schneider"
     end
     
-    it "returns the page's attributes when they are set" do
-      page
+    it "returns the page attributes" do
       jonas.api_attributes['page']['kurs'].should == 5
       jonas.api_attributes['page']['g8'].should == 1
+      jonas.api_attributes['page']['lks'].should == 'lks'
       jonas.api_attributes['page']['bio'].should == nil
+      jonas.api_attributes['page']['foto'].should == nil
+    end
+    
+    it "returns the page text when set" do
+      page
+      jonas.api_attributes['page']['text'].should == 'asdf'
+      jonas.api_attributes['page']['author'].should == 'Jonas Schneider'
     end
   end
   
@@ -50,12 +63,5 @@ describe "Person" do
       jonas.reload.save!
       Person.with_page.to_a.should == [jonas]
     end
-  end
-  
-  def stringify_keys hash
-    hash.keys.each do |key|
-      hash[key.to_s] = hash.delete(key)
-    end
-    hash
   end
 end
