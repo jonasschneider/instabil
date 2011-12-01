@@ -32,6 +32,9 @@ class Person
   validates_presence_of :uid
   validates_presence_of :name
   
+  validates :email, :allow_nil => true, :uniqueness => true, :format => { :with => /^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i }
+    
+  
   belongs_to :page, validate: false
   attr_protected :uid
   

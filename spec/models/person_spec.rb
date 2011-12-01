@@ -17,6 +17,13 @@ describe "Person" do
     jonas.create_page text: 'asdf', author: jonas
   end
   
+  it "validate emails" do
+    jonas.email = 'asdf'
+    jonas.should_not be_valid
+    jonas.email = 'a@b.net'
+    jonas.should be_valid
+  end
+  
   describe "#api_attributes" do
     it "returns a hash of attributes" do
       jonas.api_attributes['uid'].should == "schneijo"
