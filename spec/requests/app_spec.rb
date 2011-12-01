@@ -69,6 +69,26 @@ describe "The app" do
         last_response.body.should have_selector("a[href='/people/#{lukas.uid}']")
       end
       
+      describe "when the user has an email address set" do
+        before :each do
+          lukas.email = 'a@b.net'
+          lukas.save!
+          get "/"
+        end
+        
+        it "shows no banner" do
+          last_response.body.should_not have_selector("#nomail")
+        end
+      end
+      
+      it "shows a banner informing to enter an email address" do
+        last_response.body.should have_selector("#nomail")
+      end
+      
+      it "shows a link to the user's profile" do
+        last_response.body.should have_selector("a[href='/people/#{lukas.uid}']")
+      end
+      
       it "shows a link to logout" do
         last_response.body.should have_selector("a[href='/logout']")
       end

@@ -30,6 +30,12 @@
         %h1
           %a{ href: '/' }
             %img{ :src => '/images/logo.png' }
+        - if current_user.email.nil? || current_user.email.empty?
+          #nomail
+            %a{ :href => "/preferences" }
+              %span
+                %strong Du hast noch keine E-Mail-Addresse eingetragen.
+                Bitte tu das, damit du über Neuigkeiten informiert werden kannst. Klicke dazu hier.
         %ul.actions
           %li.minibutton
             %a{ :href => '/' } Startseite

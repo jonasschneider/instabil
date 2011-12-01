@@ -2,6 +2,32 @@
   font-weight: bold;
 }
 
+
+#nomail span {
+  background: #B14151;
+  color: #ddd;
+  width: 35%;
+  float: left;
+  margin: 0 0 0 30px;
+  padding: 10px;
+  display: inline-block;
+  font-size: 120%;
+  box-shadow: 0 0 5px #800011;
+}
+
+#nomail span:hover {
+  background-color: #AD0017;
+}
+
+#nomail a:hover {
+  
+  text-decoration: none !important;
+}
+
+#nomail strong {
+  color: white;
+}
+
 .flash {
   background-color: #f9f9f9;
   border: 1px solid #e4e4e4;
