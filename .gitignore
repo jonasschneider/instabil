@@ -6,3 +6,8 @@ tmp/
 .bundle
 abitex/mongourl
 abitex/tex/mems.tex
+abitex/fetchpupils.sh
+abitex/tex/pupils/*
+abitex/tex/coursereports/*
+abitex/backup/*
+abitex/dump.sh

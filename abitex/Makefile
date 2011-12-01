@@ -1,7 +1,17 @@
 SRC = abi
-all: fetchpupils pupils memoirs pdf
+all: fetchpupils pupils pdf
 
 fast : pupils pdf
+
+dump :
+	./dump.sh
+	
+clean:
+	rm tex/abi.toc
+	rm tex/abi.stc*
+	rm tex/abi.pdf
+	rm tex/abi.mtc*
+	rm tex/abi.aux
 
 fetchpupils:
 	./fetchpupils.sh

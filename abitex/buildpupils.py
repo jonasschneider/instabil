@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-
+# -*- coding: utf-8 -*-
 import json, os
 from string import Template
 import subprocess
@@ -14,7 +14,7 @@ for pupil in j :
 	print pupil["uid"]
 	pupillist.append(pupil["uid"])
 	#print "tex/pupils/" + pupil["uid"] + ".tex"
-	content["name"] = pupil["name"]
+	content["name"] = pupil["name"].replace(u"ё", '"e')
 	if content["g8"]==1 :
 		content["g8"] = "G8"
 	else :
@@ -29,7 +29,7 @@ for pupil in j :
 	out = page.substitute(content)
 	f =  open("tex/pupils/" + pupil["uid"] + ".tex", "w")
 	f.write(out.encode("utf-8"))
-
+print len(pupillist)
 f =  open("tex/pupilspages.tex", "w")
 for p in pupillist :
 	f.write("\input{pupils/" + p + ".tex}\n");
