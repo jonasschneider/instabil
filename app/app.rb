@@ -31,7 +31,7 @@ class Instabil::App < Sinatra::Base
       end
     end
   end
-    
+  
   use Rack::Session::Cookie
   
   set :authorized_group_id, 10095
@@ -82,9 +82,15 @@ class Instabil::App < Sinatra::Base
   
   post '/preferences' do
     authenticate!
-    current_user.update_attributes params[:person]
-    flash[:notice] = "Einstellungen gespeichert."
-    redirect '/'
+    @person = current_user
+    
+    if @person.update_attributes params[:person]
+      flash[:notice] = "Einstellungen gespeichert."
+      redirect '/'
+    else
+      flash[:error] = "Fehler beim Speichern. Ist die E-Mail-Addresse korrekt?"
+      haml :preferences
+    end
   end
   
   post '/messages' do

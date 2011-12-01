@@ -151,6 +151,17 @@ describe "The app" do
         lukas.uid.should == old_uid
         lukas.bio.should == 'testing'
       end
+      
+      describe "with a bogus email" do
+        let(:new_email) { 'test0x83.eu' }
+        
+        it "updates the users attributes" do
+          old_uid
+          post "/preferences", person: { name: new_name, email: new_email, bio: 'testing' }
+          lukas.email.should_not == new_email
+          last_response.body.should include('Fehler')
+        end
+      end
     end
     
     describe "visiting /people/<uid>" do
