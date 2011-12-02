@@ -5,7 +5,7 @@
   - Course.all.select{|c|c.num==4}.group_by{|c|c.fach}.each do |fach, courses|
     %h3= fach
     %ul
-      - courses.each do |course|
+      - courses.sort_by{|c|c.name}.each do |course|
         %li
           %a{ :href => "/courses/#{course.id}" }= course.name
           == (#{course.fach} vierstündig)
@@ -14,7 +14,7 @@
   - Course.all.select{|c|c.num==2}.group_by{|c|c.fach}.each do |fach, courses|
     %h3= fach
     %ul
-      - courses.each do |course|
+      - courses.sort_by{|c|c.name}.each do |course|
         %li
           %a{ :href => "/courses/#{course.id}" }= course.name
           == (#{course.fach} zweistündig)
