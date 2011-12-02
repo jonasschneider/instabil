@@ -9,5 +9,9 @@ abitex/tex/mems.tex
 abitex/fetchpupils.sh
 abitex/tex/pupils/*
 abitex/tex/coursereports/*
+abitex/tex/abi.pdf
+abitex/tex/abi.maf
+abitex/tex/abi.stc*
+abitex/tex/abi.toc
 abitex/backup/*
 abitex/dump.sh
