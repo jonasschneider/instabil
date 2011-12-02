@@ -67,7 +67,7 @@ class Instabil::App < Sinatra::Base
     haml :index
   end
   
-  get '/api' do
+  get '/api/people.json' do
     halt 403, 'Forbidden' unless params[:key] == settings.api_key
     Person.all.map{ |p| p.api_attributes }.to_json
   end
