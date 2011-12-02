@@ -2,5 +2,8 @@
   Neue Seite für
   = @target.name
 %form{ action: "/pages", method: 'post' }
-  %input{ type: 'hidden', name: 'for_person', value: params[:for_person] }
+  - if params[:for_person]
+    %input{ type: 'hidden', name: 'for_person', value: params[:for_person] }
+  - else
+    %input{ type: 'hidden', name: 'for_course', value: params[:for_course] }
   = haml :page_form, locals: { page: @page }

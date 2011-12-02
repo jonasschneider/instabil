@@ -36,7 +36,7 @@ class Person
   validates :email, :allow_nil => true, :uniqueness => true, :format => { :with => /^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i }
     
   
-  belongs_to :page, validate: false
+  belongs_to :page
   attr_protected :uid
   
   def api_attributes

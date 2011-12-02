@@ -1,3 +1,5 @@
 %ul
   - Course.all.each do |course|
-    %li= course.name
+    %li
+      = course.name
+      %a{ :href => "/pages/new?for_course=#{course.id}" } Seite erstellen

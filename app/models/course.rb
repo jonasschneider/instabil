@@ -3,4 +3,5 @@ class Course
   include Mongoid::Timestamps
   
   field :name
+  belongs_to :page
 end

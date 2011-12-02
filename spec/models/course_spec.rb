@@ -6,4 +6,10 @@ describe "Course" do
   it "is valid" do
     course.should be_valid
   end
+  
+  it "has a page" do
+    p = Page.new
+    course.page = p
+    course.page_id.should == p.id
+  end
 end
