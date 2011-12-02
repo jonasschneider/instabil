@@ -65,10 +65,6 @@ describe "The app" do
         get "/"
       end
       
-      it "shows a link to the user's profile" do
-        last_response.body.should have_selector("a[href='/people/#{lukas.uid}']")
-      end
-      
       describe "when the user has an email address set" do
         before :each do
           lukas.email = 'a@b.net'

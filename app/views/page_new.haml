@@ -7,3 +7,12 @@
   - else
     %input{ type: 'hidden', name: 'for_course', value: params[:for_course] }
   = haml :page_form, locals: { page: @page }
+  
+  %p
+    Wenn du diese Seite erstellst, bist du
+    %strong verantwortlich
+    dafür, dass sie mit Inhalt gefüllt wird.
+    Andere können sie immer noch bearbeiten, aber du solltest schauen, dass kein Mist gebaut wird.
+  
+  %p
+    %input{ type: 'submit', value: 'Seite erstellen und mich als Verantwortlichen eintragen' }

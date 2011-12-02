@@ -1,5 +1,8 @@
-%ul
-  - Course.all.each do |course|
-    %li
-      = course.name
-      %a{ :href => "/pages/new?for_course=#{course.id}" } Seite erstellen
+- if Course.all.empty?
+  %p Es wurden noch keine Kurse eingetragen. Das kann sich nur noch um Stunden handeln...
+- else
+  %ul
+    - Course.all.each do |course|
+      %li
+        = course.name
+        %a{ :href => "/pages/new?for_course=#{course.id}" } Seite erstellen

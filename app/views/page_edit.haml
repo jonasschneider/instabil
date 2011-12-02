@@ -1,3 +1,6 @@
 %h1 Seite bearbeiten
 %form{ action: "/pages/#{@page.id}", method: 'post' }
   = haml :page_form, locals: { page: @page }
+
+  %p
+    %input{ type: 'submit', value: 'Speichern' }
