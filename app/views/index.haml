@@ -2,8 +2,10 @@
 
 %p
   instABIl ist ein Projekt, das uns den großen Organisationsaufwand für die Abisachen abnehmen soll. Hier können 
-  %a{ :href => '/#users'} Steckbriefe
-  und bald auch Kursberichte und andere Artikel für die Abizeitung online geschrieben werden. Auch werden hier demokratische 
+  = succeed ',' do
+    %a{ :href => '/#users'} Steckbriefe
+  %a{ :href => '/courses'} Kursberichte
+  und andere Artikel für die Abizeitung online geschrieben werden. Auch werden hier demokratische 
   %a{ :href => '/polls'} Umfragen und Abstimmungen
   stattfinden, deshalb ist die Anmeldung so kompliziert mit dem Schulpasswort (damit jeder nur einmal abstimmen kann).
   %strong
