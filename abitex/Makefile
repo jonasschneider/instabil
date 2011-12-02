@@ -22,14 +22,8 @@ pupils:
 memoirs:
 	./memoirs.py > tex/mems.tex
  
-pdf: rev
+pdf:
 	make -C tex
-	
-rev :
-	./rev.py > tex/rev.tex
-	
-view :
-	evince tex/abi.pdf& 3> /dev/null
 	#./tex.sh
 	#cd tex
 	#make
