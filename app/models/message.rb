@@ -6,6 +6,7 @@ class Message
   scope :newest, order_by(:created_at, :desc).limit(CAP)
   
   field :body, type: String
+  validates_length_of :body, minimum: 2, maximum: 90
   
   belongs_to :author, class_name: 'Person', inverse_of: nil
   validates_presence_of :author

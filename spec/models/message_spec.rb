@@ -22,4 +22,9 @@ describe "Message" do
     end
     Message.newest.to_a.length.should == Message::CAP
   end
+  
+  it "has a max length" do
+    message.body = 'a'*100
+    message.should_not be_valid
+  end
 end
