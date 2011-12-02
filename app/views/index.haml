@@ -87,6 +87,6 @@
 %p.small Es werden hier nur Leute angezeigt, die sich schon mal hier angemeldet haben! Das sind also nicht alle Schüler aus der Stufe.
 
 %ul
-  - Person.all.each do |person|
+  - Person.order_by(:uid).each do |person|
     %li
       %a{ :href => "/people/#{person.uid}" }= person.name

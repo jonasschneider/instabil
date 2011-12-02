@@ -1,5 +1,6 @@
 class Person
   include Mongoid::Document
+  include Mongoid::Timestamps
   
   def self.with_page # HACK
     all.select{|p| p.page.present? }

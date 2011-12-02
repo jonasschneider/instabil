@@ -138,6 +138,14 @@ describe "The app" do
       end
     end
     
+    describe "visiting /courses" do
+      it "shows a list of courses" do
+        Course.create! name: '4Bi2'
+        get "/courses"
+        last_response.body.should include('4Bi2')
+      end
+    end
+    
     describe "POSTing to /preferences" do
       let(:new_name) { 'Laggas' }
       let(:new_email) { 'test@0x83.eu' }

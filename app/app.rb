@@ -108,4 +108,8 @@ class Instabil::App < Sinatra::Base
     
     haml :person
   end
+  
+  get '/courses' do
+    haml :courses
+  end
 end
