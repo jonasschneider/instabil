@@ -220,3 +220,26 @@
 #abimotto-flow a:hover {
   text-decoration: none
 }
+
+.clearfix {
+  clear: both;
+}
+
+.courses {
+}
+
+.course-group {
+  display: inline;
+  float: left;
+  margin: 20px;
+  padding: 20px;
+  background: #eee;
+}
+
+.course-group h3 {
+  display: inline;
+}
+
+.course-group ul {
+  display: inline;
+}

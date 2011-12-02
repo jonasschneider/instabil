@@ -2,19 +2,22 @@
   %p Es wurden noch keine Kurse eingetragen. Das kann sich nur noch um Stunden handeln...
 - else
   %h1 Vierstündige Kurse
-  - Course.all.select{|c|c.num==4}.group_by{|c|c.fach}.each do |fach, courses|
-    %h3= fach
-    %ul
-      - courses.sort_by{|c|c.name}.each do |course|
-        %li
-          %a{ :href => "/courses/#{course.id}" }= course.name
-          == (#{course.fach} vierstündig)
-  
+  .courses
+    - Course.all.select{|c|c.num==4}.group_by{|c|c.fach}.sort_by{|x|x[0]}.each do |fach, courses|
+      .course-group
+        %h3= fach
+        %ul
+          - courses.sort_by{|c|c.name}.each do |course|
+            %li
+              %a{ :href => "/courses/#{course.id}" }= course.name
+  .clearfix
   %h1 Zweistündige Kurse
-  - Course.all.select{|c|c.num==2}.group_by{|c|c.fach}.each do |fach, courses|
-    %h3= fach
-    %ul
-      - courses.sort_by{|c|c.name}.each do |course|
-        %li
-          %a{ :href => "/courses/#{course.id}" }= course.name
-          == (#{course.fach} zweistündig)
+  .courses
+    - Course.all.select{|c|c.num==2}.group_by{|c|c.fach}.sort_by{|x|x[0]}.each do |fach, courses|
+      .course-group
+        %h3= fach
+        %ul
+          - courses.sort_by{|c|c.name}.each do |course|
+            %li
+              %a{ :href => "/courses/#{course.id}" }= course.name
+  .clearfix
