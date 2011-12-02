@@ -43,7 +43,7 @@
 %h2 Chat
 %a{ name: 'chat' }
 %form{ action: '/messages', method: 'post', id: 'chat_form' }
-  %input{ type: 'text', name: 'message[body]', size: 40, placeholder: 'Nachricht hier eingeben', id: 'chat_message' }
+  %input{ type: 'text', name: 'message[body]', size: 40, maxlength: 90, placeholder: 'Nachricht hier eingeben', id: 'chat_message' }
   %input{ type: 'submit', value: 'Senden' }
 %ul#chat
   :javascript
