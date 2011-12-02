@@ -10,6 +10,10 @@ class Page
   
   has_one :person
   has_one :course
+  
+  def name
+    person ? person.name : (course ? course.name : nil)
+  end
 
   def date
     updated_at || created_at

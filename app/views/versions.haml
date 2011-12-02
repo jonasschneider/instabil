@@ -1,7 +1,7 @@
-%h1= @person.name
+%h1= @page.name
 
 %p
-  %a{ :href => "/people/#{@person.uid}" } Zurück
+  %a{ :href => "javascript:history.back()" } Zurück
 
 = haml :diff, :layout => false, :locals => { :old_version => @page.version-1, :new_version => @page.version, :page => @page }
 

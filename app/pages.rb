@@ -67,6 +67,14 @@ module Instabil::Pages
           haml :page_edit
         end
       end
+      
+      get '/pages/:id/versions' do
+        authenticate!
+        @page = Page.find(params[:id])
+        @versions = @page.versions
+        
+        haml :versions
+      end
     end
   end
 end

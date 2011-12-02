@@ -1,4 +1,4 @@
-%h1 Seite bearbeiten
+%h1= @page.name
 %form{ action: "/pages/#{@page.id}", method: 'post' }
   = haml :page_form, locals: { page: @page }
 

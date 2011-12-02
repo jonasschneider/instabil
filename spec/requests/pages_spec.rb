@@ -214,5 +214,31 @@ describe "Instabil::Pages" do
         end
       end
     end
+    
+    describe "visiting /pages/:id/versions" do
+      describe "when there is a page" do
+        it 'shows the recent version' do
+          get "/pages/#{page.id}/versions"
+          last_response.body.should include(page.name)
+        end
+        
+        describe "with multiple versions" do
+          let(:new_text) { 'Neuer Text'}
+          
+          before :each do
+            page.update_attributes lks: new_text
+          end
+          
+          it 'shows a change' do
+            get "/pages/#{page.id}/versions"
+            last_response.body.should include(page.text)
+            last_response.body.should include(new_text)
+          end
+        end
+      end
+    end
   end
+  
+
+  
 end

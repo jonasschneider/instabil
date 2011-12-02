@@ -5,7 +5,6 @@ require 'redcarpet'
 dir = File.dirname(File.expand_path(__FILE__))
 require "#{dir}/boot" 
 require "#{dir}/auth"
-require "#{dir}/versions"
 require "#{dir}/polls"
 require "#{dir}/pages"
 
@@ -44,7 +43,6 @@ class Instabil::App < Sinatra::Base
   end
   
   register Instabil::Auth
-  register Instabil::Versions
   register Instabil::Polls
   register Instabil::Pages
   
