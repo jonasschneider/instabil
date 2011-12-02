@@ -146,8 +146,8 @@ describe "The app" do
         last_response.body.should include('4Bi2')
       end
       
-      it "shows a link to create a page for the course" do
-        last_response.body.should have_selector "a[href='/pages/new?for_course=#{course.id}']"
+      it "shows a link to the course page" do
+        last_response.body.should have_selector "a[href='/courses/#{course.id}']"
       end
     end
     
@@ -173,6 +173,40 @@ describe "The app" do
           post "/preferences", person: { name: new_name, email: new_email, bio: 'testing' }
           lukas.email.should_not == new_email
           last_response.body.should include('Fehler')
+        end
+      end
+    end
+    
+    describe "visiting /courses/<id>" do
+      let(:course) { Course.create! name: '4Bi2' }
+      
+      before :each do
+        get "/courses/#{course.id}"
+      end
+      
+      it "shows the course name" do
+        last_response.body.should include(course.name)
+      end
+      
+      it "shows a link to create a page for the course" do
+        last_response.body.should have_selector "a[href='/pages/new?for_course=#{course.id}']"
+      end
+      
+      describe "when the course has a page" do
+        let(:page) { Page.create! text: 'bla', author: jonas }
+        
+        before :each do
+          course.page = page
+          course.save!
+          get "/courses/#{course.id}"
+        end
+        
+        it "shows the page content" do
+          last_response.body.should include(page.text)
+        end
+        
+        it "shows a link to edit the page" do
+          last_response.body.should have_selector "a[href='/pages/#{page.id}/edit']"
         end
       end
     end

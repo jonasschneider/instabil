@@ -33,7 +33,7 @@ module Instabil::Pages
             if params[:for_person]
               redirect "/people/#{@target.id}"
             else
-              redirect "/courses"
+              redirect "/courses/#{@target.id}"
             end
           else
             flash.now[:error] = "Fehler beim Speichern."
@@ -43,7 +43,7 @@ module Instabil::Pages
           if params[:for_person]
             redirect "/people/#{@target.id}"
           else
-            redirect "/courses"
+            redirect "/courses/#{@target.id}"
           end
         end
       end
@@ -59,7 +59,7 @@ module Instabil::Pages
           if @page.person
             redirect "/people/#{@page.person.id}"
           else
-            redirect "/courses"
+            redirect "/courses/#{@page.course.id}"
           end
         else
           flash.now[:error] = "Fehler beim Speichern."

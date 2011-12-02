@@ -9,6 +9,7 @@ class Page
   validates_presence_of :author
   
   has_one :person
+  has_one :course
 
   def date
     updated_at || created_at

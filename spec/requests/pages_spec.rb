@@ -163,9 +163,9 @@ describe "Instabil::Pages" do
           course.page.should == course.reload.page
         end
         
-        it "redirects back to the courses page" do
+        it "redirects back to the course's page" do
           last_response.status.should == 302
-          last_response.headers['Location'].should == "http://example.org/courses"
+          last_response.headers['Location'].should == "http://example.org/courses/#{course.id}"
         end
       end
       
@@ -184,7 +184,7 @@ describe "Instabil::Pages" do
         
         it "redirects back to the courses page" do
           last_response.status.should == 302
-          last_response.headers['Location'].should == "http://example.org/courses"
+          last_response.headers['Location'].should == "http://example.org/courses/#{course.id}"
         end
       end
     end
@@ -198,7 +198,7 @@ describe "Instabil::Pages" do
         
         it "redirects to the courses page" do
           last_response.status.should == 302
-          last_response.headers["Location"].should == 'http://example.org/courses'
+          last_response.headers["Location"].should == "http://example.org/courses/#{course.id}"
         end
         
         it "updates the page" do

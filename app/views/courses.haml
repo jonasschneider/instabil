@@ -7,9 +7,8 @@
     %ul
       - courses.each do |course|
         %li
-          = course.name
-          (vierstündig)
-          %a{ :href => "/pages/new?for_course=#{course.id}" } Seite erstellen
+          %a{ :href => "/courses/#{course.id}" }= course.name
+          == (#{course.fach} vierstündig)
   
   %h1 Zweistündige Kurse
   - Course.all.select{|c|c.num==2}.group_by{|c|c.fach}.each do |fach, courses|
@@ -17,6 +16,5 @@
     %ul
       - courses.each do |course|
         %li
-          = course.name
+          %a{ :href => "/courses/#{course.id}" }= course.name
           == (#{course.fach} zweistündig)
-          %a{ :href => "/pages/new?for_course=#{course.id}" } Seite erstellen
