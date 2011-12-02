@@ -79,9 +79,17 @@
 %a{ name: 'users' }
 
 
-%span#count
+.global-count
   %span= Person.count
   registrierte Benutzer
+
+.global-count
+  %span= Course.all.select{|c|c.page.present?}.count
+  angefangene Kursberichte
+
+.global-count
+  %span= Poll.count
+  Umfragen und Abstimmungen
 
 %p.small Es werden hier nur Leute angezeigt, die sich schon mal hier angemeldet haben! Das sind also nicht alle Schüler aus der Stufe.
 
