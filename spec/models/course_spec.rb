@@ -3,12 +3,20 @@ require File.expand_path(File.dirname(__FILE__)+'/../spec_helper')
 describe "Course" do
   let(:course) { Course.create! name: '4BI2' }
   
-  it "returns the #group" do
-    course.group.should == 'Bi (vierstündig)'
+  it "#fach" do
+    course.fach.should == 'Bi'
     course.name = '2INF05'
-    course.group.should == 'Inf (zweistündig)'
+    course.fach.should == 'Inf'
     course.name = nil
-    course.group.should == nil
+    course.fach.should == nil
+  end
+  
+  it "#num" do
+    course.num.should == 4
+    course.name = '2INF05'
+    course.num.should == 2
+    course.name = nil
+    course.num.should == nil
   end
   
   it "is valid" do

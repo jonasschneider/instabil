@@ -1,10 +1,22 @@
 - if Course.all.empty?
   %p Es wurden noch keine Kurse eingetragen. Das kann sich nur noch um Stunden handeln...
 - else
-  - Course.all.group_by{|c|c.group}.each do |group, courses|
-    %h3= group
+  %h1 Vierstündige Kurse
+  - Course.all.select{|c|c.num==4}.group_by{|c|c.fach}.each do |fach, courses|
+    %h3= fach
     %ul
       - courses.each do |course|
         %li
           = course.name
+          (vierstündig)
+          %a{ :href => "/pages/new?for_course=#{course.id}" } Seite erstellen
+  
+  %h1 Zweistündige Kurse
+  - Course.all.select{|c|c.num==2}.group_by{|c|c.fach}.each do |fach, courses|
+    %h3= fach
+    %ul
+      - courses.each do |course|
+        %li
+          = course.name
+          == (#{course.fach} zweistündig)
           %a{ :href => "/pages/new?for_course=#{course.id}" } Seite erstellen

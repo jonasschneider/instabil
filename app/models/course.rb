@@ -5,10 +5,13 @@ class Course
   field :name
   belongs_to :page
   
-  def group
+  def fach
     return nil if name.nil?
-    num, subject = $1, $2 if name.match(/^(\d+)([^\d]+)\d+/)
-    t = num.to_i == 4 ? 'vierstündig' : 'zweistündig'
-    "#{subject.capitalize} (#{t})"
+    $2.capitalize if name.match(/^(\d+)([^\d]+)\d+/)
+  end
+  
+  def num
+    return nil if name.nil?
+    $1.to_i if name.match(/^(\d+)([^\d]+)\d+/)
   end
 end
