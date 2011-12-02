@@ -72,6 +72,11 @@ class Instabil::App < Sinatra::Base
     Person.all.map{ |p| p.api_attributes }.to_json
   end
   
+  get '/api/courses.json' do
+    halt 403, 'Forbidden' unless params[:key] == settings.api_key
+    Course.all.map{ |p| p.api_attributes }.to_json
+  end
+  
   get '/preferences' do
     authenticate!
     @person = current_user

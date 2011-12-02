@@ -52,6 +52,23 @@ describe "The app" do
         last_response.status.should == 200
         last_response.body.should_not == '[]'
       end
+    
+      describe "GET /api/courses.json?key=<key>" do
+        it 'returns [] without any courses' do
+          get '/api/courses.json', :key => key
+          last_response.status.should == 200
+          last_response.body.should == '[]'
+        end
+        
+        it 'returns something when there are courses' do
+          Course.create! name: '4Bi01'
+          
+          get '/api/courses.json', :key => key
+          
+          last_response.status.should == 200
+          last_response.body.should_not == '[]'
+        end
+      end
     end
   end
   
