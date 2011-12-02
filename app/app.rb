@@ -10,8 +10,8 @@ require "#{dir}/polls"
 require "#{dir}/pages"
 
 
-
 require "#{dir}/models/page"
+require "#{dir}/models/course"
 require "#{dir}/models/person"
 require "#{dir}/models/message"
 require "#{dir}/models/answer"

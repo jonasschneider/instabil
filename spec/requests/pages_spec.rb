@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__)+'/../spec_helper')
 
-describe "The app" do
+describe "Instabil::Pages" do
   let(:jonas) do
     Person.create! name: "Jonas Schneider" do |p|
       p.uid = "schneijo"

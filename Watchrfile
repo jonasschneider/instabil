@@ -5,7 +5,7 @@ def run(cmd)
 end
 
 def run_spec(args)
-  run("./spin push #{args}")
+  run("spin push #{args}")
   #run("bundle exec rspec --fail-fast #{args}")
 end
 
