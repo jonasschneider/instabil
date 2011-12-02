@@ -28,7 +28,7 @@ describe "The app" do
     
     describe "without a proper key" do
       it "is inaccessible" do
-        get '/api', :key => key
+        get '/api/people.json', :key => key
         last_response.status.should == 403
       end
     end
@@ -39,7 +39,7 @@ describe "The app" do
       end
       
       it 'returns [] without any people' do
-        get '/api', :key => key
+        get '/api/people.json', :key => key
         last_response.status.should == 200
         last_response.body.should == '[]'
       end
@@ -47,7 +47,7 @@ describe "The app" do
       it 'returns something when there are people' do
         jonas
         
-        get '/api', :key => key
+        get '/api/people.json', :key => key
         
         last_response.status.should == 200
         last_response.body.should_not == '[]'
