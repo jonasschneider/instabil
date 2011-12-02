@@ -2,7 +2,12 @@ class Course
   include Mongoid::Document
   include Mongoid::Timestamps
   
+  default_scope order_by(:name)
+  
   field :name
+  validates_presence_of :name
+  validates_uniqueness_of :name
+  
   belongs_to :page
   
   def fach
