@@ -87,7 +87,9 @@
 
 .global-count
   %span= Course.all.select{|c|c.page.present?}.count
-  angefangene Kursberichte
+  angefangene Kursberichte bei
+  = Course.count
+  Kursen
 
 .global-count
   %span= Poll.count
