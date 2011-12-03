@@ -13,6 +13,8 @@ abitex/tex/pupils/*
 abitex/tex/coursereports/*
 abitex/tex/abi.maf
 abitex/tex/abi.stc*
+abitex/tex/abi.mtc*
+abitex/tex/abi.out
 abitex/tex/abi.toc
 
 abitex/tex/rev.tex

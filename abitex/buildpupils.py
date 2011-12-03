@@ -13,8 +13,18 @@ for pupil in j :
 	content = pupil["page"]
 	print pupil["uid"]
 	pupillist.append(pupil["uid"])
-	#print "tex/pupils/" + pupil["uid"] + ".tex"
-	content["name"] = pupil["name"].replace(u"ё", '"e')
+	#print "tex/pupils/" + pupil["uid"] + ".tex"last = True
+	last = True
+	content["name"] = ""
+	for c in pupil["name"] :
+		if c.isupper() and not last :
+			content["name"] += " " + c
+		else :
+			content["name"] += c
+		last = not c.islower()
+
+	
+	content["name"] = content["name"].replace(u"ё", '"e')
 	if content["g8"]==1 :
 		content["g8"] = "G8"
 	else :
@@ -33,6 +43,7 @@ for pupil in j :
 	f =  open("tex/pupils/" + pupil["uid"] + ".tex", "w")
 	f.write(out.encode("utf-8"))
 print len(pupillist)
+pupillist.sort()
 f =  open("tex/pupilspages.tex", "w")
 for p in pupillist :
 	f.write("\input{pupils/" + p + ".tex}\n");
