@@ -1,24 +1,25 @@
-.set_env
-tmp/
 *.aux
 *.log
-*.pdf
+
 .bundle
-abitex/mongourl
-abitex/tex/mems.tex
+
 abitex/fetchpupils.sh
 abitex/fetchcourses.sh
+abitex/*.json
 
+abitex/*.pdf
+abitex/**/*.pdf
 abitex/tex/pupils/*
 abitex/tex/coursereports/*
-abitex/tex/abi.pdf
 abitex/tex/abi.maf
 abitex/tex/abi.stc*
 abitex/tex/abi.toc
-abitex/backup/*
 
-abitex/dump.sh
 abitex/tex/rev.tex
+abitex/tex/mems.tex
 abitex/tex/pupilspages.tex
 abitex/tex/courses.tex
-abitex/*.json
+
+abitex/mongourl
+abitex/backup/*
+abitex/dump.sh
