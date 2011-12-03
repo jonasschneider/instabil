@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__)+'/../spec_helper')
 
 describe "Course" do
-  let(:course) { Course.create! name: '4BI2' }
+  let(:course) { Course.create! name: '4BI02' }
   
   let(:jonas) do
     Person.create! name: "Jonas Schneider" do |p|
@@ -10,9 +10,14 @@ describe "Course" do
   end
   
   it "#fach" do
-    course.fach.should == 'Bi'
+    course.fach.should == 'Biologie'
+    
     course.name = '2INF05'
-    course.fach.should == 'Inf'
+    course.fach.should == 'Informatik'
+    
+    course.name = '2F0901'
+    course.fach.should == 'Sonstiges'
+    
     course.name = nil
     course.fach.should == nil
   end
