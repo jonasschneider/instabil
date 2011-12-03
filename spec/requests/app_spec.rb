@@ -153,16 +153,25 @@ describe "The app" do
         
         last_response.should have_selector form + ' input[name="person[avatar]"][type=file]'
         
-        last_response.should have_selector 'img[src="/people/kramerlu/avatar/medium.png"]'
+        last_response.should have_selector 'img[src="/people/kramerlu/avatar/medium"]'
       end
     end
     
-    describe "visiting /people/<uid>/avatar/medium.png" do
+    describe "visiting /people/<uid>/avatar/original" do
       it "displays the user's avatar" do
         lukas.avatar = Rack::Test::UploadedFile.new(avatar_path, 'avatar.jpg')
         lukas.save!
-        get "/people/kramerlu/avatar/medium.png"
+        get "/people/kramerlu/avatar/original"
         last_response.body.length.should == File.size(avatar_path)
+      end
+    end
+    
+    describe "visiting /people/<uid>/avatar/medium" do
+      it "displays the user's avatar" do
+        lukas.avatar = Rack::Test::UploadedFile.new(avatar_path, 'avatar.jpg')
+        lukas.save!
+        get "/people/kramerlu/avatar/medium"
+        last_response.body.length.should == lukas.avatar.to_file(:medium).size
       end
     end
     

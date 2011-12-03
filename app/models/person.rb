@@ -32,8 +32,12 @@ class Person
     :delegate   => Fog::External::Backend::Bertrpc.new('localhost', 8000)
   }, :fog_directory => 'paperclip', 
     :path => ':attachment/:id/:style/:filename',
-    :fog_host => 'http://titan:3344'
+    :fog_host => 'http://titan:3344',
 
+    :styles => {
+      :medium => "300x300#",
+      :thumb  => "50x50>" }
+  
   validate do
     if avatar.present?
       errors.add :avatar, "Bitte nur JPEGS oder PNGS. Typ = #{avatar_content_type} oder #{avatar.content_type}" unless avatar_content_type =~ /jpe?g/ || avatar_content_type =~ /png/

@@ -116,10 +116,10 @@ class Instabil::App < Sinatra::Base
     end
   end
   
-  get '/people/:uid/avatar/medium.png' do
+  get '/people/:uid/avatar/:style' do
     @person = Person.find params[:uid]
     headers 'Content-type' => @person.avatar.content_type
-    @person.avatar.to_file
+    @person.avatar.to_file(params[:style])
   end
   
   post '/messages' do

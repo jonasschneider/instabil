@@ -71,4 +71,17 @@ describe "Person" do
       Person.with_page.to_a.should == [jonas]
     end
   end
+  
+  describe "avatar" do
+    let(:avatar_path) { File.join(File.dirname(__FILE__), '..', 'avatar.jpg') }
+    
+    it "gets resized" do
+      jonas.avatar = Rack::Test::UploadedFile.new(avatar_path, 'avatar.jpg')
+      jonas.save!
+      x = Tempfile.new 'avatar'
+      x.write(jonas.avatar.to_file(:medium).read)
+      x.close
+      `identify #{x.path}`.should include('300x300')
+    end
+  end
 end
