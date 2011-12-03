@@ -1,7 +1,7 @@
 SRC = abi
-all: fetchpupils pupils pdf
+all: fetchpupils fetchcourses pupils courses pdf
 
-fast : pupils pdf
+fast : pupils courses pdf
 
 dump :
 	./dump.sh
@@ -19,6 +19,12 @@ fetchpupils:
 pupils:
 	./buildpupils.py
 
+fetchcourses:
+	./fetchcourses.sh
+
+courses:
+	./buildcourses.py
+
 memoirs:
 	./memoirs.py > tex/mems.tex
  
@@ -27,7 +33,8 @@ pdf: rev
 	
 rev :
 	./rev.py > tex/rev.tex
-	
+
+
 view :
 	evince tex/abi.pdf& 3> /dev/null
 	#./tex.sh

@@ -1,25 +1,34 @@
 #!/usr/bin/env python2
 
-import json, os
+import json, os, subprocess
 from string import Template
-f = open("coursetest.json")
+f = open("courses.json")
 blah = f.read()
 j = json.loads(blah)
 temp = open("temp/course.tex").read()
-pupillist = []
+courselist = []
 for course in j :
 	page = Template(temp.decode("utf-8"))
-	pupillist.append(course["id"])
+	if course["author"] == "" :
+		continue
+	courselist.append(course["name"])
+	print course["name"]
 	#print "tex/pupils/" + pupil["uid"] + ".tex"
 	#print type(content["tags"])
-	if course["tags"] != None :
+	"""if course["tags"] != None :
 		course["tags"] = "\//\/".join(course["tags"])
 	else : 
-		course["tags"] = ""
+		course["tags"] = """
+	if int(course["num"]) == 4 :
+		course["type"] = "vier"
+	else :
+		course["type"] = "zwei"
+	proc = subprocess.Popen("./md2tex.sh", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+	course["text"] = proc.communicate(course["text"].encode("utf-8"))[0].decode("utf-8")
 	out = page.substitute(course)
-	f =  open("tex/coursereports/" + course["id"] + ".tex", "w")
+	f =  open("tex/coursereports/" + course["name"] + ".tex", "w")
 	f.write(out.encode("utf-8"))
 
 f =  open("tex/courses.tex", "w")
-for p in pupillist :
+for p in courselist :
 	f.write("\input{coursereports/" + p + ".tex}\n");
