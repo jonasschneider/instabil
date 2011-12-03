@@ -18,6 +18,9 @@ describe "Course" do
     course.name = '2F0901'
     course.fach.should == 'Sonstiges'
     
+    course.name = '4F01'
+    course.fach.should == 'Französisch'
+    
     course.name = nil
     course.fach.should == nil
   end

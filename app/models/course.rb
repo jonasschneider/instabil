@@ -10,16 +10,18 @@ class Course
   
   belongs_to :page
   
+  REGEX = /^(\d+)([^\d]+)\d\d$/
+  
   def fach
     return nil if name.nil?
     
-    return Instabil::SUBJECT_MAP[$2.downcase] if name.match(/^(\d+)([^\d][^\d]+)\d\d/)
+    return Instabil::SUBJECT_MAP[$2.downcase] if name.match(REGEX)
     'Sonstiges'
   end
   
   def num
     return nil if name.nil?
-    $1.to_i if name.match(/^(\d+)([^\d]+)\d+/)
+    $1.to_i if name.match(REGEX)
   end
   
   def api_attributes
