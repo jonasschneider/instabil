@@ -33,8 +33,13 @@ class Person
   }, :fog_directory => 'paperclip', 
     :path => ':attachment/:id/:style/:filename',
     :fog_host => 'http://titan:3344'
-  
-  
+
+  validate do
+    if avatar.present?
+      errors.add :avatar, "Bitte nur JPEGS oder PNGS. Typ = #{avatar_content_type} oder #{avatar.content_type}" unless avatar_content_type =~ /jpe?g/ || avatar_content_type =~ /png/
+    end
+  end
+
   field :tags, type: Array
   
   before_create :set_original_name

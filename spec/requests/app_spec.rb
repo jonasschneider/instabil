@@ -22,6 +22,8 @@ describe "The app" do
       anna.create_page text: 'Text', author: jonas
     end
   end
+  
+  let(:avatar_path) { File.join(File.dirname(__FILE__), '..', 'avatar.jpg') }
 
   describe "'s API endpoint" do
     let(:key) { 'secret' }
@@ -150,6 +152,17 @@ describe "The app" do
         last_response.should have_selector form + ' input[name="person[bio]"][type=text]'
         
         last_response.should have_selector form + ' input[name="person[avatar]"][type=file]'
+        
+        last_response.should have_selector 'img[src="/people/kramerlu/avatar/medium.png"]'
+      end
+    end
+    
+    describe "visiting /people/<uid>/avatar/medium.png" do
+      it "displays the user's avatar" do
+        lukas.avatar = Rack::Test::UploadedFile.new(avatar_path, 'avatar.jpg')
+        lukas.save!
+        get "/people/kramerlu/avatar/medium.png"
+        last_response.body.length.should == File.size(avatar_path)
       end
     end
     
@@ -169,11 +182,18 @@ describe "The app" do
       
       describe "with an avatar" do
         it "updates the avatar" do
-          f = Rack::Test::UploadedFile.new(__FILE__, 'app_spec.rb') # not an image!
+          f = Rack::Test::UploadedFile.new(avatar_path, 'avatar.jpg')
           post "/preferences", person: { avatar: f }
           lukas.reload
-          lukas.avatar.original_filename.should == 'app_spec.rb'
-          lukas.avatar.to_file.read.should include('This assertion is self-fulfilling.')
+          lukas.avatar.original_filename.should == 'avatar.jpg'
+          lukas.avatar.to_file.length.should == File.size(avatar_path)
+        end
+        
+        it "requires an image" do
+          f = Rack::Test::UploadedFile.new(__FILE__, 'app_spec.rb')
+          post "/preferences", person: { avatar: f }
+          lukas.reload
+          lukas.avatar.original_filename.should_not == 'app_spec.rb'
         end
       end
       

@@ -105,16 +105,21 @@ class Instabil::App < Sinatra::Base
   post '/preferences' do
     authenticate!
     @person = current_user
-    
     params[:person][:avatar] = CoolUpload.new(params[:person][:avatar]) unless params[:person][:avatar].nil?
     
     if @person.update_attributes params[:person]
       flash[:notice] = "Einstellungen gespeichert."
       redirect '/'
     else
-      flash[:error] = "Fehler beim Speichern. Ist die E-Mail-Addresse korrekt?"
+      flash[:error] = "Fehler beim Speichern. #{Rack::Utils.escape_html(@person.errors.to_a.inspect)}"
       haml :preferences
     end
+  end
+  
+  get '/people/:uid/avatar/medium.png' do
+    @person = Person.find params[:uid]
+    headers 'Content-type' => @person.avatar.content_type
+    @person.avatar.to_file
   end
   
   post '/messages' do

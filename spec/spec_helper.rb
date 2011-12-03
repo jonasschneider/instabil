@@ -4,6 +4,7 @@ ENV["API_KEY"] = 'random_string'
 project_root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 
 Paperclip.options[:log] = false
+$stdout.sync = true
 
 require File.join(project_root, 'app', 'app')
 Webrat.configure do |config|
