@@ -152,17 +152,13 @@ describe "The app" do
     end
     
     describe "visiting /courses" do
-      let(:course) { Course.create! name: '4Bi2' }
+      let(:course) { Course.create! name: '4BIO02' }
       
       before :each do
         course
         get "/courses"
       end
-      
-      it "shows a list of courses" do
-        last_response.body.should include('4Bi2')
-      end
-      
+
       it "shows a link to the course page" do
         last_response.body.should have_selector "a[href='/courses/#{course.id}']"
       end
