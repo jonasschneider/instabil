@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__)+'/../spec_helper')
 
 describe "Course" do
-  let(:course) { Course.create! name: '4BI02' }
+  let(:course) { Course.create! name: '4BIO02' }
   
   let(:jonas) do
     Person.create! name: "Jonas Schneider" do |p|

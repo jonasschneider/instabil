@@ -9,7 +9,7 @@ module Instabil
     
     "ph" => "Physik",
     "ch" => "Chemie",
-    "bi" => "Biologie",
+    "bio" => "Biologie",
     
     "wi" => "Wirtschaft",
     
