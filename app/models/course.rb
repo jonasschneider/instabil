@@ -12,7 +12,9 @@ class Course
   
   def fach
     return nil if name.nil?
-    $2.capitalize if name.match(/^(\d+)([^\d]+)\d+/)
+    
+    return Instabil::SUBJECT_MAP[$2.downcase] if name.match(/^(\d+)([^\d][^\d]+)\d\d/)
+    'Sonstiges'
   end
   
   def num
