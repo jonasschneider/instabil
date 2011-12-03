@@ -3,8 +3,9 @@ ENV["API_KEY"] = 'random_string'
 
 project_root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 
-require File.join(project_root, 'app', 'app')
+Paperclip.options[:log] = false
 
+require File.join(project_root, 'app', 'app')
 Webrat.configure do |config|
   config.mode = :rack
   config.application_framework = :sinatra

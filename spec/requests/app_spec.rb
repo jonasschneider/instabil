@@ -148,19 +148,8 @@ describe "The app" do
         last_response.should have_selector form + ' input[name="person[kurs]"][type=text]'
         last_response.should have_selector form + ' input[name="person[g8]"][type=checkbox]'
         last_response.should have_selector form + ' input[name="person[bio]"][type=text]'
-      end
-    end
-    
-    describe "visiting /courses" do
-      let(:course) { Course.create! name: '4BIO02' }
-      
-      before :each do
-        course
-        get "/courses"
-      end
-
-      it "shows a link to the course page" do
-        last_response.body.should have_selector "a[href='/courses/#{course.id}']"
+        
+        last_response.should have_selector form + ' input[name="person[avatar]"][type=file]'
       end
     end
     
@@ -178,6 +167,16 @@ describe "The app" do
         lukas.bio.should == 'testing'
       end
       
+      describe "with an avatar" do
+        it "updates the avatar" do
+          f = Rack::Test::UploadedFile.new(__FILE__, 'app_spec.rb') # not an image!
+          post "/preferences", person: { avatar: f }
+          lukas.reload
+          lukas.avatar.original_filename.should == 'app_spec.rb'
+          lukas.avatar.to_file.read.should include('This assertion is self-fulfilling.')
+        end
+      end
+      
       describe "with a bogus email" do
         let(:new_email) { 'test0x83.eu' }
         
@@ -187,6 +186,19 @@ describe "The app" do
           lukas.email.should_not == new_email
           last_response.body.should include('Fehler')
         end
+      end
+    end
+    
+    describe "visiting /courses" do
+      let(:course) { Course.create! name: '4BIO02' }
+      
+      before :each do
+        course
+        get "/courses"
+      end
+
+      it "shows a link to the course page" do
+        last_response.body.should have_selector "a[href='/courses/#{course.id}']"
       end
     end
     

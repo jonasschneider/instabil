@@ -9,7 +9,13 @@
     %label{:for => "person[email]"} E-Mail-Addresse
     %input{ name: "person[email]", value: @person.email, type: 'text', :placeholder => '(für Benachrichtigungen)', :size => 40 }
   
-    %h2 Steckbrief
+  %h2 Steckbrief
+  
+  %p
+    %strong Bild hochladen
+    %br
+    %input{ name: "person[avatar]", type: 'file' }
+  
   %p
     Kurs:
     = precede "K2." do

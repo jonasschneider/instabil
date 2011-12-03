@@ -1,6 +1,12 @@
+require "mongoid_paperclip"
+require "fog/external/storage"
+require "bertrpc"
+require 'fog/external/backend/bertrpc'
+
 class Person
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Paperclip
   
   def self.with_page # HACK
     all.select{|p| p.page.present? }
@@ -9,7 +15,6 @@ class Person
   def self.without_page # HACK
     all.select{|p| p.page.nil? }
   end
-
   
   field :uid, type: String
   field :name, type: String
@@ -21,7 +26,13 @@ class Person
   
   field :lks, type: String
   field :bio, type: String
-  #field :foto, type: String
+  
+  has_mongoid_attached_file :avatar, :storage => :fog, :fog_credentials => { 
+    :provider => 'external',
+    :delegate   => Fog::External::Backend::Bertrpc.new('localhost', 8000)
+  }, :fog_directory => 'paperclip', 
+    :path => ':attachment/:id/:style/:filename',
+    :fog_host => 'http://titan:3344'
   
   
   field :tags, type: Array

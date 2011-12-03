@@ -6,6 +6,12 @@ gem 'haml'
 gem 'rack-flash'
 gem "redcarpet", "~> 2.0.0b5"
 
+gem "fog"
+gem "fog-external", :path => '../fog-external'
+gem "bertrpc"
+gem "paperclip"
+gem "mongoid-paperclip", :require => "mongoid_paperclip"
+
 gem 'pusher'
 
 gem 'mongoid', '< 2.3'

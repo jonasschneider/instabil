@@ -19,6 +19,25 @@ require "#{dir}/models/poll"
 
 Pusher.url = ENV['PUSHER_URL'] || "http://9c903bcb2ab8ded787c1:9feb791ebc2ce7bf9143@api.pusherapp.com/apps/11445"
 
+class CoolUpload
+  def initialize(data)
+    @tempfile = data[:tempfile]
+    @name = data[:filename]
+  end
+  
+  def original_filename 
+    @name
+  end
+  
+  def method_missing(method_name, *args, &block) #:nodoc:
+    @tempfile.__send__(method_name, *args, &block)
+  end
+
+  def respond_to?(method_name, include_private = false) #:nodoc:
+    @tempfile.respond_to?(method_name, include_private) || super
+  end
+end
+
 class Instabil::App < Sinatra::Base
   Mongoid.configure do |config|
     config.master = begin
@@ -86,6 +105,8 @@ class Instabil::App < Sinatra::Base
   post '/preferences' do
     authenticate!
     @person = current_user
+    
+    params[:person][:avatar] = CoolUpload.new(params[:person][:avatar]) unless params[:person][:avatar].nil?
     
     if @person.update_attributes params[:person]
       flash[:notice] = "Einstellungen gespeichert."
