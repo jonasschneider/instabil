@@ -134,7 +134,7 @@
   margin: 0 20px;
   border-radius: 15px;
   border: 0;
-  box-shadow: 0 0 20px #999;
+  box-shadow: 0 0 20px #ccc, inset 0 0 10px #aaa;
 }
 
 #splash li.disabled a {
@@ -242,4 +242,20 @@
 
 .course-group ul {
   display: inline;
+}
+
+
+
+.download-button {
+  margin: 20px auto 30px;
+  display: block;
+  background: url(/images/icons/download.png) #ddd no-repeat;
+  background-position: 20px center;
+  background-size: 60px;
+  border-radius: 5px;
+  box-shadow: 0 0 15px #ccc, inset 0 0 10px #ccc;
+  width: 30em;
+  font-weight: bold;
+  padding: 30px;
+  padding-left: 100px;
 }

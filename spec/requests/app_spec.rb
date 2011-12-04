@@ -128,6 +128,10 @@ describe "The app" do
         last_response.body.should have_selector("a[href='/preferences']")
       end
       
+      it "shows a link to the current PDF" do
+        last_response.body.should have_selector("a[href='/current_pdf']")
+      end
+      
       it "shows a form to chat" do
         last_response.should have_selector 'form[action="/messages"][method=post] input[name="message[body]"]'
       end
