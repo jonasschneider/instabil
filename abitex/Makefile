@@ -39,10 +39,6 @@ avatars:
 
 view :
 	evince tex/abi.pdf& 2> /dev/null
-	#./tex.sh
-	#cd tex
-	#make
-	#bibtex $(SRC).aux
-	#bibtex $(SRC).aux
-	#pdflatex --file-line-error-style $(SRC).tex
-	#pdflatex --file-line-error-style $(SRC).tex
+	
+push :
+	cp tex/abi.pdf ftp
