@@ -72,22 +72,7 @@ describe "Person" do
     end
   end
   
-  describe "avatar" do
-    let(:avatar_path) { File.join(File.dirname(__FILE__), '..', 'avatar.jpg') }
-    
-    it "gets resized" do
-      jonas.avatar = Rack::Test::UploadedFile.new(avatar_path, 'avatar.jpg')
-      jonas.save!
-      x = Tempfile.new 'avatar'
-      x.write(jonas.avatar.to_file(:medium).read)
-      x.close
-      `identify #{x.path}`.should include('300x300')
-    end
-    
-    it "has a url" do
-      jonas.avatar = Rack::Test::UploadedFile.new(avatar_path, 'avatar.jpg')
-      jonas.save!
-      jonas.avatar_url.should include("/people/schneijo/avatar/original")
-    end
+  describe "#avatar" do
+    # see spec/requests/avatar_spec.rb, they need the ernie
   end
 end

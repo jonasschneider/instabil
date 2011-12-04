@@ -41,6 +41,23 @@ describe "The app (containing avatar stuff)" do
     end
     
     let(:avatar_path) { File.join(File.dirname(__FILE__), '..', 'avatar.jpg') }
+    
+    describe "Person#avatar" do
+      it "gets resized" do
+        jonas.avatar = Rack::Test::UploadedFile.new(avatar_path, 'avatar.jpg')
+        jonas.save!
+        x = Tempfile.new 'avatar'
+        x.write(jonas.avatar.to_file(:medium).read)
+        x.close
+        `identify #{x.path}`.should include('300x300')
+      end
+    
+      it "has a url" do
+        jonas.avatar = Rack::Test::UploadedFile.new(avatar_path, 'avatar.jpg')
+        jonas.save!
+        jonas.avatar_url.should include("/people/schneijo/avatar/original")
+      end
+    end
   
     describe "visiting /preferences" do
       it "shows a form for the user to edit name and email" do
