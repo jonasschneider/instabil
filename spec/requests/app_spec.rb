@@ -45,7 +45,8 @@ describe "The app" do
       end
       
       it 'returns something when there are people' do
-        jonas
+        jonas.tags.create name: 'test', author: lukas
+        jonas.save!
         
         get '/api/people.json', :key => key
         

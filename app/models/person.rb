@@ -84,7 +84,7 @@ class Person
         "text" => (page || Page.new).text,
         "author" => (page && page.author.name) || '',
         
-        "tags" => [ ]
+        "tags" => tags.map{|t|t.name}
       }
     }
   end
