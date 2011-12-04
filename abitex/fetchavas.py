@@ -1,7 +1,10 @@
 #!/usr/bin/env python2
 import json, time
 last = open(".lastavafetch")
-lastfetch = int(last.read().strip())
+try:
+	lastfetch = int(last.read().strip())
+except ValueError:
+	lastfetch = 0
 last.close()
 
 #print lastfetch
