@@ -80,17 +80,17 @@ describe "The app" do
     
     describe "visiting /current_pdf" do
       it "redirects to the viewer url with a signature" do
-        ENV["PDF_VIEWER_SECRET"] = 'totally sekret'
+        secret = 'totally sekret'
+        ENV["PDF_VIEWER_SECRET"] = secret
         
         get '/current_pdf'
         u = URI.parse(last_response.headers["Location"])
         params = Rack::Utils.parse_query(u.query)
-        
+        puts last_response.headers["Location"]
         u.host.should == "abitex.0x83.eu"
         u.path.should == "/"
         params["timestamp"].to_i.should be_within(5).of(Time.now.to_i)
-        sig = Base64.urlsafe_encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'),
-          'totally sekret', params["timestamp"]))
+        sig = OpenSSL::HMAC.hexdigest('sha1', secret, params["timestamp"])
         params["timestamp_sig"].should == sig
       end
     end
