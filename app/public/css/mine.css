@@ -234,6 +234,8 @@
   margin: 20px;
   padding: 20px;
   background: #eee;
+  box-shadow: 0 0 10px #bbb;
+  border-radius: 5px;
 }
 
 .course-group h3 {
