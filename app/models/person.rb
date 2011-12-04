@@ -8,6 +8,8 @@ class Person
   include Mongoid::Timestamps
   include Mongoid::Paperclip
   
+  STORAGE_BACKEND = (ENV["FOG_STORAGE_BACKEND"] || 'localhost:8000').split(':')
+  
   def self.with_page # HACK
     all.select{|p| p.page.present? }
   end
@@ -29,10 +31,9 @@ class Person
   
   has_mongoid_attached_file :avatar, :storage => :fog, :fog_credentials => { 
     :provider => 'external',
-    :delegate   => Fog::External::Backend::Bertrpc.new('localhost', 8000)
+    :delegate   => Fog::External::Backend::Bertrpc.new(*STORAGE_BACKEND)
   }, :fog_directory => 'paperclip', 
     :path => ':attachment/:id/:style/:filename',
-    :fog_host => 'http://titan:3344',
 
     :styles => {
       :medium => "300x300#",
@@ -41,6 +42,14 @@ class Person
   validate do
     if avatar.present?
       errors.add :avatar, "Bitte nur JPEGS oder PNGS. Typ = #{avatar_content_type} oder #{avatar.content_type}" unless avatar_content_type =~ /jpe?g/ || avatar_content_type =~ /png/
+    end
+  end
+  
+  def initialize *args, &block
+    super *args, &block
+    
+    def avatar.public_url(style = :original)
+      "/people/#{instance.id}/avatar/#{style}"
     end
   end
 
