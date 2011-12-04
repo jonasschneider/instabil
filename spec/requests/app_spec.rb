@@ -78,6 +78,23 @@ describe "The app" do
       login(lukas.uid, lukas.name)
     end
     
+    describe "visiting /current_pdf" do
+      it "redirects to the viewer url with a signature" do
+        ENV["PDF_VIEWER_SECRET"] = 'totally sekret'
+        
+        get '/current_pdf'
+        u = URI.parse(last_response.headers["Location"])
+        params = Rack::Utils.parse_query(u.query)
+        
+        u.host.should == "abitex.0x83.eu"
+        u.path.should == "/"
+        params["timestamp"].to_i.should be_within(5).of(Time.now.to_i)
+        sig = Base64.urlsafe_encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'),
+          'totally sekret', params["timestamp"]))
+        params["timestamp_sig"].should == sig
+      end
+    end
+    
     describe "visiting /" do
       before :each do
         get "/"

@@ -103,6 +103,15 @@ class Instabil::App < Sinatra::Base
     haml :preferences
   end
   
+  get '/current_pdf' do
+    authenticate!
+    
+    stamp = Time.now.to_i.to_s
+    sig =  Base64.urlsafe_encode64(OpenSSL::HMAC.digest(OpenSSL::Digest::Digest.new('sha1'),
+      ENV["PDF_VIEWER_SECRET"], stamp))
+    redirect "http://abitex.0x83.eu/?timestamp=#{stamp}&timestamp_sig=#{URI.escape(sig)}"
+  end
+  
   post '/preferences' do
     authenticate!
     @person = current_user
