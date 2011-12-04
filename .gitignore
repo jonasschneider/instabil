@@ -20,6 +20,7 @@ abitex/tex/avatars/*
 abitex/.lastavafetch
 abitex/tex/rev.tex
 abitex/mount.sh
+abitex/push.sh
 abitex/tex/mems.tex
 abitex/tex/pupilspages.tex
 abitex/tex/courses.tex

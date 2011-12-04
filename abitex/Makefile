@@ -41,4 +41,4 @@ view :
 	evince tex/abi.pdf& 2> /dev/null
 	
 push :
-	cp tex/abi.pdf ftp
+	./push.sh

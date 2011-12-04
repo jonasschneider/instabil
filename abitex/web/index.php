@@ -14,6 +14,9 @@ if(abs(time() - $timestamp) > 30) {
 if(hash_hmac("sha1", strval($timestamp), $secret) != $timestamp_sig) {
 	die("Falsche signatur");
 }
+if(file_get_contents("status")=="dis") {
+	die("Es wird gerade eine neue Revision der Abizeitung hochgeladen, versuch's in wenigen Minuten <a href='http://instabil.heroku.com/current_pdf'>nochmal</a>");
+}
 header('Content-type: application/pdf');
 header('Content-Disposition: attachment; filename="abi.pdf"');
 header("Content-Transfer-Encoding: binary"); 
