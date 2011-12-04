@@ -45,14 +45,10 @@ class Person
     end
   end
   
-  def initialize *args, &block
-    super *args, &block
-    
-    def avatar.public_url(style = :original)
-      "/people/#{instance.id}/avatar/#{style}"
-    end
+  def avatar_url(style = :original)
+    "/people/#{id}/avatar/#{style}"
   end
-
+    
   field :tags, type: Array
   
   before_create :set_original_name

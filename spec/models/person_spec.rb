@@ -87,7 +87,7 @@ describe "Person" do
     it "has a url" do
       jonas.avatar = Rack::Test::UploadedFile.new(avatar_path, 'avatar.jpg')
       jonas.save!
-      jonas.avatar.url.should include("/people/schneijo/avatar/original")
+      jonas.avatar_url.should include("/people/schneijo/avatar/original")
     end
   end
 end

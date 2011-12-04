@@ -153,7 +153,7 @@ describe "The app" do
         
         last_response.should have_selector form + ' input[name="person[avatar]"][type=file]'
         
-        last_response.should have_selector 'img[src="'+lukas.avatar.url(:medium)+'"]'
+        last_response.should have_selector 'img[src="'+lukas.avatar_url(:medium)+'"]'
       end
     end
     
