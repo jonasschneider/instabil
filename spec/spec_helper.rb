@@ -1,5 +1,16 @@
 require File.expand_path(File.join(File.dirname(__FILE__), 'boot'))
 ENV["API_KEY"] = 'random_string'
+require "tmpdir"
+require 'socket'
+
+def is_port_open?(ip, port)
+  begin
+    TCPSocket.new(ip, port)
+  rescue Errno::ECONNREFUSED
+    return false
+  end
+  return true
+end
 
 project_root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 
@@ -29,6 +40,26 @@ RSpec.configure do |config|
     app.configure do
       disable :show_exceptions
       enable :raise_errors
+    end
+    
+    @ernie_pidfile = Tempfile.new 'ernie-pid'
+    @dir = Dir.mktmpdir('instabil-test-run-ernie')
+    puts "Starting ernie at #{@dir} with pidfile #{@ernie_pidfile.path}"
+    @wd = File.join(File.dirname(__FILE__), '..')
+    cmd = "cd #{@wd}; DATA_DIR=#{@dir} ernie -d -c lib/instabil/ernie/ernie.conf -P #{@ernie_pidfile.path}"
+    puts cmd
+    system(cmd)
+    
+    puts "waiting for ernie to come up"
+    sleep(1) while !is_port_open?('127.0.0.1', 8000)
+    puts "ernie is up"
+  end
+  
+  config.after :all do
+    pid = File.read(@ernie_pidfile.path)
+    if !pid.empty?
+      puts "Stopping ernie."
+      %x(kill #{pid})
     end
   end
 

@@ -6,6 +6,7 @@ gem 'haml'
 gem 'rack-flash'
 gem "redcarpet", "~> 2.0.0b5"
 
+gem "ernie"
 gem "fog"
 gem "fog-external"
 gem "bertrpc"
