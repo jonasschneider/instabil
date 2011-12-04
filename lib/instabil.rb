@@ -26,6 +26,8 @@ module Instabil
     
     "rel" => "Religion",
     "sf" => "Seminarkurs",
-    "eth" => "Ethik"
+    "eth" => "Ethik",
+    
+    "lut" => "L&T"
   }
 end
