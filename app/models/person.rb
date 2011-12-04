@@ -77,6 +77,7 @@ class Person
         "lks" => self.lks,
         "bio" => self.bio,
         "foto" => self.avatar_url(:medium),
+        "foto_mtime" => self.avatar.updated_at,
         
         "text" => (page || Page.new).text,
         "author" => (page && page.author.name) || '',
