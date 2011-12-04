@@ -86,7 +86,7 @@ describe "The app" do
         get '/current_pdf'
         u = URI.parse(last_response.headers["Location"])
         params = Rack::Utils.parse_query(u.query)
-        puts last_response.headers["Location"]
+        
         u.host.should == "abitex.0x83.eu"
         u.path.should == "/"
         params["timestamp"].to_i.should be_within(5).of(Time.now.to_i)
