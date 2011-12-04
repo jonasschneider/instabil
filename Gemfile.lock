@@ -16,7 +16,7 @@ GIT
 PATH
   remote: ../fog-external
   specs:
-    fog-external (0.0.2)
+    fog-external (0.0.3)
       fog
 
 GEM

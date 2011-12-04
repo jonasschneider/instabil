@@ -158,6 +158,11 @@ describe "The app" do
     end
     
     describe "visiting /people/<uid>/avatar/original" do
+      it "displays the avatar image by default" do
+        get "/people/kramerlu/avatar/original"
+        last_response.body.length.should == File.size(File.join(File.dirname(__FILE__), '../../app/public/images/avatar.jpg'))
+      end
+      
       it "displays the user's avatar" do
         lukas.avatar = Rack::Test::UploadedFile.new(avatar_path, 'avatar.jpg')
         lukas.save!

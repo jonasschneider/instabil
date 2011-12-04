@@ -118,8 +118,14 @@ class Instabil::App < Sinatra::Base
   
   get '/people/:uid/avatar/:style' do
     @person = Person.find params[:uid]
-    headers 'Content-type' => @person.avatar.content_type
-    @person.avatar.to_file(params[:style])
+    
+    if @person.avatar.present?
+      headers 'Content-type' => @person.avatar.content_type
+      @person.avatar.to_file(params[:style])
+    else
+      headers 'Content-type' => 'image/jpeg'
+      File.open(File.join(settings.root, 'public', 'images', 'avatar.jpg'))
+    end
   end
   
   post '/messages' do
