@@ -10,6 +10,7 @@ require "#{dir}/pages"
 
 
 require "#{dir}/models/page"
+require "#{dir}/models/tag"
 require "#{dir}/models/course"
 require "#{dir}/models/person"
 require "#{dir}/models/message"
@@ -142,6 +143,19 @@ class Instabil::App < Sinatra::Base
     @person = Person.find(params[:uid])
     
     haml :person
+  end
+  
+  post '/people/:uid/tags' do
+    authenticate!
+    @person = Person.find(params[:uid])
+    @tag = @person.tags.build params[:tag]
+    @tag.author = current_user
+    
+    if @tag.save
+      redirect "/people/#{@person.id}"
+    else
+      halt 400, @tag.errors.inspect
+    end
   end
   
   get '/courses' do

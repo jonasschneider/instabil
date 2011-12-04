@@ -39,6 +39,8 @@ class Person
       :medium => "300x300#",
       :thumb  => "50x50>" }
   
+  embeds_many :tags
+      
   validate do
     if avatar.present?
       errors.add :avatar, "Bitte nur JPEGS oder PNGS. Typ = #{avatar_content_type} oder #{avatar.content_type}" unless avatar_content_type =~ /jpe?g/ || avatar_content_type =~ /png/
