@@ -36,7 +36,7 @@ describe "Person" do
       jonas.api_attributes['page']['g8'].should == 1
       jonas.api_attributes['page']['lks'].should == 'lks'
       jonas.api_attributes['page']['bio'].should == nil
-      jonas.api_attributes['page']['foto'].should == nil
+      jonas.api_attributes['page']['foto'].should == "/people/schneijo/avatar/medium"
     end
     
     it "returns the page text when set" do
