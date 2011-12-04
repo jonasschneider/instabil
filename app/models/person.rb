@@ -76,7 +76,7 @@ class Person
         
         "lks" => self.lks,
         "bio" => self.bio,
-        "foto" => nil,
+        "foto" => self.avatar_url(:medium),
         
         "text" => (page || Page.new).text,
         "author" => (page && page.author.name) || '',
