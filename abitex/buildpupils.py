@@ -8,10 +8,15 @@ blah = f.read()
 j = json.loads(blah)
 temp = open("temp/pupil.tex").read()
 pupillist = []
+emails = 0
 for pupil in j :
 	page = Template(temp.decode("utf-8"))
 	content = pupil["page"]
+	if pupil["email"] != None and pupil["email"] != "" :
+		#print pupil["email"]
+		emails += 1
 	print pupil["uid"]
+	content["uid"] = pupil["uid"]
 	pupillist.append(pupil["uid"])
 	#print "tex/pupils/" + pupil["uid"] + ".tex"last = True
 	last = True
@@ -42,7 +47,7 @@ for pupil in j :
 	out = page.substitute(content)
 	f =  open("tex/pupils/" + pupil["uid"] + ".tex", "w")
 	f.write(out.encode("utf-8"))
-print len(pupillist)
+print "%i Schüler, %i mit email"%(len(pupillist), emails)
 pupillist.sort()
 f =  open("tex/pupilspages.tex", "w")
 for p in pupillist :

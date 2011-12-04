@@ -19,6 +19,28 @@
 \nostcrule
 \setlength{\stcindent}{-10pt}
 \dosecttoc
+			
+%\usepackage{palatino}
+ %\usepackage{helvet}
+
+%\usepackage[all]{hypcap}
+\usepackage{draftwatermark}
+\SetWatermarkText{\textsc{Entwurf}}
+\SetWatermarkScale{2}
+
+\usepackage[gray]{datapie}
+\DTLnewdb{pupilstats}
+\DTLnewrow{pupilstats}
+\DTLnewdbentry{pupilstats}{type}{Nicht registriert}
+\DTLnewdbentry{pupilstats}{n}{123}
+\DTLnewrow{pupilstats}
+\DTLnewdbentry{pupilstats}{type}{Registriert}
+\DTLnewdbentry{pupilstats}{n}{30}
+\DTLnewrow{pupilstats}
+\DTLnewdbentry{pupilstats}{type}{Mit Email}
+\DTLnewdbentry{pupilstats}{n}{7}
+\pagestyle{headings}
+
 \usepackage[colorlinks=true,
 	pdftitle={instABIl},
 	pdfauthor={AbiTeX},
@@ -28,18 +50,14 @@
 	linkcolor = blue,
 	citecolor = blue,
 	urlcolor = blue
-]{hyperref}											% Hyperlinks
-%\usepackage[all]{hypcap}
-\usepackage{draftwatermark}
-\SetWatermarkText{\textsc{Entwurf}}
-\SetWatermarkScale{2}
-\pagestyle{headings}
+]{hyperref}					
 \begin{document}
 \input{title.tex}
 \setcounter{tocdepth}{1}
 \tableofcontents
 \newpage
 \input{rev.tex}
+%\input{stats.tex}
 \input{pupils.tex}
 \input{coursereports.tex}
 \input{memoirs.tex}

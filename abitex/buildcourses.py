@@ -7,7 +7,9 @@ blah = f.read()
 j = json.loads(blah)
 temp = open("temp/course.tex").read()
 courselist = []
+n = 0
 for course in j :
+	n+=1
 	page = Template(temp.decode("utf-8"))
 	if course["author"] == "" :
 		continue
@@ -28,7 +30,7 @@ for course in j :
 	out = page.substitute(course)
 	f =  open("tex/coursereports/" + course["name"] + ".tex", "w")
 	f.write(out.encode("utf-8"))
-
+print "%i Kurse, %i berichte"%(n, len(courselist))
 f =  open("tex/courses.tex", "w")
 for p in courselist :
 	f.write("\input{coursereports/" + p + ".tex}\n");

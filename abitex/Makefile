@@ -1,5 +1,5 @@
 SRC = abi
-all: fetchpupils fetchcourses pupils courses pdf
+all: fetchpupils fetchcourses avatars pupils courses pdf
 
 fast : pupils courses pdf
 
@@ -34,9 +34,11 @@ pdf: rev
 rev :
 	./rev.py > tex/rev.tex
 
+avatars:
+	./fetchavas.py | sh
 
 view :
-	evince tex/abi.pdf& 3> /dev/null
+	evince tex/abi.pdf& 2> /dev/null
 	#./tex.sh
 	#cd tex
 	#make
