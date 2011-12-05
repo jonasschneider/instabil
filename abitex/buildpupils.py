@@ -2,7 +2,12 @@
 # -*- coding: utf-8 -*-
 import json, os
 from string import Template
+from optparse import OptionParser
 import subprocess
+parser = OptionParser()
+parser.add_option("-s", "--spoiler", dest="spoiler", help="Spolier text", action="store_true")
+(options, args) = parser.parse_args()
+spoiler = open("spoiler").read()
 f = open("pupils.json")
 blah = f.read()
 j = json.loads(blah)
@@ -35,15 +40,16 @@ for pupil in j :
 	else :
 		content["g8"] = "G9"
 	#print type(content["tags"])
-	if content["tags"] != None :
+	if content["tags"] != None and not options.spoiler:
 		content["tags"] = "\//\/".join(content["tags"])
 	else : 
-		content["tags"] = ""
+		content["tags"] = "Hier kommen Tags hin!"
 	
-	if content["text"] != None :
+	if content["text"] != None and not options.spoiler:
 		proc = subprocess.Popen("./md2tex.sh", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 		content["text"] = proc.communicate(content["text"].encode("utf-8"))[0].decode("utf-8")
-	#proc.kill()
+	else :
+		content["text"] = spoiler;
 	out = page.substitute(content)
 	f =  open("tex/pupils/" + pupil["uid"] + ".tex", "w")
 	f.write(out.encode("utf-8"))

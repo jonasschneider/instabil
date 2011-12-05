@@ -18,6 +18,9 @@ fetchpupils:
 
 pupils:
 	./buildpupils.py
+	
+spoiler:
+	./buildpupils.py -s
 
 fetchcourses:
 	./fetchcourses.sh
