@@ -4,9 +4,9 @@ module Instabil::Auth
       use OmniAuth::Builder do
         provider :fichteid, :key => ENV['FICHTE_HMAC_SECRET'] || 'mypw'
         
-        #if app.development? || app.test?
+        if app.development? || app.test?
           provider :developer, :fields => [:username, :name, :group_ids], :uid_field => :username
-        #end
+        end
         
         configure do |c|
           c.on_failure = Proc.new do |env|
@@ -58,11 +58,11 @@ module Instabil::Auth
         redirect "/"
       end
       
-      #if development? || test?
+      if development? || test?
         post '/auth/developer/callback' do
           authenticate_with_info! env['omniauth.auth'].info
         end
-      #end
+      end
       
       get '/auth/fichteid/callback' do
         authenticate_with_info! env['omniauth.auth'].info
