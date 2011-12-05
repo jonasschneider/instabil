@@ -126,8 +126,62 @@
   margin: 5px;
 }
 
+.speech-bubble {
+	position:absolute;
+	top: -20px;
+	left: 100px;
+	padding:15px 30px;
+	margin:0;
+	color:#222;
+	font-size: 120%;
+	
+	background:#f3961c; /* default background for browsers without gradient support */
+	/* css3 */
+    background:-webkit-gradient(linear, 0 0, 0 100%, from(#f9d835), to(#f3961c));
+	background:-moz-linear-gradient(#f9d835, #f3961c);
+	background:-o-linear-gradient(#f9d835, #f3961c);
+	background:linear-gradient(#f9d835, #f3961c);
+	/* Using longhand to avoid inconsistencies between Safari 4 and Chrome 4 */
+	-webkit-border-top-left-radius:25px 50px;
+	-webkit-border-top-right-radius:25px 50px;
+	-webkit-border-bottom-right-radius:25px 50px;
+	-webkit-border-bottom-left-radius:25px 50px;
+	-moz-border-radius:25px / 50px;
+	border-radius:25px / 50px;
+}
+
+/* creates the larger triangle */
+.speech-bubble:before {
+	content:"";
+	position:absolute;
+	bottom:-30px;
+	right:80px;
+	border-width:0 0 30px 50px;
+	border-style:solid;
+	border-color:transparent #f3961c;
+    /* reduce the damage in FF3.0 */
+    display:block; 
+    width:0;
+}
+
+/* creates the smaller triangle */
+.speech-bubble:after {
+	content:"";
+	position:absolute;
+	bottom:-30px;
+	right:110px; 
+	border-width:0 0 30px 20px;
+	border-style:solid;
+	border-color:transparent #ddd;
+    /* reduce the damage in FF3.0 */
+    display:block; 
+    width:0;
+}
+
+
 #splash li {
   display: inline-block;
+  position: relative;
   width: 20%;
   background: #ddd;
   padding: 20px;
