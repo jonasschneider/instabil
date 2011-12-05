@@ -98,11 +98,12 @@ class Instabil::App < Sinatra::Base
   end
   
   get '/evil_nora_backdoor' do
-    user = Person.find_or_initialize_by uid: "zimmernoBACKDOOR"
-    user.uid = "zimmernoBACKDOOR"
-    
-    user.name = "Nora Zimmer (temporär)"
-    user.save!
+    user = Person.find_or_initialize_by uid: "zimmernobackdoor"
+    user.uid = "zimmernobackdoor"
+    unless user.name
+      user.name = "Nora Zimmer (temporär)"
+      user.save!
+    end
     
     warden.set_user user
     redirect "/"
