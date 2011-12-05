@@ -28,3 +28,4 @@ abitex/tex/courses.tex
 abitex/mongourl
 abitex/backup/*
 abitex/dump.sh
+.sass-cache
