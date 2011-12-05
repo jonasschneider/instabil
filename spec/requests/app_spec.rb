@@ -205,6 +205,25 @@ describe "The app" do
     end
     
     describe "visiting /people/<uid>" do
+      describe "when trying to visit one's own page" do
+        before :each do
+          lukas.create_page text: 'bla', author: jonas
+          get "/people/#{lukas.uid}"
+        end
+        
+        it "does not show the page contents"  do
+          last_response.body.should_not include("bla")
+        end
+        
+        it "shows a notice" do
+          last_response.body.should include("deine eigene Seite nicht")
+        end
+        
+        it 'displays no link to edit the page' do
+          last_response.body.should_not have_selector("a[href='/pages/#{lukas.page.id}/edit']")
+        end
+      end
+      
       describe "when the person has a page" do
         before :each do
           get "/people/#{anna.uid}"
