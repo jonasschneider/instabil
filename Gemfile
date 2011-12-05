@@ -5,6 +5,12 @@ gem 'sinatra'
 gem 'haml'
 gem 'rack-flash'
 gem "redcarpet", "~> 2.0.0b5"
+gem 'sprockets', '~> 2.0'
+gem "sass"
+
+gem 'warden'
+gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git'
+gem 'fichteid-client', :git => 'git://github.com/jonasschneider/fichteid-client.git'
 
 gem "ernie", :group => :ernie
 
@@ -19,9 +25,6 @@ gem 'pusher'
 gem 'mongoid', '< 2.3'
 gem 'bson_ext'
 
-gem 'warden'
-gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git'
-gem 'fichteid-client', :git => 'git://github.com/jonasschneider/fichteid-client.git'
 
 group :test do
   gem 'rspec', :require => 'rspec'
