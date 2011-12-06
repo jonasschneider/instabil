@@ -12,7 +12,7 @@
     %script{:src => "/assets/application.js", :type => "text/javascript"}
     
     %title instABIl
-  %body
+  %body{ class: (current_user.email.nil? || current_user.email.empty?) ? 'nomail' : '' }
     - if flash[:error]
       .flash#error= flash[:error]
     - if flash[:notice]
@@ -22,12 +22,6 @@
         %h1
           %a{ href: '/' }
             %img{ :src => '/images/logo.png' }
-        - if current_user.email.nil? || current_user.email.empty?
-          #nomail
-            %a{ :href => "/preferences" }
-              %span
-                %strong Du hast noch keine E-Mail-Addresse eingetragen.
-                Bitte tu das, damit du über Neuigkeiten informiert werden kannst. Klicke dazu hier.
         %ul.actions
           %li.minibutton
             %a{ :href => '/' } Startseite
@@ -44,6 +38,8 @@
       #wiki-content
         .wrap
           #wiki-body
+            - if current_user.email.nil? || current_user.email.empty?
+              = haml :nomail, layout: false
             #template= yield
       #footer
         = section :footer

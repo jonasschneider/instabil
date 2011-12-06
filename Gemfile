@@ -5,7 +5,7 @@ gem 'sinatra'
 gem 'haml'
 gem 'rack-flash'
 gem "redcarpet", "~> 2.0.0b5"
-gem 'sprockets', '~> 2.0'
+gem 'sprockets'
 gem "sass"
 
 gem 'warden'

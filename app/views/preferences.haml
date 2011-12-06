@@ -5,7 +5,7 @@
     %input{ name: "person[name]", value: @person.name, type: 'text', :size => 40 }
     %strong Hier sollen nicht irgendwelche Nicknames eingetragen werden! Mit diesem Namen taucht ihr auch in der Abizeitung auf, also lasst das. Wer irgendeinen Unfug einträgt, bekommt seinen richtigen Namen zurück. -.-
 
-  %p
+  %p{ class: (@person.errors.include?(:email) ? 'form-error' : '') }
     %label{:for => "person[email]"} E-Mail-Addresse
     %input{ name: "person[email]", value: @person.email, type: 'text', :placeholder => '(für Benachrichtigungen)', :size => 40 }
   

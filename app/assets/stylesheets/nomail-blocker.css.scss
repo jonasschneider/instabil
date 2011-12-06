@@ -1,0 +1,53 @@
+body.nomail {
+  $base: #A12544;
+  
+  #template {
+    display: none
+  }
+  
+  #nomail {
+    width: 60%;
+    background: desaturate($base, 20%);
+    color: white;
+    width: 50%;
+    margin: 20px auto;
+    padding: 0;
+    display: block;
+    font-size: 120%;
+    box-shadow: 0 0 5px #800011;
+    
+    h3 {
+      background: desaturate(darken($base, 5%), 5%);
+      text-shadow: 1px 1px 0 $base;
+      color: desaturate(lighten($base, 60%), 40%);
+      font-size: 130%;
+      padding: 15px;
+    }
+  
+    p {
+      padding: 15px;
+    }
+    
+    input {
+      padding: 10px;
+    }
+    
+    .emph {
+      background: desaturate(darken($base, 10%), 10%);
+      display: block;
+      padding: 15px;
+      margin: 15px;
+      
+      strong {
+        display: block;
+        margin-bottom: 10px;
+      }
+    }
+    
+    strong {
+      color: white;
+      text-shadow: 1px 1px 0 darken($base, 10%);
+      font-size: 120%;
+    }
+  }
+}

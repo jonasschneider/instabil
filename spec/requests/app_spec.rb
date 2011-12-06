@@ -109,11 +109,20 @@ describe "The app" do
         
         it "shows no banner" do
           last_response.body.should_not have_selector("#nomail")
+          last_response.body.should_not have_selector("body.nomail")
         end
       end
       
-      it "shows a banner informing to enter an email address" do
+      it "shows a banner informing to enter an email address, and sets the email" do
         last_response.body.should have_selector("#nomail")
+        last_response.body.should have_selector("body.nomail")
+        lukas.bio = 'test'
+        lukas.save!
+        fill_in "person[email]", with: 'my@mail.net'
+        click_button "Ja, die Email stimmt. Speichern!"
+        lukas.reload
+        lukas.email.should == 'my@mail.net'
+        lukas.bio.should == 'test'
       end
       
       it "shows a link to the user's profile" do

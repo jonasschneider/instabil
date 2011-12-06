@@ -1,36 +1,12 @@
 //= require dark-hive/jquery-ui-1.8.16.custom
 //= require gollum
 //= require template
+//= require nomail-blocker
 
 .user_name {
   font-weight: bold;
 }
 
-
-#nomail span {
-  background: #B14151;
-  color: #ddd;
-  width: 35%;
-  float: left;
-  margin: 0 0 0 30px;
-  padding: 10px;
-  display: inline-block;
-  font-size: 120%;
-  box-shadow: 0 0 5px #800011;
-}
-
-#nomail span:hover {
-  background-color: #AD0017;
-}
-
-#nomail a:hover {
-  
-  text-decoration: none !important;
-}
-
-#nomail strong {
-  color: white;
-}
 
 .flash {
   background-color: #f9f9f9;
@@ -46,6 +22,13 @@
   border-radius: 0.5em;
   -moz-border-radius: 0.5em;
   -webkit-border-radius: 0.5em;
+}
+
+p.form-error {
+  $color: #B51039;
+  border: 5px solid $color;
+  background: #D19292;
+  padding: 20px !important;
 }
 
 .flash h1 {

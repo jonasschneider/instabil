@@ -1,0 +1,18 @@
+#nomail
+  %h3 Du hast noch keine E-Mail-Adresse eingetragen.
+  %p
+    %strong Es kommt nicht jeder jeden Tag hier auf die Seite.
+  %p
+    Deshalb ist es wirklich wichtig, dass wir von jedem eine E-Mail-Addresse haben.
+    Nur so können neue Infos wie zur Wahl des Abimottos schnell weitergeleitet werden.
+    Bitte trag deshalb unten deine E-Mail-Adresse ein.
+    
+  %form{ action: '/preferences', method: 'post'}
+    %p.emph
+      %strong Bitte achtet darauf, dass die Adresse stimmt, und schaut die Mails auch an!
+      Wer absichtlich eine falsche Adresse einträgt, braucht sich nicht wundern,
+      wenn am Ende alles vorbei ist, ohne dass man etwas mitgekriegt hat.
+      %br
+      %br
+      %input{ name: 'person[email]', placeholder: 'E-Mail-Addresse' }
+      %input{ type: 'submit', value: 'Ja, die Email stimmt. Speichern!' }
