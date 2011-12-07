@@ -90,7 +90,7 @@ describe "Authentication" do
       end
       
       it 'redirects to the fichteID logout page with a return_to parameter' do
-        last_response.headers["Location"].should == 'http://fichteid.heroku.com/sso/logout?return_to=http://example.org/'
+        last_response.headers["Location"].should == 'http://fichteid.heroku.com/sso/logout?return_to=http://example.org/?logged_out=true'
       end
       
       it "clears the session" do
