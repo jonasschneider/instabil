@@ -13,7 +13,7 @@ describe "Authentication" do
     
     it "displays a link to log in" do
       get '/'
-      last_response.should have_selector("a[href='/auth/fichteid']")
+      last_response.should have_selector("form[action='/auth/fichteid']")
     end
   end
 
@@ -87,7 +87,7 @@ describe "Authentication" do
       end
       
       it "clears the session" do
-        get '/'
+        get '/courses'
         last_response.status.should == 301
       end
     end

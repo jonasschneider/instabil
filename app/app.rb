@@ -164,10 +164,12 @@ class Instabil::App < Sinatra::Base
   
   ## COURSES
   get '/courses' do
+    authenticate!
     haml :courses
   end
   
   get '/courses/:id' do
+    authenticate!
     @course = Course.find params[:id]
     haml :course
   end
