@@ -45,7 +45,7 @@ describe "Authentication" do
     end
   end
   
-  describe 'as a banner user, with the correct group id' do
+  describe 'as a banned user, with the correct group id' do
     let(:group_ids) { "#{correct_id}" }
     
     it 'fails' do
