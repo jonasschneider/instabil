@@ -45,6 +45,18 @@ describe "Authentication" do
     end
   end
   
+  describe 'as a banner user, with the correct group id' do
+    let(:group_ids) { "#{correct_id}" }
+    
+    it 'fails' do
+      ENV["BANNED_UIDS"] = "someguy,#{user},anotherone"
+      
+      post '/auth/developer/callback', :username => user, :name => name, :group_ids => group_ids
+      last_response.status.should == 403
+      last_response.body.should include('nicht berechtigt')
+    end
+  end
+  
   describe 'GET /logout' do
     describe "when logged in" do
       let(:lukas) do

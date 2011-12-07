@@ -1,6 +1,11 @@
 module Instabil::Auth
   def self.registered(app)
     app.class_eval do
+      configure do
+        set :authorized_group_id, 10095
+        set :banned_uids do (ENV["BANNED_UIDS"] || '').split(","); end
+      end
+      
       use OmniAuth::Builder do
         provider :fichteid, :key => ENV['FICHTE_HMAC_SECRET'] || 'mypw'
         
@@ -41,8 +46,13 @@ module Instabil::Auth
         warden.authenticate!
       end
       
+      def authorized?(info)
+        return false if settings.banned_uids.include?(info.username)
+        info.group_ids.split(',').include? settings.authorized_group_id.to_s
+      end
+      
       def authenticate_with_info!(info)
-        unless info.group_ids.split(',').include? settings.authorized_group_id.to_s
+        unless authorized?(info)
           halt 403, haml(:authfail, :layout => false)
         end
         

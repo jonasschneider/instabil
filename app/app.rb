@@ -62,7 +62,6 @@ class Instabil::App < Sinatra::Base
   
   use Rack::Session::Cookie
   
-  set :authorized_group_id, 10095
   
   if ENV['API_KEY']
     set :api_key, ENV['API_KEY']
