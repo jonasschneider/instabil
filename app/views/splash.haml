@@ -42,6 +42,10 @@
       p {
         margin: 25px 0;
       }
+      
+      p.notice {
+        color: green;
+      }
     
       button {
         padding: 15px;
@@ -57,6 +61,8 @@
         #content
           %p
             %img{ :src => '/images/logo.png' }
+          - if params[:logged_out]
+            %p.notice Du wurdest abgemeldet.
           %p
             Dies ist ein Projekt für die Kursstufe 2 des Fichte-Gymnasiums im Schuljahr 2011/2012.
             Bitte melde dich mit deiner FichteID an.

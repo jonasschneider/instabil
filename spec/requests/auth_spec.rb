@@ -15,6 +15,13 @@ describe "Authentication" do
       get '/'
       last_response.should have_selector("form[action='/auth/fichteid']")
     end
+    
+    describe "with logged_out=true" do
+      it "shows a notice" do
+        get '/?logged_out=true'
+        last_response.body.should include('abgemeldet')
+      end
+    end
   end
 
   describe 'with the correct group id' do
