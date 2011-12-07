@@ -214,6 +214,16 @@ describe "The app" do
     end
     
     describe "visiting /people/<uid>" do
+      describe "when there is no such user" do
+        before :each do
+          get "/people/ohai"
+        end
+        
+        it "404's" do
+          last_response.status.should == 404
+        end
+      end
+      
       describe "when trying to visit one's own page" do
         before :each do
           lukas.create_page text: 'bla', author: jonas

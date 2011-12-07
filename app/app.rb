@@ -74,6 +74,10 @@ class Instabil::App < Sinatra::Base
   register Instabil::Polls
   register Instabil::Pages
   
+  error Mongoid::Errors::DocumentNotFound do
+    halt 404, 'Dokument nicht in der Datenbank gefunden.'
+  end
+  
   use Rack::Flash
 
   def section(key, *args, &block)
