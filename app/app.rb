@@ -98,8 +98,12 @@ class Instabil::App < Sinatra::Base
   end
 
   get '/' do
-    authenticate!
-    haml :index
+    if current_user.present?
+      authenticate!
+      haml :index
+    else
+      haml :splash, :layout => false
+    end
   end
   
   

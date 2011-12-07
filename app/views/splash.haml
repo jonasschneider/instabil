@@ -1,0 +1,68 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html;charset=utf-8", "http-equiv" => "Content-type"}
+    %link{ rel: "shortcut icon", href: "/favicon.ico" }
+    %link{:href => "/assets/application.css", :rel => "stylesheet", :type => "text/css"}
+    
+    %title instABIl
+    
+    :css
+      body {
+        background: #eee;
+        padding: 0;
+        margin: 0;
+      }
+      #outer {
+        position:absolute;
+        top:0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: table;
+      }
+      
+      #inner {
+        display: table-cell; 
+        vertical-align: middle;
+      }
+      
+      #content {
+        width: 500px;
+        margin: auto;
+        background: rgba(0,0,0,0.1);
+        padding: 30px;
+        font-size: 150%;
+        text-align: center;
+        letter-spacing: 0.07em;
+        border-radius: 10px;
+        color: #333;
+      }
+      
+      p {
+        margin: 25px 0;
+      }
+    
+      button {
+        padding: 15px;
+      }
+      
+      button span {
+        position: relative;
+        top: -7px;
+      }
+  %body
+    #outer
+      #inner
+        #content
+          %p
+            %img{ :src => '/images/logo.png' }
+          %p
+            Dies ist ein Projekt für die Kursstufe 2 des Fichte-Gymnasiums im Schuljahr 2011/2012.
+            Bitte melde dich mit deiner FichteID an.
+          %form{ action: '/auth/fichteid', id: 'go' }
+          %p
+            %button{ onclick: "document.getElementById('go').submit()" }
+              %span Mit
+              %img{ :src => '/images/fichteid-logo.png', :width => 100 }
+              %span anmelden

@@ -4,6 +4,18 @@ describe "Authentication" do
   let(:user) { 'atmos' }
   let(:name) { 'Atmos' }
   let(:correct_id) { app.settings.authorized_group_id }
+  
+  describe "visiting / when not logged in" do
+    it "displays an info page" do
+      get '/'
+      last_response.status.should == 200
+    end
+    
+    it "displays a link to log in" do
+      get '/'
+      last_response.should have_selector("a[href='/auth/fichteid']")
+    end
+  end
 
   describe 'with the correct group id' do
     let(:group_ids) { "#{correct_id}" }
