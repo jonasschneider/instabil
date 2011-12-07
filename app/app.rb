@@ -51,6 +51,15 @@ class Instabil::App < Sinatra::Base
     end
   end
   
+  if ENV["AIRBRAKE_API_KEY"].present?
+    Airbrake.configure do |config|
+      config.api_key = ENV["AIRBRAKE_API_KEY"]
+    end
+    
+    use Airbrake::Rack
+    enable :raise_errors
+  end
+  
   use Rack::Session::Cookie
   
   set :authorized_group_id, 10095

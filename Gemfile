@@ -1,6 +1,8 @@
 source :rubygems
 
 gem "rake"
+gem "airbrake"
+
 gem 'sinatra'
 gem 'haml'
 gem 'rack-flash'
