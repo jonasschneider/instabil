@@ -82,8 +82,8 @@ describe "Authentication" do
         get '/logout'
       end
       
-      it 'redirects to the fichteID logout page' do
-        last_response.headers["Location"].should == 'http://fichteid.heroku.com/sso/logout'
+      it 'redirects to the fichteID logout page with a return_to parameter' do
+        last_response.headers["Location"].should == 'http://fichteid.heroku.com/sso/logout?return_to=http://example.org/'
       end
       
       it "clears the session" do

@@ -80,7 +80,7 @@ module Instabil::Auth
       
       get '/logout' do
         warden.logout
-        redirect 'http://fichteid.heroku.com/sso/logout' 
+        redirect "http://fichteid.heroku.com/sso/logout?return_to=#{url '/'}"
       end
     end
   end
