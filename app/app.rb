@@ -7,6 +7,7 @@ require "#{dir}/boot"
 require "#{dir}/auth"
 require "#{dir}/polls"
 require "#{dir}/pages"
+require "#{dir}/people"
 
 
 require "#{dir}/models/page"
@@ -71,11 +72,13 @@ class Instabil::App < Sinatra::Base
   end
   
   register Instabil::Auth
+  
   register Instabil::Polls
+  register Instabil::People
   register Instabil::Pages
   
   error Mongoid::Errors::DocumentNotFound do
-    halt 404, 'Dokument nicht in der Datenbank gefunden.'
+    halt 404, 'Dokument nicht gefunden.'
   end
   
   use Rack::Flash
@@ -99,6 +102,8 @@ class Instabil::App < Sinatra::Base
     haml :index
   end
   
+  
+  ## API
   get '/api/people.json' do
     halt 403, 'Forbidden' unless params[:key] == settings.api_key
     Person.all.map{ |p| p.api_attributes }.to_json
@@ -109,18 +114,22 @@ class Instabil::App < Sinatra::Base
     Course.all.map{ |p| p.api_attributes }.to_json
   end
   
-  get '/preferences' do
-    authenticate!
-    @person = current_user
-    haml :preferences
-  end
   
+  ## PDF
   get '/current_pdf' do
     authenticate!
     
     stamp = Time.now.to_i.to_s
     sig = OpenSSL::HMAC.hexdigest('sha1', ENV["PDF_VIEWER_SECRET"], stamp)
     redirect "http://abitex.0x83.eu/?timestamp=#{stamp}&timestamp_sig=#{sig}"
+  end
+  
+  
+  ## PREFERENCES
+  get '/preferences' do
+    authenticate!
+    @person = current_user
+    haml :preferences
   end
   
   post '/preferences' do
@@ -137,18 +146,8 @@ class Instabil::App < Sinatra::Base
     end
   end
   
-  get '/people/:uid/avatar/:style' do
-    @person = Person.find params[:uid]
-    
-    if @person.avatar.present?
-      headers 'Content-type' => @person.avatar.content_type
-      @person.avatar.to_file(params[:style])
-    else
-      headers 'Content-type' => 'image/jpeg'
-      File.open(File.join(settings.root, 'public', 'images', 'avatar.jpg'))
-    end
-  end
   
+  ## CHAT
   post '/messages' do
     authenticate!
     msg = Message.new author: current_user, body: params[:message][:body]
@@ -158,26 +157,8 @@ class Instabil::App < Sinatra::Base
     redirect '/#chat'
   end
   
-  get '/people/:uid' do
-    authenticate!
-    @person = Person.find(params[:uid])
-    
-    haml :person
-  end
   
-  post '/people/:uid/tags' do
-    authenticate!
-    @person = Person.find(params[:uid])
-    @tag = @person.tags.build params[:tag]
-    @tag.author = current_user
-    
-    if @tag.save
-      redirect "/people/#{@person.id}"
-    else
-      halt 400, @tag.errors.inspect
-    end
-  end
-  
+  ## COURSES
   get '/courses' do
     haml :courses
   end

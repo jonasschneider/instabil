@@ -42,6 +42,12 @@ RSpec.configure do |config|
       enable :raise_errors
     end
   end
+  
+  def make_person(options)
+    Person.create! name: options[:name] do |p|
+      p.uid = options[:uid]
+    end
+  end
 
   def login(username, name)
     post '/auth/developer/callback', :username => username, :name => name, :group_ids => app.settings.authorized_group_id
