@@ -75,6 +75,12 @@ describe Instabil::People do
         last_response.body.should have_selector("a[href='/pages/#{anna.page.id}/edit']")
       end
       
+      describe "authored by someone else" do
+        it 'displays no link to edit the page' do
+          last_response.body.should_not have_selector("a[href='/pages/#{anna.page.id}/edit']")
+        end
+      end
+      
       it 'displays a link to view the page versions' do
         last_response.body.should have_selector("a[href='/pages/#{anna.page.id}/versions']")
       end

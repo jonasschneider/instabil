@@ -37,9 +37,13 @@
   
     %p= markdown page.text
     
-    %ul.actions
-      %li.minibutton
-        %a{ :href => "/pages/#{page.id}/edit" } Seite bearbeiten
+    - if current_user.can_update(page)
+      %ul.actions
+        %li.minibutton
+          %a{ :href => "/pages/#{page.id}/edit" } Seite bearbeiten
+    - else
+      %p
+        %em (Du kannst die Seite nicht bearbeiten.)
 
   - else
     %p
