@@ -24,6 +24,13 @@
   -webkit-border-radius: 0.5em;
 }
 
+#new_page .create-warning {
+  background: desaturate(#A12544, 20%);
+  color: white;
+  padding: 20px;
+
+}
+
 p.form-error {
   $color: #B51039;
   border: 5px solid $color;

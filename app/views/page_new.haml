@@ -1,18 +1,17 @@
 %h1
   Neue Seite für
   = @target.name
-%form{ action: "/pages", method: 'post' }
+%form#new_page{ action: "/pages", method: 'post' }
   - if params[:for_person]
     %input{ type: 'hidden', name: 'for_person', value: params[:for_person] }
   - else
     %input{ type: 'hidden', name: 'for_course', value: params[:for_course] }
   = haml :page_form, locals: { page: @page }
   
-  %p
+  %p.create-warning
     Wenn du diese Seite erstellst, bist du
     %strong verantwortlich
     dafür, dass sie mit Inhalt gefüllt wird.
     Andere können sie immer noch bearbeiten, aber du solltest schauen, dass kein Mist gebaut wird.
-  
-  %p
+    %br
     %input{ type: 'submit', value: 'Seite erstellen und mich als Verantwortlichen eintragen' }
