@@ -91,7 +91,7 @@
   registrierte Benutzer
 
 .global-count
-  %span= Person.where(:page_id.exists => true).count
+  %span= Person.where(:page_id.ne => nil).count
   angefangene Benutzerseiten
 
 .global-count
