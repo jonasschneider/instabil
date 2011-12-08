@@ -15,7 +15,7 @@ describe Instabil::People do
   end
   
   before :each do
-    login(lukas.uid, lukas.name)
+    login(jonas.uid, jonas.name)
   end
   
   describe "visiting /people/<uid>" do
@@ -31,8 +31,8 @@ describe Instabil::People do
     
     describe "when trying to visit one's own page" do
       before :each do
-        lukas.create_page text: 'bla', author: jonas
-        get "/people/#{lukas.uid}"
+        jonas.create_page text: 'bla', author: jonas
+        get "/people/#{jonas.uid}"
       end
       
       it "does not show the page contents"  do
@@ -44,7 +44,7 @@ describe Instabil::People do
       end
       
       it 'displays no link to edit the page' do
-        last_response.body.should_not have_selector("a[href='/pages/#{lukas.page.id}/edit']")
+        last_response.body.should_not have_selector("a[href='/pages/#{jonas.page.id}/edit']")
       end
     end
     
@@ -71,12 +71,18 @@ describe Instabil::People do
         last_response.body.should have_selector('#last-edit .user_name', :content => jonas.name)
       end
       
+      it 'displays no link to create the page' do
+        last_response.body.should_not have_selector("a[href='/pages/new?for_person=winteran']")
+      end
+      
       it 'displays a link to edit the page' do
         last_response.body.should have_selector("a[href='/pages/#{anna.page.id}/edit']")
       end
       
       describe "authored by someone else" do
         it 'displays no link to edit the page' do
+          login(lukas.uid, lukas.name)
+          get "/people/winteran"
           last_response.body.should_not have_selector("a[href='/pages/#{anna.page.id}/edit']")
         end
       end
@@ -88,28 +94,28 @@ describe Instabil::People do
     
     describe "when the person does not yet have a page" do
       before :each do
-        get "/people/#{jonas.id}"
+        get "/people/#{lukas.id}"
       end
       
       it "shows a link to create the page" do
-        last_response.body.should have_selector("a[href='/pages/new?for_person=schneijo']")
+        last_response.body.should have_selector("a[href='/pages/new?for_person=kramerlu']")
       end
       
       it 'displays a form to add a tag' do
-        last_response.body.should have_selector("form[action='/people/schneijo/tags'][method=post] input[name='tag[name]']")
+        last_response.body.should have_selector("form[action='/people/kramerlu/tags'][method=post] input[name='tag[name]']")
         fill_in 'tag[name]', with: 'test'
         click_button "Hinzufügen"
         
-        last_response.headers["Location"].should == "http://example.org/people/schneijo"
-        jonas.reload.tags.first.name.should == 'test'
-        jonas.reload.tags.first.author.should == lukas
+        last_response.headers["Location"].should == "http://example.org/people/kramerlu"
+        lukas.reload.tags.first.name.should == 'test'
+        lukas.reload.tags.first.author.should == jonas
       end
       
       describe "but some tags" do
         it "displays the tag" do
-          jonas.reload.tags.create name: 'test', author: lukas
-          jonas.save!
-          get "/people/#{jonas.id}"
+          lukas.reload.tags.create name: 'test', author: jonas
+          lukas.save!
+          get "/people/#{lukas.id}"
           last_response.body.should have_selector('li.tag', content: 'test')
         end
       end
