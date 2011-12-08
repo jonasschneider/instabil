@@ -7,6 +7,8 @@ describe "Instabil::Pages" do
     end
   end
   
+  let(:lukas) { make_person name: "Lukas", uid: "kramerlu" }
+  
   let(:anna) do
     Person.create!(name: "Anna") do |anna|
       anna.uid = "winteran"
@@ -38,7 +40,15 @@ describe "Instabil::Pages" do
     end
   
     describe "visiting /pages/:id/edit" do
-      describe "when the page exists" do
+      describe "when the page exists and was created by another user" do
+        it "denies access" do
+          login(lukas.uid, lukas.name)
+          get "/pages/#{page.id}/edit"
+          last_response.status.should == 403
+        end
+      end
+      
+      describe "when the page exists and was created by the current user" do
         it "displays a form" do
           get "/pages/#{page.id}/edit"
           form = "form[action=\"/pages/#{page.id}\"][method=post]"
