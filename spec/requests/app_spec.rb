@@ -80,6 +80,12 @@ describe "The app" do
       get "/"
       last_response.body.should include('hai there')
     end
+    
+    it "shows the author of a person's page" do
+      lukas.create_page text: 'asdf', author: jonas
+      get "/"
+      last_response.body.should have_selector('a[href="/people/kramerlu"] + *', content: '(Jonas Schneider schreibt die Seite)')
+    end
   end
   
   describe "POSTing to /messages" do
