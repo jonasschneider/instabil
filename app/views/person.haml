@@ -37,7 +37,7 @@
   
     %p= markdown page.text
     
-    - if current_user.can_update(page)
+    - if current_user.can_update?(page)
       %ul.actions
         %li.minibutton
           %a{ :href => "/pages/#{page.id}/edit" } Seite bearbeiten
