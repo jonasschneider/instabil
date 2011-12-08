@@ -91,6 +91,10 @@
   registrierte Benutzer
 
 .global-count
+  %span= Person.where(:page_id.exists => true).count
+  angefangene Benutzerseiten
+
+.global-count
   %span= Course.all.select{|c|c.page.present?}.count
   angefangene Kursberichte bei
   = Course.count
