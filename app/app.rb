@@ -63,6 +63,11 @@ class Instabil::App < Sinatra::Base
   
   use Rack::Session::Cookie
   
+  include Canable::Enforcers
+  
+  error Canable::Transgression do
+    halt 403, 'you fail'
+  end
   
   if ENV['API_KEY']
     set :api_key, ENV['API_KEY']

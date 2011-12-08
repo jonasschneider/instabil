@@ -2,6 +2,7 @@ class Page
   include Mongoid::Document
   include Mongoid::Versioning
   include Mongoid::Timestamps
+  include Canable::Ables
   
   field :text, type: String
   
@@ -14,7 +15,15 @@ class Page
   def name
     person ? person.name : (course ? course.name : nil)
   end
+  
+  def updatable_by?(user)
+    author == user
+  end
 
+  def destroyable_by?(user)
+    updatable_by?(user)
+  end
+  
   def date
     updated_at || created_at
   end

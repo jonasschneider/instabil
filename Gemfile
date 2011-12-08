@@ -9,6 +9,7 @@ gem 'rack-flash'
 gem "redcarpet", "~> 2.0.0b5"
 gem 'sprockets'
 gem "sass"
+gem "canable"
 
 gem 'warden'
 gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git'

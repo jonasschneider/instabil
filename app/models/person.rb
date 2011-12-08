@@ -7,6 +7,7 @@ class Person
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Paperclip
+  include Canable::Cans
   
   STORAGE_BACKEND = (ENV["FOG_STORAGE_BACKEND"] || 'localhost:8000').split(':')
   

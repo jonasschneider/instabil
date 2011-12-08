@@ -4,12 +4,8 @@ module Instabil::Pages
       get '/pages/:id/edit' do
         authenticate!
         @page = Page.find(params[:id])
-        
-        if @page.author == current_user
-          haml :page_edit
-        else
-          halt 403
-        end
+        enforce_update_permission(@page)
+        haml :page_edit
       end
       
       get '/pages/new' do
