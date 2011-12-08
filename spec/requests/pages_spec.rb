@@ -103,6 +103,14 @@ describe "Instabil::Pages" do
     
     describe "POSTing to /pages/:id" do
       describe "when the person already has a page" do
+        describe "authored by another user" do
+          it "denies access" do
+            login(lukas.uid, lukas.name)
+            post "/pages/#{anna.page.id}", { :page => { :text => 'Next-level' } }
+            last_response.status.should == 403
+          end
+        end
+        
         before :each do
           post "/pages/#{anna.page.id}", { :page => { :text => 'Next-level' } }
         end

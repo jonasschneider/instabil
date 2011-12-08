@@ -16,6 +16,14 @@ class Page
     person ? person.name : (course ? course.name : nil)
   end
   
+  def viewable_by?(user)
+    true
+  end
+  
+  def creatable_by?(user)
+    true
+  end
+  
   def updatable_by?(user)
     author == user
   end

@@ -11,6 +11,7 @@ module Instabil::Pages
       get '/pages/new' do
         authenticate!
         @page = Page.new
+        enforce_create_permission(@page)
         @target = params[:for_person] ? Person.find(params[:for_person]) : Course.find(params[:for_course])
         haml :page_new
       end
@@ -19,9 +20,9 @@ module Instabil::Pages
         authenticate!
         
         @target = params[:for_person] ? Person.find(params[:for_person]) : Course.find(params[:for_course])
-        
         @page = Page.new
         @page.write_attributes params[:page]
+        enforce_create_permission(@page)
         @page.author = current_user
         
         if @target.page.nil?
@@ -51,6 +52,7 @@ module Instabil::Pages
       post '/pages/:id' do
         authenticate!
         @page = Page.find(params[:id])
+        enforce_update_permission(@page)
         @page.write_attributes params[:page]
         @page.author = current_user
         
@@ -71,6 +73,7 @@ module Instabil::Pages
       get '/pages/:id/versions' do
         authenticate!
         @page = Page.find(params[:id])
+        enforce_view_permission(@page)
         @versions = @page.versions
         
         haml :versions
