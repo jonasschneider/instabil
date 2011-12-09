@@ -5,6 +5,7 @@ module Instabil
     
     "e" => "Englisch",
     "f" => "Französisch",
+    "fb" => "Französisch (bili)",
     "sp" => "Spanisch",
     
     "ph" => "Physik",
