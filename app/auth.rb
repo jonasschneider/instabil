@@ -4,6 +4,7 @@ module Instabil::Auth
       configure do
         set :authorized_group_id, 10095
         set :banned_uids do (ENV["BANNED_UIDS"] || '').split(","); end
+        set :whitelisted_uids do (ENV["WHITELISTED_UIDS"] || '').split(","); end
       end
       
       use OmniAuth::Builder do
@@ -48,6 +49,7 @@ module Instabil::Auth
       
       def authorized?(info)
         return false if settings.banned_uids.include?(info.username)
+        return true if settings.whitelisted_uids.include?(info.username)
         info.group_ids.split(',').include? settings.authorized_group_id.to_s
       end
       

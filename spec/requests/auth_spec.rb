@@ -64,6 +64,20 @@ describe "Authentication" do
     end
   end
   
+  
+  describe 'as a whitelisted user, with an invalid group' do
+    let(:group_ids) { "#{correct_id+1}" }
+    
+    it 'works' do
+      ENV["WHITELISTED_UIDS"] = "someguy,#{user},anotherone"
+      
+      post '/auth/developer/callback', :username => user, :name => name, :group_ids => group_ids
+      last_response.headers['Location'].should == 'http://example.org/'
+      follow_redirect!
+      last_response.body.should include(name)
+    end
+  end
+  
   describe 'as a banned user, with the correct group id' do
     let(:group_ids) { "#{correct_id}" }
     
