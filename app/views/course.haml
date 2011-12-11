@@ -1,6 +1,7 @@
 %h1= @course.name
 - if page = @course.page
-  %a{ :href => "/pages/#{page.id}/edit" } Seite bearbeiten
+  - if current_user.can_update? page
+    %a{ :href => "/pages/#{page.id}/edit" } Seite bearbeiten
   
   %p= markdown page.text
   

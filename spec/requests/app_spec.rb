@@ -130,7 +130,7 @@ describe "The app" do
     end
     
     describe "when the course has a page" do
-      let(:page) { Page.create! text: 'bla', author: jonas }
+      let(:page) { Page.create! text: 'bla', author: lukas }
       
       before :each do
         course.page = page
@@ -144,6 +144,15 @@ describe "The app" do
       
       it "shows a link to edit the page" do
         last_response.body.should have_selector "a[href='/pages/#{page.id}/edit']"
+      end
+      
+      describe "by someone else" do
+        it "shows no link to edit the page" do
+          page.author = jonas
+          page.save!
+          get "/courses/#{course.id}"
+          last_response.body.should_not have_selector "a[href='/pages/#{page.id}/edit']"
+        end
       end
     end
   end
