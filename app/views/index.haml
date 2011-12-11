@@ -82,6 +82,15 @@
       renderMessage(this)
     })
 
+%h2 Neue Benutzer
+
+%ul
+  - Person.order_by(:created_at, :desc).limit(5).each do |person|
+    %li
+      %a{ :href => "/people/#{person.uid}" }= person.name
+      - if person.page.present?
+        %span== (#{person.page.author.name} schreibt die Seite)
+
 %h2 Alle Benutzer
 %a{ name: 'users' }
 
@@ -107,7 +116,7 @@
 %p.small Es werden hier nur Leute angezeigt, die sich schon mal hier angemeldet haben! Das sind also nicht alle Schüler aus der Stufe.
 
 %ul
-  - Person.order_by(:uid).each do |person|
+  - Person.order_by(:uid, :asc).each do |person|
     %li
       %a{ :href => "/people/#{person.uid}" }= person.name
       - if person.page.present?

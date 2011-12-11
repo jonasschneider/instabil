@@ -11,14 +11,6 @@ class Person
   
   STORAGE_BACKEND = (ENV["FOG_STORAGE_BACKEND"] || 'localhost:8000').split(':')
   
-  def self.with_page # HACK
-    all.select{|p| p.page.present? }
-  end
-  
-  def self.without_page # HACK
-    all.select{|p| p.page.nil? }
-  end
-  
   field :uid, type: String
   field :name, type: String
   field :original_name, type: String
