@@ -7,7 +7,7 @@ import subprocess
 parser = OptionParser()
 parser.add_option("-s", "--spoiler", dest="spoiler", help="Spolier text", action="store_true")
 (options, args) = parser.parse_args()
-spoiler = open("spoiler").read()
+spoiler = open("spoilertext").read()
 f = open("pupils.json")
 blah = f.read()
 j = json.loads(blah)

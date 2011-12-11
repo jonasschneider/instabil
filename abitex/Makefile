@@ -45,3 +45,7 @@ view :
 	
 push :
 	./push.sh
+
+missing: fetchpupils
+	./buildpupils.py | head -n -1 > users
+	./qusers.py > missing

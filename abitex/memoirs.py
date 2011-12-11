@@ -66,8 +66,12 @@ def parse_memoir(mem) :
 		print "\\raggedleft \\textsc{\\footnotesize --\\/"+mem["person"].encode("utf-8")+"}\\\\"
 	
 	
-
+memoirs.reverse()
+i = 0
 for n in memoirs :
 	parse_memoir(n)
+	if i == 10:
+		break
+	i+=1
 
 
