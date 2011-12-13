@@ -8,7 +8,7 @@ GET /api/people.json?key=asdf
   
   "page": {
     "kurs": 5,
-    "g8": 1,
+    "g8": 1, // 0|1|2=nil
     
     "lks": "Bio, Molekularspaß mit Hr Kaindl",
     "bio": "Selbstbeschreibung-bla. Twitter-style in 140 Zeichen.",
