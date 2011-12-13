@@ -37,8 +37,10 @@ for pupil in j :
 	content["name"] = content["name"].replace(u"ё", '"e')
 	if content["g8"]==1 :
 		content["g8"] = "G8"
-	else :
+	elif content["g8"]==0 :
 		content["g8"] = "G9"
+	elif content["g8"]==2 :
+		content["g8"] = "G8/G9 \\em{fixme}"
 	#print type(content["tags"])
 	if content["tags"] != None and not options.spoiler:
 		content["tags"] = "\//\/".join(content["tags"])
