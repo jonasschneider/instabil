@@ -67,8 +67,7 @@ class Person
       
       "page" => {
         "kurs" => self.kurs,
-        "g8" => self.g8 ? 1 : 0,
-        
+        "g8" => (g8.nil? ? 2 : g8 ? 1 : 0),
         "lks" => self.lks,
         "bio" => self.bio,
         "foto" => self.avatar_url(:medium),

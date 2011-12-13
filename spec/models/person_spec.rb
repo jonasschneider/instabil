@@ -44,6 +44,14 @@ describe "Person" do
       jonas.api_attributes['page']['text'].should == 'asdf'
       jonas.api_attributes['page']['author'].should == 'Jonas Schneider'
     end
+    
+    it "g8 is 2 when nil" do
+      jonas.api_attributes['page']['g8'].should == 1
+      jonas.g8 = false
+      jonas.api_attributes['page']['g8'].should == 0
+      jonas.g8 = nil
+      jonas.api_attributes['page']['g8'].should == 2
+    end
   end
   
   it "protects uid attribute" do
