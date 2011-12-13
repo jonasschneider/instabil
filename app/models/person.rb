@@ -83,7 +83,7 @@ class Person
   end
   
   def zug
-    g8 ? 'G8' : 'G9'
+    g8.nil? ? 'G8/G9?' : g8 ? 'G8' : 'G9'
   end
   
   def create_page(*att)

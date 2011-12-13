@@ -52,23 +52,13 @@ describe "Person" do
     end.should_not change(jonas, :uid)
   end
   
-  describe ".without_page" do
+ describe "#zug" do
     it "works" do
-      jonas
-      Person.without_page.to_a.should == [jonas]
-      page
-      jonas.reload.save!
-      Person.without_page.to_a.should == []
-    end
-  end
-  
-  describe ".with_page" do
-    it "works" do
-      jonas
-      Person.with_page.to_a.should == []
-      page
-      jonas.reload.save!
-      Person.with_page.to_a.should == [jonas]
+      jonas.zug.should == 'G8'
+      jonas.g8 = false
+      jonas.zug.should == 'G9'
+      jonas.g8 = nil
+      jonas.zug.should == 'G8/G9?'
     end
   end
   
