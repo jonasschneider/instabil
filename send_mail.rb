@@ -14,17 +14,17 @@ people = JSON.parse(open(URL).read)
 puts "Done, got #{people.length} records.".green
 
 print "Subject: ".white
-SUBJECT = gets
+SUBJECT = $stdin.gets
 
 puts "Body (until EOF):".white
 body = ''
-while (line = gets) && !line.strip.empty?
+while (line = $stdin.gets) && !line.strip.empty?
   body << line
 end
 BODY = body
 
 puts "Press Enter to continue.".yellow
-gets
+$stdin.gets
 
 puts
 sent = 0
