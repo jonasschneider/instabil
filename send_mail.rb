@@ -17,11 +17,7 @@ print "Subject: ".white
 SUBJECT = $stdin.gets
 
 puts "Body (until EOF):".white
-body = ''
-while (line = $stdin.gets) && !line.strip.empty?
-  body << line
-end
-BODY = body
+BODY = $stdin.read
 
 puts "Press Enter to continue.".yellow
 $stdin.gets
