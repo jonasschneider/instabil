@@ -2,6 +2,7 @@ require "mongoid_paperclip"
 require "fog/external/storage"
 require "bertrpc"
 require 'fog/external/backend/bertrpc'
+require "tmpdir"
 
 class Person
   include Mongoid::Document
@@ -9,7 +10,7 @@ class Person
   include Mongoid::Paperclip
   include Canable::Cans
   
-  STORAGE_BACKEND = (ENV["FOG_STORAGE_BACKEND"] || 'localhost:8000').split(':')
+  
   
   field :uid, type: String
   field :name, type: String
@@ -20,12 +21,24 @@ class Person
   field :g8, type: Boolean
   
   field :lks, type: String
-  field :bio, type: String
+  field :zukunft, type: String
+  field :nachabi, type: String
+  field :lebenswichtig, type: String
   
-  has_mongoid_attached_file :avatar, :storage => :fog, :fog_credentials => { 
-    :provider => 'external',
-    :delegate   => Fog::External::Backend::Bertrpc.new(*STORAGE_BACKEND)
-  }, :fog_directory => 'paperclip', 
+  if ENV["FOG_STORAGE_BACKEND"]
+    STORAGE_BACKEND = (ENV["FOG_STORAGE_BACKEND"] || 'localhost:8000').split(':')
+    fog_opts = { 
+      :provider => 'external',
+      :delegate   => Fog::External::Backend::Bertrpc.new(*STORAGE_BACKEND)
+    }
+  else
+    fog_opts = {
+      :provider => 'local',
+      :local_root => Dir.mktmpdir
+    }
+  end
+  
+  has_mongoid_attached_file :avatar, :storage => :fog, :fog_credentials => fog_opts, :fog_directory => 'paperclip', 
     :path => ':attachment/:id/:style/:filename',
 
     :styles => {
@@ -68,8 +81,12 @@ class Person
       "page" => {
         "kurs" => self.kurs,
         "g8" => (g8.nil? ? 2 : g8 ? 1 : 0),
+        
         "lks" => self.lks,
-        "bio" => self.bio,
+        "zukunft" => self.zukunft,
+        "nachabi" => self.nachabi,
+        "lebenswichtig" => self.lebenswichtig,
+        
         "foto" => self.avatar_url(:medium),
         "foto_mtime" => self.avatar.updated_at,
         

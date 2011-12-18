@@ -7,7 +7,7 @@ describe Instabil::People do
   let(:anna) do
     Person.create!(name: "Anna") do |anna|
       anna.uid = "winteran"
-      anna.bio = 'Bla'
+      anna.zukunft = 'Bla'
       anna.lks = "ENDLICH!"
     end.tap do |anna|
       anna.create_page text: 'Text', author: jonas
@@ -53,9 +53,7 @@ describe Instabil::People do
         get "/people/#{anna.uid}"
       end
       
-      it "displays the page info" do
-        last_response.body.should include(anna.bio)
-        last_response.body.should include(anna.lks)
+      it "displays the page text" do
         last_response.body.should include(anna.page.text)
       end
       

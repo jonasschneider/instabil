@@ -38,11 +38,17 @@
     %input{ name: "person[lks]", value: @person.lks, type: 'text', :placeholder => 'z.B. "Molekularspaß mit Hr Kaindl"', :size => 40 }
     %br
     
-    %label{:for => "person[bio]"} Kurzbeschreibung:
-    %input{ name: "person[bio]", value: @person.bio, type: 'text', :maxsize => 140, :placeholder => "z.B. ein Zitat, ein Erlebnis" }
-    (Maximal 140 Zeichen!)
-    
+    %label{:for => "person[zukunft]"} Später:
+    %input{ name: "person[zukunft]", value: @person.zukunft, size: 60, type: 'text', :placeholder => "z.B. werde ich Atomrandphysiker" }
     %br
-    Tags: kommt noch
+    
+    %label{:for => "person[nachabi]"} Nach dem Abi:
+    %input{ name: "person[nachabi]", value: @person.nachabi, type: 'text', :placeholder => "z.B. nehm ich kein Buch mehr in die Hand" }
+    %br
+    
+    Ohne
+    %input{ name: "person[lebenswichtig]", value: @person.lebenswichtig, type: 'text'}
+    hätte ich das Abi nicht geschafft.
+  
   %p
     %input{ type: 'submit', value: 'Speichern' }

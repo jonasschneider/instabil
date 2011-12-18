@@ -11,7 +11,11 @@ GET /api/people.json?key=asdf
     "g8": 1, // 0|1|2=nil
     
     "lks": "Bio, Molekularspaß mit Hr Kaindl",
-    "bio": "Selbstbeschreibung-bla. Twitter-style in 140 Zeichen.",
+    "zukunft": "Später mal...",
+    "nachabi": "nix machen",
+    "lebenswichtig": "Ruby",
+    
+    "dob": "21.10.2015",
     "foto": "http://instabil.heroku.com/leute/schneijo/bild.png",
     "foto_mtime": 1322956747,
     

@@ -46,13 +46,13 @@ describe "The app" do
     it "shows a banner informing to enter an email address, and sets the email" do
       last_response.body.should have_selector("#nomail")
       last_response.body.should have_selector("body.nomail")
-      lukas.bio = 'test'
+      lukas.zukunft = 'test'
       lukas.save!
       fill_in "person[email]", with: 'my@mail.net'
       click_button "Ja, die Email stimmt. Speichern!"
       lukas.reload
       lukas.email.should == 'my@mail.net'
-      lukas.bio.should == 'test'
+      lukas.zukunft.should == 'test'
     end
     
     it "shows a link to the user's profile" do

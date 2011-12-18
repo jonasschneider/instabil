@@ -9,6 +9,7 @@ describe "Person" do
        p.kurs = 5
        p.g8 = true
        p.lks = 'lks'
+       p.zukunft = 'cool'
        p.save!
      end
   end
@@ -35,7 +36,10 @@ describe "Person" do
       jonas.api_attributes['page']['kurs'].should == 5
       jonas.api_attributes['page']['g8'].should == 1
       jonas.api_attributes['page']['lks'].should == 'lks'
-      jonas.api_attributes['page']['bio'].should == nil
+      jonas.api_attributes['page']['zukunft'].should == 'cool'
+      jonas.api_attributes['page']['nachabi'].should == nil
+      jonas.api_attributes['page']['lebenswichtig'].should == nil
+      
       jonas.api_attributes['page']['foto'].should == "/people/schneijo/avatar/medium"
     end
     
@@ -71,6 +75,21 @@ describe "Person" do
   end
   
   describe "#avatar" do
-    # see spec/requests/avatar_spec.rb, they need the ernie
+    let(:avatar_path) { File.join(File.dirname(__FILE__), '..', 'avatar.jpg') }
+    
+    it "gets resized" do
+      jonas.avatar = Rack::Test::UploadedFile.new(avatar_path, 'avatar.jpg')
+      jonas.save!
+      x = Tempfile.new 'avatar'
+      x.write(jonas.avatar.to_file(:medium).read)
+      x.close
+      `identify #{x.path}`.should include('300x300')
+    end
+  
+    it "has a url" do
+      jonas.avatar = Rack::Test::UploadedFile.new(avatar_path, 'avatar.jpg')
+      jonas.save!
+      jonas.avatar_url.should include("/people/schneijo/avatar/original")
+    end
   end
 end

@@ -1,28 +1,6 @@
 require File.expand_path(File.dirname(__FILE__)+'/../spec_helper')
 
-describe "The app (containing avatar stuff)" do
-  before :all do
-    @ernie_pidfile = Tempfile.new 'ernie-pid'
-    @ernie_dir = Dir.mktmpdir('instabil-test-run-ernie')
-    puts "Starting ernie at #{@dir} with pidfile #{@ernie_pidfile.path}"
-    wd = File.join(File.dirname(__FILE__), '..', '..')
-    cmd = "cd #{wd}; DATA_DIR=#{@ernie_dir} ernie -d -c lib/instabil/ernie/ernie.conf -P #{@ernie_pidfile.path}"
-    puts cmd
-    system(cmd)
-    
-    puts "waiting for ernie to come up"
-    sleep(1) while !is_port_open?('127.0.0.1', 8000)
-    puts "ernie is up"
-  end
-  
-  after :all do
-    pid = File.read(@ernie_pidfile.path)
-    if !pid.empty?
-      puts "Stopping ernie."
-      %x(kill #{pid})
-    end
-  end
-  
+describe "Preferences" do
   describe "viewed as lukas" do
     let(:jonas) do
       Person.create! name: "Jonas Schneider" do |p|
@@ -42,22 +20,6 @@ describe "The app (containing avatar stuff)" do
     
     let(:avatar_path) { File.join(File.dirname(__FILE__), '..', 'avatar.jpg') }
     
-    describe "Person#avatar" do
-      it "gets resized" do
-        jonas.avatar = Rack::Test::UploadedFile.new(avatar_path, 'avatar.jpg')
-        jonas.save!
-        x = Tempfile.new 'avatar'
-        x.write(jonas.avatar.to_file(:medium).read)
-        x.close
-        `identify #{x.path}`.should include('300x300')
-      end
-    
-      it "has a url" do
-        jonas.avatar = Rack::Test::UploadedFile.new(avatar_path, 'avatar.jpg')
-        jonas.save!
-        jonas.avatar_url.should include("/people/schneijo/avatar/original")
-      end
-    end
   
     describe "visiting /preferences" do
       it "shows a form for the user to edit name and email" do
@@ -72,7 +34,10 @@ describe "The app (containing avatar stuff)" do
         
         last_response.should have_selector form + ' input[name="person[kurs]"][type=text]'
         last_response.should have_selector form + ' input[name="person[g8]"][type=checkbox]'
-        last_response.should have_selector form + ' input[name="person[bio]"][type=text]'
+        
+        last_response.should have_selector form + ' input[name="person[zukunft]"][type=text]'
+        last_response.should have_selector form + ' input[name="person[nachabi]"][type=text]'
+        last_response.should have_selector form + ' input[name="person[lebenswichtig]"][type=text]'
         
         last_response.should have_selector form + ' input[name="person[avatar]"][type=file]'
         

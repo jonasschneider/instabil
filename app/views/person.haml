@@ -1,24 +1,16 @@
 %h1= @person.name
 %h2== Kurs K2.#{@person.kurs}, #{@person.zug}
 %img{ src: @person.avatar_url(:medium) }
-%p
-  Vierstündig:
-  = @person.lks
-  %br
-
-  Kurzinfo:
-  = @person.bio
-  
-  %h2 Tags
-  - if @person.tags.empty?
-    %p (noch keine Tags)
-  - else
-    %ul
-      - @person.tags.each do |tag|
-        %li.tag= tag.name
-  %form{ action: "/people/#{@person.id}/tags", method: 'post' }
-    %input{ name: 'tag[name]', type: 'text' }
-    %input{ type: 'submit', value: 'Hinzufügen' }
+%h2 Tags
+- if @person.tags.empty?
+  %p (noch keine Tags)
+- else
+  %ul
+    - @person.tags.each do |tag|
+      %li.tag= tag.name
+%form{ action: "/people/#{@person.id}/tags", method: 'post' }
+  %input{ name: 'tag[name]', type: 'text' }
+  %input{ type: 'submit', value: 'Hinzufügen' }
 
 %h2 Abizeitungs-Seite
 - if @person == current_user
