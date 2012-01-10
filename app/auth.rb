@@ -22,7 +22,7 @@ class OmniAuth::Strategies::LDAP
     f.text_field 'Benutzername im Schulnetzwerk', 'username'
     f.password_field 'Passwort', 'password'
     f.instance_eval do
-      @html << "<h4><i>(Kann ein wenig dauern)</i></h4>"
+      @html << "<h4><i>(Dauert einen Moment)</i></h4>"
     end
     f.to_response
   end
@@ -69,8 +69,8 @@ module Instabil::Auth
 
       use Warden::Manager do |manager|
         manager.failure_app = Proc.new do |env|
-            puts "auth failure, redirecting to fichteid"
-            [301, { 'Location' => '/auth/fichteid', 'Content-Type'=> 'text/plain' }, ['Log in please.']]
+            puts "auth failure, redirecting to login"
+            [301, { 'Location' => '/auth/ldap', 'Content-Type'=> 'text/plain' }, ['Log in please.']]
           end
       end
       
@@ -139,7 +139,7 @@ module Instabil::Auth
       
       get '/logout' do
         warden.logout
-        redirect "http://fichteid.heroku.com/sso/logout?return_to=#{url '/?logged_out=true'}"
+        redirect url('/?logged_out=true')
       end
     end
   end

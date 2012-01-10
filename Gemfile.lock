@@ -6,13 +6,6 @@ GIT
       hashie (~> 1.2)
       rack
 
-GIT
-  remote: git://github.com/jonasschneider/fichteid-client.git
-  revision: 528546a3589979a2c8821e5f36eb9878bca03f6c
-  specs:
-    fichteid-client (0.0.1)
-      ruby-openid (~> 2.1.8)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -111,7 +104,6 @@ GEM
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.7.0)
     ruby-hmac (0.4.0)
-    ruby-openid (2.1.8)
     rubyntlm (0.1.1)
     sass (3.1.7)
     signature (0.1.2)
@@ -143,7 +135,6 @@ DEPENDENCIES
   bson_ext
   canable
   ernie
-  fichteid-client!
   fog
   fog-external
   haml
