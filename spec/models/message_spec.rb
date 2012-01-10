@@ -24,7 +24,7 @@ describe "Message" do
   end
   
   it "has a max length" do
-    message.body = 'a'*100
+    message.body = 'a'*200
     message.should_not be_valid
   end
 end
