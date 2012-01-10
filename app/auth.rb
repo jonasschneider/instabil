@@ -57,6 +57,13 @@ module Instabil::Auth
         unless authorized?(info)
           halt 403, haml(:authfail, :layout => false)
         end
+
+        if Time.now < ((session['bounce_timer'] || Time.now - 15) + 10)
+          puts "#{info.inspect} got bounced"
+          redirect '/logout' # debounce, attempt to fix login bug
+        end
+
+        session['bounce_timer'] = Time.now
         
         user = Person.find_or_initialize_by uid: info.username
         user.uid = info.username

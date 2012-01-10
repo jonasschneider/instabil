@@ -24,7 +24,7 @@ describe "Authentication" do
     end
   end
 
-  describe 'with the correct group id' do
+  describe 'POST /auth/developers/callback with the correct group id' do
     let(:group_ids) { "#{correct_id}" }
     
     it 'works' do
@@ -41,55 +41,61 @@ describe "Authentication" do
       Person.first.original_name.should == 'Atmos'
       Person.first.email.should == nil
     end
-  end
-  
-  describe 'with a set of groups including the correct group id' do
-    let(:group_ids) { "#{correct_id+1},#{correct_id}" }
     
-    it 'works' do
+    it "redirects to logout when bouncing" do
       post '/auth/developer/callback', :username => user, :name => name, :group_ids => group_ids
-      last_response.headers['Location'].should == 'http://example.org/'
-      follow_redirect!
-      last_response.body.should include(name)
-    end
-  end
-  
-  describe 'with an unauthorized group id' do
-    let(:group_ids) { "#{correct_id+1}" }
-    
-    it 'fails' do
       post '/auth/developer/callback', :username => user, :name => name, :group_ids => group_ids
-      last_response.status.should == 403
-      last_response.body.should include('nicht berechtigt')
+      last_response.headers['Location'].should == 'http://example.org/logout'
     end
-  end
-  
-  
-  describe 'as a whitelisted user, with an invalid group' do
-    let(:group_ids) { "#{correct_id+1}" }
-    
-    it 'works' do
-      ENV["WHITELISTED_UIDS"] = "someguy,#{user},anotherone"
+
+    describe 'with a set of groups including the correct group id' do
+      let(:group_ids) { "#{correct_id+1},#{correct_id}" }
       
-      post '/auth/developer/callback', :username => user, :name => name, :group_ids => group_ids
-      last_response.headers['Location'].should == 'http://example.org/'
-      follow_redirect!
-      last_response.body.should include(name)
+      it 'works' do
+        post '/auth/developer/callback', :username => user, :name => name, :group_ids => group_ids
+        last_response.headers['Location'].should == 'http://example.org/'
+        follow_redirect!
+        last_response.body.should include(name)
+      end
     end
-  end
-  
-  describe 'as a banned user, with the correct group id' do
-    let(:group_ids) { "#{correct_id}" }
-    
-    it 'fails' do
-      ENV["BANNED_UIDS"] = "someguy,#{user},anotherone"
+
+    describe 'with an unauthorized group id' do
+      let(:group_ids) { "#{correct_id+1}" }
       
-      post '/auth/developer/callback', :username => user, :name => name, :group_ids => group_ids
-      last_response.status.should == 403
-      last_response.body.should include('nicht berechtigt')
+      it 'fails' do
+        post '/auth/developer/callback', :username => user, :name => name, :group_ids => group_ids
+        last_response.status.should == 403
+        last_response.body.should include('nicht berechtigt')
+      end
+    end
+
+
+    describe 'as a whitelisted user, with an invalid group' do
+      let(:group_ids) { "#{correct_id+1}" }
+      
+      it 'works' do
+        ENV["WHITELISTED_UIDS"] = "someguy,#{user},anotherone"
+        
+        post '/auth/developer/callback', :username => user, :name => name, :group_ids => group_ids
+        last_response.headers['Location'].should == 'http://example.org/'
+        follow_redirect!
+        last_response.body.should include(name)
+      end
+    end
+
+    describe 'as a banned user, with the correct group id' do
+      let(:group_ids) { "#{correct_id}" }
+      
+      it 'fails' do
+        ENV["BANNED_UIDS"] = "someguy,#{user},anotherone"
+        
+        post '/auth/developer/callback', :username => user, :name => name, :group_ids => group_ids
+        last_response.status.should == 403
+        last_response.body.should include('nicht berechtigt')
+      end
     end
   end
-  
+
   describe 'GET /logout' do
     describe "when logged in" do
       let(:lukas) do
