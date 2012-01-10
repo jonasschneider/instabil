@@ -1,3 +1,33 @@
+require 'omniauth-ldap'
+
+class OmniAuth::Strategies::LDAP
+  def request_phase
+    f = OmniAuth::Form.new(:title => (options[:title] || "LDAP Authentication"), :url => callback_path)
+
+    if fail_reason = request.params['fail']
+      case fail_reason
+      when 'credentials'
+        text = 'Benutzername oder Passwort falsch.'
+      when 'internal'
+        text = 'Das ging schief. Ist der Schulserver down?'
+      else
+        text = fail_reason
+      end
+
+      f.instance_eval do
+        @html << "<h3>#{text}</h3>"
+      end
+    end
+    
+    f.text_field 'Benutzername im Schulnetzwerk', 'username'
+    f.password_field 'Passwort', 'password'
+    f.instance_eval do
+      @html << "<h4><i>(Kann ein wenig dauern)</i></h4>"
+    end
+    f.to_response
+  end
+end
+
 module Instabil::Auth
   def self.registered(app)
     app.class_eval do
@@ -8,9 +38,8 @@ module Instabil::Auth
       end
       
       use OmniAuth::Builder do
-        #provider :fichteid, :key => ENV['FICHTE_HMAC_SECRET'] || 'mypw'
         provider :ldap, 
-          :title => "My LDAP", 
+          :title => 'Anmeldung am Fichte-Schulnetzwerk', 
           :host => 'www.fichteportfolio.de',
           :port => 636,
           :method => :ssl,
@@ -23,8 +52,17 @@ module Instabil::Auth
         
         configure do |c|
           c.on_failure = Proc.new do |env|
-            puts "omniauth error: #{env['omniauth.type'].inspect} #{env['omniauth.error'].inspect}"
-            [301, { 'Location' => '/auth/fichteid', 'Content-Type'=> 'text/plain' }, ['Das hat nicht geklappt.']]
+            if env['omniauth.error.type'] == :invalid_credentials
+              [302, { 'Location' => '/auth/ldap?fail=credentials', 'Content-Type'=> 'text/plain' }, []]
+            else
+              Airbrake.notify(
+                :error_class   => "Auth Error",
+                :error_message => "OmniAuth Error: #{env['omniauth.error.type']}",
+                :parameters    => env
+              )
+
+              [302, { 'Location' => '/auth/ldap?fail=internal', 'Content-Type'=> 'text/plain' }, []]
+            end
           end
         end
       end
@@ -89,7 +127,6 @@ module Instabil::Auth
       end
       
       post '/auth/ldap/callback' do
-        puts "got info: #{env['omniauth.auth']}"
         ldap_info = env['omniauth.auth'].extra.raw_info
 
         info = Hashie::Mash.new
@@ -97,7 +134,6 @@ module Instabil::Auth
         info[:name] = ldap_info['displayname'].first
         info[:group_ids] = ldap_info['gidnumber'].join(',')
         
-        puts "info hash: #{info.inspect}"
         authenticate_with_info! info
       end
       
