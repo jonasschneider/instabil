@@ -14,7 +14,7 @@ people = JSON.parse(open(URL).read)
 puts "Done, got #{people.length} records.".green
 
 print "Subject: ".white
-SUBJECT = $stdin.gets
+SUBJECT = $stdin.gets.strip
 
 print "Body filename: ".white
 filename = $stdin.gets.strip
@@ -48,7 +48,7 @@ people.each do |person|
   end
   begin
     m = Mail.new({
-      :from => ENV['GMAIL_SMTP_USER'],
+      :from => "#{ENV['GMAIL_SMTP_USER']}@gmail.com",
       :to => person["email"],
       :subject => SUBJECT,
       :body => BODY,
