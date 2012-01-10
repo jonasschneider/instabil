@@ -16,13 +16,15 @@ module Instabil::Auth
         
         configure do |c|
           c.on_failure = Proc.new do |env|
-            [400, { 'Content-Type'=> 'text/html'}, [env["omniauth.error.type"].inspect]]
+            puts "omniauth error: #{env["omniauth.error.type"].inspect}"
+            [301, { 'Location' => '/auth/fichteid', 'Content-Type'=> 'text/plain' }, ['Das hat nicht geklappt.']]
           end
         end
       end
 
       use Warden::Manager do |manager|
         manager.failure_app = Proc.new do |env|
+            puts "auth failure, redirecting to fichteid"
             [301, { 'Location' => '/auth/fichteid', 'Content-Type'=> 'text/plain' }, ['Log in please.']]
           end
       end
@@ -44,7 +46,9 @@ module Instabil::Auth
       end
       
       def authenticate!
+        puts "call to authenticate!"
         warden.authenticate!
+        puts "authenticated as #{current_user.uid}"
       end
       
       def authorized?(info)
@@ -65,7 +69,7 @@ module Instabil::Auth
           user.name = info.name
           user.save!
         end
-        
+        puts "logged in as #{user.inspect}"
         warden.set_user user
         redirect "/"
       end
