@@ -8,7 +8,14 @@ module Instabil::Auth
       end
       
       use OmniAuth::Builder do
-        provider :fichteid, :key => ENV['FICHTE_HMAC_SECRET'] || 'mypw'
+        #provider :fichteid, :key => ENV['FICHTE_HMAC_SECRET'] || 'mypw'
+        provider :ldap, 
+          :title => "My LDAP", 
+          :host => 'www.fichteportfolio.de',
+          :port => 636,
+          :method => :ssl,
+          :base => 'ou=accounts,dc=fichteportfolio,dc=de',
+          :uid => 'uid'
         
         if app.development? || app.test?
           provider :developer, :fields => [:username, :name, :group_ids], :uid_field => :username
@@ -16,7 +23,7 @@ module Instabil::Auth
         
         configure do |c|
           c.on_failure = Proc.new do |env|
-            puts "omniauth error: #{env["omniauth.error.type"].inspect}"
+            puts "omniauth error: #{env['omniauth.type'].inspect} #{env['omniauth.error'].inspect}"
             [301, { 'Location' => '/auth/fichteid', 'Content-Type'=> 'text/plain' }, ['Das hat nicht geklappt.']]
           end
         end
@@ -57,6 +64,7 @@ module Instabil::Auth
         info.group_ids.split(',').include? settings.authorized_group_id.to_s
       end
       
+      # info: Hashie::Mash of { username: 'schneijo', name: 'Jonas Schneider', group_ids => '1,2' }
       def authenticate_with_info!(info)
         unless authorized?(info)
           halt 403, haml(:authfail, :layout => false)
@@ -80,8 +88,17 @@ module Instabil::Auth
         end
       end
       
-      get '/auth/fichteid/callback' do
-        authenticate_with_info! env['omniauth.auth'].info
+      post '/auth/ldap/callback' do
+        puts "got info: #{env['omniauth.auth']}"
+        ldap_info = env['omniauth.auth'].extra.raw_info
+
+        info = Hashie::Mash.new
+        info[:username] = ldap_info['uid'].first
+        info[:name] = ldap_info['displayname'].first
+        info[:group_ids] = ldap_info['gidnumber'].join(',')
+        
+        puts "info hash: #{info.inspect}"
+        authenticate_with_info! info
       end
       
       get '/logout' do
