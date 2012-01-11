@@ -1,33 +1,3 @@
-require 'omniauth-ldap'
-
-class OmniAuth::Strategies::LDAP
-  def request_phase
-    f = OmniAuth::Form.new(:title => (options[:title] || "LDAP Authentication"), :url => callback_path)
-
-    if fail_reason = request.params['fail']
-      case fail_reason
-      when 'credentials'
-        text = 'Benutzername oder Passwort falsch.'
-      when 'internal'
-        text = 'Das ging schief. Ist der Schulserver down?'
-      else
-        text = fail_reason
-      end
-
-      f.instance_eval do
-        @html << "<h3>#{text}</h3>"
-      end
-    end
-    
-    f.text_field 'Benutzername im Schulnetzwerk', 'username'
-    f.password_field 'Passwort', 'password'
-    f.instance_eval do
-      @html << "<h4><i>(Dauert einen Moment)</i></h4>"
-    end
-    f.to_response
-  end
-end
-
 module Instabil::Auth
   def self.registered(app)
     app.class_eval do
