@@ -107,9 +107,9 @@ describe "Authentication" do
         last_response.headers["Location"].should == 'http://fichteid.heroku.com/sso/logout?return_to=http://example.org/?logged_out=true'
       end
       
-      it "clears the session" do
+      it "requires authentication again" do
         get '/courses'
-        last_response.status.should == 301
+        last_response.status.should == 302
       end
     end
   end
