@@ -38,13 +38,7 @@ module Instabil::Auth
       end
       
       use OmniAuth::Builder do
-        provider :ldap, 
-          :title => 'Anmeldung am Fichte-Schulnetzwerk', 
-          :host => 'www.fichteportfolio.de',
-          :port => 636,
-          :method => :ssl,
-          :base => 'ou=accounts,dc=fichteportfolio,dc=de',
-          :uid => 'uid'
+        provider :fichteid, :key => ENV['FICHTE_HMAC_SECRET'] || 'mypw'
         
         if app.development? || app.test?
           provider :developer, :fields => [:username, :name, :group_ids], :uid_field => :username
@@ -52,17 +46,8 @@ module Instabil::Auth
         
         configure do |c|
           c.on_failure = Proc.new do |env|
-            if env['omniauth.error.type'] == :invalid_credentials
-              [302, { 'Location' => '/auth/ldap?fail=credentials', 'Content-Type'=> 'text/plain' }, []]
-            else
-              Airbrake.notify(
-                :error_class   => "Auth Error",
-                :error_message => "OmniAuth Error: #{env['omniauth.error.type']}",
-                :parameters    => env
-              )
-
-              [302, { 'Location' => '/auth/ldap?fail=internal', 'Content-Type'=> 'text/plain' }, []]
-            end
+            puts "omniauth error: #{env["omniauth.error.type"].inspect}"
+            [302, { 'Location' => '/auth/fichteid', 'Content-Type'=> 'text/plain' }, ['Das hat nicht geklappt.']]
           end
         end
       end
@@ -102,7 +87,6 @@ module Instabil::Auth
         info.group_ids.split(',').include? settings.authorized_group_id.to_s
       end
       
-      # info: Hashie::Mash of { username: 'schneijo', name: 'Jonas Schneider', group_ids => '1,2' }
       def authenticate_with_info!(info)
         unless authorized?(info)
           halt 403, haml(:authfail, :layout => false)
@@ -126,20 +110,13 @@ module Instabil::Auth
         end
       end
       
-      post '/auth/ldap/callback' do
-        ldap_info = env['omniauth.auth'].extra.raw_info
-
-        info = Hashie::Mash.new
-        info[:username] = ldap_info['uid'].first
-        info[:name] = ldap_info['displayname'].first
-        info[:group_ids] = ldap_info['gidnumber'].join(',')
-        
-        authenticate_with_info! info
+      get '/auth/fichteid/callback' do
+        authenticate_with_info! env['omniauth.auth'].info
       end
       
       get '/logout' do
         warden.logout
-        redirect url('/?logged_out=true')
+        redirect "http://fichteid.heroku.com/sso/logout?return_to=#{url '/?logged_out=true'}"
       end
     end
   end

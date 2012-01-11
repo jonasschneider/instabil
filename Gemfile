@@ -13,7 +13,7 @@ gem "canable"
 
 gem 'warden'
 gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git'
-gem 'omniauth-ldap'
+gem 'fichteid-client', :git => 'git://github.com/jonasschneider/fichteid-client.git'
 
 gem "ernie", :group => :ernie
 
