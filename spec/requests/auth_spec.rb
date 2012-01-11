@@ -13,7 +13,7 @@ describe "Authentication" do
     
     it "displays a link to log in" do
       get '/'
-      last_response.should have_selector("a[href='/auth/ldap']")
+      last_response.should have_selector("form[action='/auth/fichteid']")
     end
     
     describe "with logged_out=true" do
@@ -103,8 +103,8 @@ describe "Authentication" do
         get '/logout'
       end
       
-      it 'redirects to the logout page with a return_to parameter' do
-        last_response.headers["Location"].should == 'http://example.org/?logged_out=true'
+      it 'redirects to the fichteID logout page with a return_to parameter' do
+        last_response.headers["Location"].should == 'http://fichteid.heroku.com/sso/logout?return_to=http://example.org/?logged_out=true'
       end
       
       it "clears the session" do
