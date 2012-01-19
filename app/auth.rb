@@ -25,7 +25,7 @@ module Instabil::Auth
       use Warden::Manager do |manager|
         manager.failure_app = Proc.new do |env|
             puts "auth failure, redirecting to login"
-            [302, { 'Location' => '/auth/ldap', 'Content-Type'=> 'text/plain' }, ['Log in please.']]
+            [302, { 'Location' => '/auth/fichteid', 'Content-Type'=> 'text/plain' }, ['Log in please.']]
           end
       end
       
