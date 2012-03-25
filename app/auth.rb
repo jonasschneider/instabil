@@ -24,7 +24,6 @@ module Instabil::Auth
 
       use Warden::Manager do |manager|
         manager.failure_app = Proc.new do |env|
-            puts "auth failure, redirecting to login"
             [302, { 'Location' => '/auth/fichteid', 'Content-Type'=> 'text/plain' }, ['Log in please.']]
           end
       end
@@ -46,9 +45,7 @@ module Instabil::Auth
       end
       
       def authenticate!
-        puts "call to authenticate!"
         warden.authenticate!
-        puts "authenticated as #{current_user.uid}"
       end
       
       def authorized?(info)
@@ -69,7 +66,7 @@ module Instabil::Auth
           user.name = info.name
           user.save!
         end
-        puts "logged in as #{user.inspect}"
+
         warden.set_user user
         redirect "/"
       end
