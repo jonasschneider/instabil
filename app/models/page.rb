@@ -17,7 +17,9 @@ class Page
   end
   
   def viewable_by?(user)
-    true
+    # Course pages are viewable by everyone,
+    # Person pages only by the author
+    !person || author == user
   end
   
   def creatable_by?(user)

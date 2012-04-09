@@ -10,7 +10,7 @@ describe Instabil::People do
       anna.zukunft = 'Bla'
       anna.lks = "ENDLICH!"
     end.tap do |anna|
-      anna.create_page text: 'Text', author: jonas
+      anna.create_page text: 'annatext', author: jonas
     end
   end
   
@@ -31,7 +31,7 @@ describe Instabil::People do
     
     describe "when trying to visit one's own page" do
       before :each do
-        jonas.create_page text: 'bla', author: jonas
+        jonas.create_page text: 'bla', author: lukas
         get "/people/#{jonas.uid}"
       end
       
@@ -40,7 +40,7 @@ describe Instabil::People do
       end
       
       it "shows a notice" do
-        last_response.body.should include("deine eigene Seite nicht")
+        last_response.body.should include("nicht anschauen")
       end
       
       it 'displays no link to edit the page' do
@@ -78,10 +78,21 @@ describe Instabil::People do
       end
       
       describe "authored by someone else" do
-        it 'displays no link to edit the page' do
+        before do
           login(lukas.uid, lukas.name)
           get "/people/winteran"
+        end
+
+        it 'displays no link to edit the page' do
           last_response.body.should_not have_selector("a[href='/pages/#{anna.page.id}/edit']")
+        end
+
+        it "does not show the page contents"  do
+          last_response.body.should_not include("annatext")
+        end
+        
+        it "shows a notice" do
+          last_response.body.should include("nicht anschauen")
         end
       end
       

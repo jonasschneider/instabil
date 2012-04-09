@@ -13,10 +13,9 @@
   %input{ type: 'submit', value: 'Hinzufügen' }
 
 %h2 Abizeitungs-Seite
-- if @person == current_user
-  %p Du kannst deine eigene Seite nicht anschauen ;)
-- else
-  - if page = @person.page
+- if page = @person.page
+  == #{page.author.name} schreibt die Seite.
+  - if current_user.can_view?(page)
     - section :footer do
       %p#last-edit 
         == Version #{page.version}, zuletzt bearbeitet von
@@ -38,6 +37,10 @@
         %em (Du kannst die Seite nicht bearbeiten.)
 
   - else
+    %p Du darfst die Seite aber nicht anschauen ;)
+
+- else
+  - unless @person == current_user
     %p
       == #{@person.name} hat noch keine Seite. Du kannst sie erstellen.
 
