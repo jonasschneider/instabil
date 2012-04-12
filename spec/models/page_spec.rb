@@ -37,7 +37,7 @@ describe "Page" do
   describe "#compare" do
     it "works for the first version" do
       page.version.should == 1
-      page.compare(0, 1).should == { "kurs" => 5, "g8" => true }
+      page.compare(0, 1).should == {"text"=>"", "kurs" => 5, "g8" => true }
     end
     
     it "works for a second version" do
@@ -60,6 +60,15 @@ describe "Page" do
       course.page = Page.create text: 'ohai', author: me
 
       course.page.name.should == 'Kursbericht für 4BIO02'
+    end
+  end
+
+  describe "#wordcount" do
+    it "works" do
+      page.text = 'Hello world'
+      page.wordcount.should == 2
+      page.text = 'Hello worldHello worldHello world'
+      page.wordcount.should == 4
     end
   end
 end

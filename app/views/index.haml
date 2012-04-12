@@ -6,6 +6,7 @@
     - current_user.assigned_pages.each do |p|
       %li
         %a{ href: "/pages/#{p.id}/edit"}= p.name
+        %span.wordcount== (#{p.wordcount} Wörter)
 
 %h2 Was ist das hier?
 %p

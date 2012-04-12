@@ -4,7 +4,7 @@ class Page
   include Mongoid::Timestamps
   include Canable::Ables
   
-  field :text, type: String
+  field :text, type: String, default: ''
   
   belongs_to :author, class_name: 'Person', inverse_of: nil
   validates_presence_of :author
@@ -57,5 +57,9 @@ class Page
     diff_array = new_version.to_hash.to_a - old_version.to_hash.to_a
     diff_array.delete_if {|f| reject_fields.include?(f.first) }
     Hash[diff_array]
+  end
+
+  def wordcount
+    (text || "").scan(/\w+/).length
   end
 end
