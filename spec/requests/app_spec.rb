@@ -42,6 +42,17 @@ describe "The app" do
         last_response.body.should_not have_selector("body.nomail")
       end
     end
+
+    describe "shows a list of pages owned by the user" do
+      before :each do
+        jonas.create_page text: 'Text', author: lukas
+        get "/"
+      end
+      
+      it "works" do
+        last_response.body.should have_selector("#dashboard a", content: 'Personenbericht für Jonas Schneider')
+      end
+    end
     
     it "shows a banner informing to enter an email address, and sets the email" do
       last_response.body.should have_selector("#nomail")

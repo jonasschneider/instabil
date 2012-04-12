@@ -13,7 +13,7 @@ class Page
   has_one :course
   
   def name
-    person ? person.name : (course ? course.name : nil)
+    person ? "Personenbericht für #{person.name}" : (course ? "Kursbericht für #{course.name}" : "<Seite>")
   end
   
   def viewable_by?(user)

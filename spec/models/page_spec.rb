@@ -47,4 +47,19 @@ describe "Page" do
       page.compare(1, 2).should == { "kurs" => 10 }
     end
   end
+
+  describe "#name" do
+    it "works for person pages" do
+      me.create_page author: me, text: 'ohai'
+      me.page.name.should == 'Personenbericht für Jonas'
+    end
+
+    let(:course) { Course.create! name: '4BIO02' }
+    
+    it "works for course pages" do
+      course.page = Page.create text: 'ohai', author: me
+
+      course.page.name.should == 'Kursbericht für 4BIO02'
+    end
+  end
 end
