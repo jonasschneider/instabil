@@ -111,4 +111,8 @@ class Person
   def set_original_name
     self.original_name = name
   end
+
+  def assigned_pages
+    Page.where(:author_id => id)
+  end
 end

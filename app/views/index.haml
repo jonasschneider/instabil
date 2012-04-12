@@ -1,5 +1,13 @@
 %h1 Abi Wan Kenobi — Möge G8 mit dir sein!
 
+- unless current_user.assigned_pages.empty?
+  %h2 Deine Seiten
+  %ul#dashboard
+    - current_user.assigned_pages.each do |p|
+      %li
+        %a{ href: "/pages/#{p.id}/edit"}= p.name
+
+%h2 Was ist das hier?
 %p
   instABIl ist ein Projekt, das uns den großen Organisationsaufwand für die Abisachen abnehmen soll. Hier können 
   = succeed ',' do

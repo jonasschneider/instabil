@@ -92,4 +92,15 @@ describe "Person" do
       jonas.avatar_url.should include("/people/schneijo/avatar/original")
     end
   end
+
+  describe "#assigned_pages" do
+    it "returns [] when empty" do
+      jonas.assigned_pages.should == []
+    end
+
+    it "returns the pages the user is author of" do
+      page
+      jonas.assigned_pages.should == [page]
+    end
+  end
 end
