@@ -1,4 +1,5 @@
 require 'instabil'
+require 'instabil/summary_presenter'
 
 require 'redcarpet'
 

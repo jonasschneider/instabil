@@ -1,8 +1,11 @@
+- summary = Instabil::SummaryPresenter.new(Person.all)
+- results, totals = summary.run
+
 #summary
   %h1 Redaktionsübersicht
   #progress
     Fortschritt
-    %span 13%
+    %span== #{((totals.sum.to_f / summary.data_point_count.to_f)*100).to_i}%
   
   %p== Gewünschte Gesamtzahl an Benutzern: 149
 
@@ -21,26 +24,17 @@
       %th Foto
       %th Endabnahme
 
-    - Person.all.each do |p|
+    - results.each do |r|
+      - p, result = r
       %tr[p]
-        %td.name
-          %a{ href: "/people/#{p.uid}"}= p.name
-        %td.signup.pending
-        %td.page_assigned{ :class => p.page.nil? ? 'fail' : 'ok'}
-        %td.page_corrected.pending
-        %td.meta.pending
-        %td.comments.pending
-        %td.photo{ :class => p.avatar.present? ? 'ok' : 'fail'}
-        %td.final.pending
+        %td.name= p.name
+        - result.each_with_index do |step_result, i|
+          %td{ :class => summary.steps[i][:name].to_s+' '+(step_result ? 'ok' : 'fail')}
+        
 
     %tr.footer
       %td
-      %td 10
-      %td 10
-      %td 10
-      %td 10
-      %td 10
-      %td 10
-      %td 10
+      - totals.each do |t|
+        %td= t
 
   %p== Moderatoren: #{Person.moderator_uids.map{|uid| Person.find(uid).name }.join(', ')}
