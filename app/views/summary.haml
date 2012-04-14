@@ -1,9 +1,46 @@
-%h1 Übersicht
-%p== Angemeldete Benutzer: #{Person.count}
-%p== Benutzer mit Seite: #{Person.where(:page_id.exists => true).count}
+#summary
+  %h1 Redaktionsübersicht
+  #progress
+    Fortschritt
+    %span 13%
+  
+  %p== Gewünschte Gesamtzahl an Benutzern: 149
 
-%table
-  - Person.all.each do |p|
-    %tr[p]
-      %td.name= p.name
-      %td.page{ :class => p.page.nil? ? 'fail' : 'ok'}
+  %table
+    %tr
+      %th Name
+      %th Angemeldet
+      %th
+        Bericht
+        %span eingetragen
+      %th
+        Bericht
+        %span korrigiert
+      %th Metadaten
+      %th mind. 5 Tags
+      %th Foto
+      %th Endabnahme
+
+    - Person.all.each do |p|
+      %tr[p]
+        %td.name
+          %a{ href: "/people/#{p.uid}"}= p.name
+        %td.signup.pending
+        %td.page_assigned{ :class => p.page.nil? ? 'fail' : 'ok'}
+        %td.page_corrected.pending
+        %td.meta.pending
+        %td.comments.pending
+        %td.photo.pending
+        %td.final.pending
+
+    %tr.footer
+      %td
+      %td 10
+      %td 10
+      %td 10
+      %td 10
+      %td 10
+      %td 10
+      %td 10
+
+  %p== Moderatoren: #{Person.moderator_uids.map{|uid| Person.find(uid).name }.join(', ')}

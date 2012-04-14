@@ -41,12 +41,18 @@ describe "Instabil::Summary" do
 
     it "shows information" do
       last_response.status.should == 200
-      last_response.body.should =~ /Übersicht/
+      last_response.body.should =~ /Übersicht/i
       last_response.body.should =~ /#{Person.count}/
       last_response.body.should =~ /#{Course.count}/
+    end
+
+    it "shows a row for every person" do
       last_response.body.should have_selector('tr.person#person_schneijo td.name', content: 'Jonas Schneider')
-      last_response.body.should have_selector('tr.person#person_schneijo td.page.fail')
-      last_response.body.should have_selector('tr.person#person_winteran td.page.ok')
+    end
+
+    it "shows the state of page assigment" do
+      last_response.body.should have_selector('tr.person#person_schneijo td.page_assigned.fail')
+      last_response.body.should have_selector('tr.person#person_winteran td.page_assigned.ok')
     end
   end
 end

@@ -12,6 +12,61 @@ span.wordcount {
   font-size: 75%;
 }
 
+#summary {
+
+  table {
+    margin: 20px auto
+  }
+
+  #progress {
+    float: right;
+    text-transform: uppercase;
+    font-size: 200%;
+
+    span {
+      font-size: 200%;
+    }
+  }
+
+  td {
+    width: 80px;
+
+    &.name {
+      width: 150px;
+    }
+  }
+
+  td.fail {
+    background-color: #CC0404;
+  }
+
+  th {
+    text-align: center !important
+  }
+
+  tr.footer td {
+    background-color: #eee;
+
+    &:first-child {
+      visibility: hidden;
+    }
+  }
+
+  th span {
+    display: block;
+    text-align: center;
+    font-size: 70%;
+  }
+
+  td.ok {
+    background-color: #37A141;
+  }
+
+  td.pending {
+    background-color: #F2DC99;
+  }
+}
+
 
 .flash {
   background-color: #f9f9f9;
