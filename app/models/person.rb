@@ -14,7 +14,7 @@ class Person
     attr_accessor :moderator_uids
   end
 
-  self.moderator_uids = %w(schneijo kramerlu)
+  self.moderator_uids = %w(schneijo kramerlu zimmerno cussaceg)
   
   field :uid, type: String
   field :name, type: String
