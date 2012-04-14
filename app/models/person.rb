@@ -10,7 +10,11 @@ class Person
   include Mongoid::Paperclip
   include Canable::Cans
   
-  
+  class << self
+    attr_accessor :moderator_uids
+  end
+
+  self.moderator_uids = %w(schneijo kramerlu)
   
   field :uid, type: String
   field :name, type: String
@@ -114,5 +118,9 @@ class Person
 
   def assigned_pages
     Page.where(:author_id => id)
+  end
+
+  def moderator?
+    self.class.moderator_uids.include? uid
   end
 end

@@ -13,6 +13,12 @@ describe "Person" do
        p.save!
      end
   end
+
+  let(:lukas) do
+     Person.new name: "Lukas Kramer" do |me|
+       me.uid = "kramerlu"
+     end
+  end
   
   let(:page) do
     jonas.create_page text: 'asdf', author: jonas
@@ -101,6 +107,17 @@ describe "Person" do
     it "returns the pages the user is author of" do
       page
       jonas.assigned_pages.should == [page]
+    end
+  end
+
+  describe "#moderator?" do
+    before do
+      Person.moderator_uids = ['schneijo']
+    end
+
+    it "returns the right value" do
+      jonas.moderator?.should == true
+      lukas.moderator?.should == false
     end
   end
 end
