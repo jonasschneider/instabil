@@ -23,6 +23,9 @@
           %a{ href: '/' }
             %img{ :src => '/images/logo.png' }
         %ul.actions
+          - if current_user.moderator?
+            %li.minibutton
+              %a{ :href => '/summary' } REDAKTION
           %li.minibutton
             %a{ :href => '/' } Startseite
           %li.minibutton
