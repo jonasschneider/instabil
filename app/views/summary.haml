@@ -30,7 +30,7 @@
         %td.page_corrected.pending
         %td.meta.pending
         %td.comments.pending
-        %td.photo.pending
+        %td.photo{ :class => p.avatar.present? ? 'ok' : 'fail'}
         %td.final.pending
 
     %tr.footer

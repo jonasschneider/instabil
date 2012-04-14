@@ -34,7 +34,11 @@ describe "Instabil::Summary" do
   end
 
   describe "as moderator" do
+    let(:avatar_path) { File.join(File.dirname(__FILE__), '..', 'avatar.jpg') }
+
     before :each do
+      anna.avatar = Rack::Test::UploadedFile.new(avatar_path, 'avatar.jpg')
+      anna.save!
       login(jonas.uid, jonas.name)
       get '/summary'
     end
@@ -42,8 +46,6 @@ describe "Instabil::Summary" do
     it "shows information" do
       last_response.status.should == 200
       last_response.body.should =~ /Übersicht/i
-      last_response.body.should =~ /#{Person.count}/
-      last_response.body.should =~ /#{Course.count}/
     end
 
     it "shows a row for every person" do
@@ -54,5 +56,12 @@ describe "Instabil::Summary" do
       last_response.body.should have_selector('tr.person#person_schneijo td.page_assigned.fail')
       last_response.body.should have_selector('tr.person#person_winteran td.page_assigned.ok')
     end
+
+    it "shows the state of photos" do
+      last_response.body.should have_selector('tr.person#person_schneijo td.photo.fail')
+      last_response.body.should have_selector('tr.person#person_winteran td.photo.ok')
+    end
+
+    it "shows info about the courses"
   end
 end
