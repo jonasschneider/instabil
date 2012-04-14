@@ -8,7 +8,7 @@ require "#{dir}/auth"
 require "#{dir}/polls"
 require "#{dir}/pages"
 require "#{dir}/people"
-
+require "#{dir}/summary"
 
 require "#{dir}/models/page"
 require "#{dir}/models/tag"
@@ -81,6 +81,7 @@ class Instabil::App < Sinatra::Base
   register Instabil::Polls
   register Instabil::People
   register Instabil::Pages
+  register Instabil::Summary
   
   error Mongoid::Errors::DocumentNotFound do
     halt 404, 'Dokument nicht gefunden.'

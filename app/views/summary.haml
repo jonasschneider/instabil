@@ -1,0 +1,9 @@
+%h1 Übersicht
+%p== Angemeldete Benutzer: #{Person.count}
+%p== Benutzer mit Seite: #{Person.where(:page_id.exists => true).count}
+
+%table
+  - Person.all.each do |p|
+    %tr[p]
+      %td.name= p.name
+      %td.page{ :class => p.page.nil? ? 'fail' : 'ok'}
