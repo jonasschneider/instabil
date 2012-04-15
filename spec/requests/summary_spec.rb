@@ -111,7 +111,11 @@ describe "Instabil::Summary" do
   context "/comments" do
     before :each do
       tag = anna.tags.build name: 'lolz'
-      tag.author = jonas
+      tag.author = lukas # own tag
+
+      tag = anna.tags.build name: 'failed'
+      tag.author = jonas # tag by another user
+
       anna.save!
         
       login(lukas.uid, lukas.name)
@@ -124,6 +128,10 @@ describe "Instabil::Summary" do
 
     it "displays the already added tags" do
       last_response.body.should have_selector("tr#person_winteran .tag", content: 'lolz')
+    end
+
+    it "does not display tags by other users" do
+      last_response.body.should_not have_selector("tr#person_winteran .tag", content: 'failed')
     end
 
     it "displays a form to enter a new tag" do
