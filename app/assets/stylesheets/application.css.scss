@@ -80,15 +80,17 @@ span.tag {
   border: 1px solid #e4e4e4;
   left: 50%;
   overflow: hidden;
-  padding: 2%;
-  margin: 0 0 0 -35%;
-  position: absolute;
-  top: -20px;
-  width: 70%;
-  
-  border-radius: 0.5em;
-  -moz-border-radius: 0.5em;
-  -webkit-border-radius: 0.5em;
+  padding: 3%;
+  font-size: 130%;
+  margin: 3% 0;
+}
+
+.flash.error {
+  background-color: #8ACF67;
+}
+
+.flash.notice {
+  background-color: #A0CF88;
 }
 
 #new_page .create-warning {

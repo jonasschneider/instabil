@@ -13,10 +13,6 @@
     
     %title instABIl
   %body{ class: (current_user.email.nil? || current_user.email.empty?) ? 'nomail' : '' }
-    - if flash[:error]
-      .flash#error= flash[:error]
-    - if flash[:notice]
-      .flash#notice= flash[:notice]
     #wiki-wrapper
       #head
         %h1
@@ -43,7 +39,12 @@
           #wiki-body
             - if current_user.email.nil? || current_user.email.empty?
               = haml :nomail, layout: false
-            #template= yield
+            #template
+              - if flash[:error]
+                .flash.error= flash[:error]
+              - if flash[:notice]
+                .flash.notice= flash[:notice]
+              = yield
       #footer
         = section :footer
         %hr

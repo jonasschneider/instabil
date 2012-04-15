@@ -1,3 +1,7 @@
+- if @person == current_user
+  .flash.notice
+    %form{ action: '/preferences' }
+      %input{ type: 'submit', value: 'Das ist deine Seite! Du kannst sie bearbeiten.' }
 %h1= @person.name
 %h2== Kurs K2.#{@person.kurs}, #{@person.zug}
 %img{ src: @person.avatar_url(:medium) }
