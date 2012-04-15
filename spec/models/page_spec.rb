@@ -1,8 +1,14 @@
 require File.expand_path(File.dirname(__FILE__)+'/../spec_helper')
 
 describe "Page" do
+  before do
+    Person.moderator_uids = %w(schneijo)
+  end
+
   let(:me) { Person.create! name: 'Jonas' do |p| p.uid = 'schneijo'; end }
-  let(:page) { Page.create(kurs: 5, g8: true, author: me) }
+  let(:lukas) { Person.create! name: 'Lukas' do |p| p.uid = 'kramerlu'; end }
+  let(:anna) { Person.create! name: 'Anna' do |p| p.uid = 'winteran'; end }
+  let(:page) { Page.create(kurs: 5, g8: true, author: lukas) }
   
   it "is valid" do
     page.should be_valid
@@ -15,6 +21,24 @@ describe "Page" do
       p.should_not be_valid
       p.author = me
       p.should be_valid
+    end
+  end
+
+  it "is editable by the author and moderators" do
+    page.updatable_by?(lukas).should == true
+    page.updatable_by?(me).should == true
+    page.updatable_by?(anna).should == false
+  end
+
+  describe "when signed off" do
+    before :each do
+      page.signed_off_by = me
+    end
+
+    it "is editable only for moderators" do
+      page.updatable_by?(lukas).should == false
+      page.updatable_by?(me).should == true
+      page.updatable_by?(anna).should == false
     end
   end
   

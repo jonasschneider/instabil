@@ -30,7 +30,7 @@ class Person
   field :zukunft, type: String
   field :nachabi, type: String
   field :lebenswichtig, type: String
-  
+
   if ENV["FOG_STORAGE_BACKEND"]
     STORAGE_BACKEND = (ENV["FOG_STORAGE_BACKEND"] || 'localhost:8000').split(':')
     fog_opts = { 

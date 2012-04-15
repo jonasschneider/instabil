@@ -1,4 +1,14 @@
 %h1= @page.name
+
+- if @page.signed_off_by.present?
+  .flash.notice== Als fertig markiert von #{@page.signed_off_by.name}. Ab jetzt können nur noch Mitglieder der Redaktion die Seite bearbeiten
+- else
+  - if current_user.moderator?
+    Moderator-Aktionen:
+    %form{ action: "/pages/#{@page.id}/signoff", method: 'post' }
+      %input{ type: 'submit', value: 'Als fertig markieren' }
+
+  
 %form{ action: "/pages/#{@page.id}", method: 'post' }
   = haml :page_form, locals: { page: @page }
 

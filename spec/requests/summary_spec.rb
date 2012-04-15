@@ -50,6 +50,11 @@ describe "Instabil::Summary" do
       anna.active = false
       anna.save!
 
+      # Anna's page is signed off
+      anna.page.signed_off_by = jonas
+      anna.page.save!
+      anna.save!
+
       login(jonas.uid, jonas.name)
       get '/summary'
     end
@@ -82,6 +87,12 @@ describe "Instabil::Summary" do
       last_response.body.should have_selector('tr.person#person_schneijo td.signup.ok')
       last_response.body.should have_selector('tr.person#person_winteran td.signup.fail')
     end
+
+    it "shows the state of page signoff" do
+      last_response.body.should have_selector('tr.person#person_schneijo td.page_signoff.fail')
+      last_response.body.should have_selector('tr.person#person_winteran td.page_signoff.ok')
+    end
+
 
     it "shows info about the courses"
   end

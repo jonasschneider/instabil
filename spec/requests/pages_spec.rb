@@ -24,6 +24,21 @@ describe "Instabil::Pages" do
   
   describe "person pages" do
     let(:page) { anna.page }
+
+    describe "signoff" do
+      it "shows nothing as a normal user" do
+        login(anna.uid, anna.name)
+        get "/pages/#{page.id}/edit"
+        last_response.body.should_not include('Als fertig markieren')
+      end
+
+      it "shows a button as moderator" do
+        get "/pages/#{page.id}/edit"
+        click_button 'Als fertig markieren'
+        anna.reload.page.signed_off_by.should == jonas
+        last_response.body.should include('Als fertig markiert von Jonas Schneider')
+      end
+    end
     
     describe "visiting /pages/new?for_person=<uid>" do
       it "displays a form" do

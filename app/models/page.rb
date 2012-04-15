@@ -11,6 +11,8 @@ class Page
   
   has_one :person
   has_one :course
+
+  belongs_to :signed_off_by, class_name: "Person"
   
   def name
     person ? "Personenbericht für #{person.name}" : (course ? "Kursbericht für #{course.name}" : "<Seite>")
@@ -27,7 +29,7 @@ class Page
   end
   
   def updatable_by?(user)
-    author == user
+    (author == user && signed_off_by.nil?) || user.moderator?
   end
 
   def destroyable_by?(user)
