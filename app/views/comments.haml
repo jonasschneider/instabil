@@ -16,13 +16,18 @@
 
 :javascript
     $('form.ajaxtag').submit(function() {
-      var x = $(this).find('.tagname').val()
-      $(this).data('pending', x)
+      var f = $(this)
+
+      var x = f.find('.tagname').val()
+      f.data('pending', x)
+      
+      setTimeout(function() {
+        f.find('.tagname').val('')
+      }, 200)
     })
 
     $('form.ajaxtag').ajaxForm({
       success: function(body, state, xhr, form) {
-        console.log(this)
         form.prev().append("<span class='tag'>"+form.data('pending')+"</span> ")
       }
     });
