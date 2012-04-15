@@ -1,4 +1,4 @@
-- summary = Instabil::SummaryPresenter.new(Person.all.order_by(:uid))
+- summary = Instabil::SummaryPresenter.new(Person.all.order_by([:uid, :asc]))
 - results, totals = summary.run
 
 #summary
