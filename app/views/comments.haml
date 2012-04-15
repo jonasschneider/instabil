@@ -1,6 +1,8 @@
 %h1 Kommentare
 
-%p== Hier kannst du die Kommentare anschauen, die für die jeweilige Person hinterlassen wurden, und selbst neue schreiben.
+%p
+  Hier kannst du die Kommentare anschauen, die für die jeweilige Person hinterlassen wurden, und selbst neue schreiben.
+  Nicht sparsam sein, es wird genug Platz geben!
 
 %table
   - Person.order_by([:uid, :asc]).each do |p|
