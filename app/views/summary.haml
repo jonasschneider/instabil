@@ -1,4 +1,4 @@
-- summary = Instabil::SummaryPresenter.new(Person.all)
+- summary = Instabil::SummaryPresenter.new(Person.all.order_by(:uid))
 - results, totals = summary.run
 
 #summary
@@ -12,17 +12,8 @@
   %table
     %tr
       %th Name
-      %th Angemeldet
-      %th
-        Bericht
-        %span eingetragen
-      %th
-        Bericht
-        %span korrigiert
-      %th Metadaten
-      %th mind. 5 Tags
-      %th Foto
-      %th Endabnahme
+      - summary.steps.each do |step|
+        %th= step[:title]
 
     - results.each do |r|
       - p, result = r
@@ -37,4 +28,4 @@
       - totals.each do |t|
         %td= t
 
-  %p== Moderatoren: #{Person.moderator_uids.map{|uid| Person.find(uid).name }.join(', ')}
+  %p== Moderatoren: #{Person.moderator_uids.map{|uid| Person.where(uid: uid).first.try(:name) }.join(', ')}

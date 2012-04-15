@@ -13,13 +13,13 @@ module Instabil
       @collection = collection
     end
 
-    step :signup, check: lambda{|p| true }
-    step :page_assigned, check: lambda{|p| p.page.present? }
-    step :page_corrected
-    step :meta
-    step :comments
-    step :photo, check: lambda{|p| p.avatar.present? }
-    step :final
+    step :signup, title: 'Angemeldet', check: lambda{|p| true }
+    step :page_assigned, title: 'Bericht <span>eingetragen</span>', check: lambda{|p| p.page.present? }
+    step :page_corrected, title: 'Bericht <span>korrigiert</span>'
+    step :meta, title: 'Metadaten'
+    step :comments, title: 'mind. 5 Tags'
+    step :photo, title: 'Foto', check: lambda{|p| p.avatar.present? }
+    step :final, title: 'Endabnahme'
 
     def steps
       self.class.steps
