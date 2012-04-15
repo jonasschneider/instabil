@@ -37,26 +37,22 @@
     %label{:for => "person[lks]"} Meister in ...:
     %input{ name: "person[lks]", value: @person.lks, type: 'text', :placeholder => 'z.B. "Molekularspaß mit Hr Kaindl"', :size => 40 }
     %br
+
+    %label{:for => "person[nachabi]"} Nach dem Abi:
+    %input{ name: "person[nachabi]", value: @person.nachabi, size: 60, type: 'text', :placeholder => "z.B. nehm ich kein Buch mehr in die Hand" }
+    %br
     
     %label{:for => "person[zukunft]"} Später mal:
     %input{ name: "person[zukunft]", value: @person.zukunft, size: 60, type: 'text', :placeholder => "z.B. werde ich Atomrandphysiker" }
     %br
     
-    %label{:for => "person[nachabi]"} Nach dem Abi:
-    %input{ name: "person[nachabi]", value: @person.nachabi, type: 'text', :placeholder => "z.B. nehm ich kein Buch mehr in die Hand" }
-    %br
+    Ohne
+    %input{ name: "person[lebenswichtig]", value: @person.lebenswichtig, type: 'text', size: 30}
+    hätte ich das Abi nicht geschafft.
 
     %label{:for => "person[nachruf]"} Was ich euch schon immer mal sagen wollte:
     %input{ name: "person[nachruf]", value: @person.nachruf, size: 60, type: 'text' }
     %br
-    
-    %label{:for => "person[nachabi]"} Nach dem Abi:
-    %input{ name: "person[nachabi]", value: @person.nachabi, size: 60, type: 'text', :placeholder => "z.B. nehm ich kein Buch mehr in die Hand" }
-    %br
-    
-    Ohne
-    %input{ name: "person[lebenswichtig]", value: @person.lebenswichtig, type: 'text', size: 30}
-    hätte ich das Abi nicht geschafft.
   
   %p
     %input{ type: 'submit', value: 'Speichern' }
