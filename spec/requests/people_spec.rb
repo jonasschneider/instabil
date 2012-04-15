@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__)+'/../spec_helper')
 describe Instabil::People do
   let(:jonas) { make_person name: 'Jonas Schneider', uid: 'schneijo' }
   let(:lukas) { make_person name: 'Lukas', uid: 'kramerlu' }
-  
+
   let(:anna) do
     Person.create!(name: "Anna") do |anna|
       anna.uid = "winteran"
@@ -35,7 +35,7 @@ describe Instabil::People do
         get "/people/#{jonas.uid}"
       end
       
-      it "does not show the page contents"  do
+      it "does show the page contents"  do
         last_response.body.should_not include("bla")
       end
       

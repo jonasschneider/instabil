@@ -32,6 +32,8 @@ RSpec.configure do |config|
       collection.name !~ /system/ 
     end.each(&:drop) 
     Pusher::Channel.stub(:trigger).and_return(true)
+    
+    Person.moderator_uids = %w()
   end
   
   def app

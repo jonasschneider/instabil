@@ -17,7 +17,6 @@ describe "Instabil::Pages" do
     end
   end
   
-  
   before :each do
     login(jonas.uid, jonas.name)
   end
@@ -25,7 +24,11 @@ describe "Instabil::Pages" do
   describe "person pages" do
     let(:page) { anna.page }
 
-    describe "signoff" do
+    describe "signing off as a moderator" do
+      before :each do
+        Person.moderator_uids = %w(schneijo)
+      end
+
       it "shows nothing as a normal user" do
         login(anna.uid, anna.name)
         get "/pages/#{page.id}/edit"

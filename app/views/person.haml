@@ -10,20 +10,20 @@
 %h2 Steckbrief
 %p
   Meister in ...
-  %strong= @person.lks.empty? ? 'XXX' : @person.lks
+  %strong= @person.lks || 'XXX'
 %p
   Später mal:
-  %strong= @person.zukunft.empty? ? 'XXX': @person.zukunft
+  %strong= @person.zukunft || 'XXX'
 %p
   Nach dem Abi:
-  %strong= @person.nachabi.empty? ? 'XXX' : @person.nachabi
+  %strong= @person.nachabi || 'XXX'
 %p
   Ohne
-  %strong= @person.lebenswichtig.empty? ? 'XXX' : @person.lebenswichtig
+  %strong= @person.lebenswichtig || 'XXX'
   hätte ich das Abi nicht geschafft.
 %p
   Was ich euch schon immer mal sagen wollte:
-  %strong= @person.nachruf.empty? ? 'XXX' : person.nachruf
+  %strong= @person.nachruf || 'XXX'
 
 %h2 Tags
 - if @person.tags.empty?
@@ -61,7 +61,7 @@
         %em (Du kannst die Seite nicht bearbeiten.)
 
   - else
-    %p Du darfst die Seite aber nicht anschauen ;)
+    %p Du darfst sie aber nicht anschauen ;)
 
 - else
   - unless @person == current_user
