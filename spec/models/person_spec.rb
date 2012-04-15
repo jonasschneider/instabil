@@ -30,6 +30,21 @@ describe "Person" do
     jonas.email = 'a@b.net'
     jonas.should be_valid
   end
+
+  describe "#meta_complete?" do
+    it "returns true only when all fields are filled out" do
+      jonas.meta_complete?.should == false
+      jonas.lks = 'asdf'
+      jonas.zukunft = 'asdf'
+      jonas.nachabi = 'asdf'
+      jonas.lebenswichtig = 'asdf'
+
+      jonas.meta_complete?.should == false
+
+      jonas.nachruf = 'asdf'
+      jonas.meta_complete?.should == true
+    end
+  end
   
   describe "#api_attributes" do
     it "returns a hash of attributes" do

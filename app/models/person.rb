@@ -59,6 +59,14 @@ class Person
       errors.add :avatar, "Bitte nur JPEGS oder PNGS. Typ = #{avatar_content_type} oder #{avatar.content_type}" unless avatar_content_type =~ /jpe?g/ || avatar_content_type =~ /png/
     end
   end
+
+  def meta_fields
+    %w(lks zukunft nachabi lebenswichtig nachruf).map{|s| s.to_sym }
+  end
+
+  def meta_complete?
+    meta_fields.all? { |f| v=self.send(f); !v.nil? && !v.empty? }
+  end
   
   def avatar_url(style = :original)
     "/people/#{id}/avatar/#{style}"
@@ -93,6 +101,7 @@ class Person
         "zukunft" => self.zukunft,
         "nachabi" => self.nachabi,
         "lebenswichtig" => self.lebenswichtig,
+        "nachruf" => self.nachruf,
         
         "foto" => self.avatar_url(:medium),
         "foto_mtime" => self.avatar.updated_at,

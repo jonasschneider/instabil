@@ -55,6 +55,12 @@ describe "Instabil::Summary" do
       anna.page.save!
       anna.save!
 
+      # Anna's metadata is filled out
+      anna.meta_fields.each do |f|
+        anna.send("#{f}=", 'asdf')
+      end
+      anna.save!
+
       login(jonas.uid, jonas.name)
       get '/summary'
     end
@@ -91,6 +97,11 @@ describe "Instabil::Summary" do
     it "shows the state of page signoff" do
       last_response.body.should have_selector('tr.person#person_schneijo td.page_signoff.fail')
       last_response.body.should have_selector('tr.person#person_winteran td.page_signoff.ok')
+    end
+
+    it "shows the state of metadata" do
+      last_response.body.should have_selector('tr.person#person_schneijo td.metadata.fail')
+      last_response.body.should have_selector('tr.person#person_winteran td.metadata.ok')
     end
 
 
