@@ -12,6 +12,8 @@
     %tr[p]
       %td= p.name
       %td
+        %span{style: 'color:#999'}== (#{c=p.tags.where(:author_id.ne => current_user.uid).count} Kommentar#{c!=1 ? 'e' : ''} von anderen)
+        %br
         .tags
           - p.tags.where(author_id: current_user.uid).each do |t|
             %span.tag= t.name
