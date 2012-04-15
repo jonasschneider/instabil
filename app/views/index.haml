@@ -82,15 +82,6 @@
       renderMessage(this)
     })
 
-%h2 Neue Benutzer
-
-%ul
-  - Person.order_by(:created_at, :desc).limit(5).each do |person|
-    %li
-      %a{ :href => "/people/#{person.uid}" }= person.name
-      - if person.page.present?
-        %span== (#{person.page.author.name} schreibt die Seite)
-
 %h2 Alle Benutzer
 %a{ name: 'users' }
 
