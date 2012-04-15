@@ -15,6 +15,8 @@ class Person
   end
 
   self.moderator_uids = %w(schneijo kramerlu zimmerno cussaceg)
+
+  field :active, type: Boolean, default: true
   
   field :uid, type: String
   field :name, type: String

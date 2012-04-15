@@ -13,7 +13,7 @@ module Instabil
       @collection = collection
     end
 
-    step :signup, title: 'Angemeldet', check: lambda{|p| true }
+    step :signup, title: 'Angemeldet', check: lambda{|p| p.active? }
     step :page_assigned, title: 'Bericht <span>eingetragen</span>', check: lambda{|p| p.page.present? }
     step :page_corrected, title: 'Bericht <span>korrigiert</span>'
     step :meta, title: 'Metadaten'

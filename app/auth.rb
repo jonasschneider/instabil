@@ -61,12 +61,14 @@ module Instabil::Auth
         
         user = Person.find_or_initialize_by uid: info.username
         user.uid = info.username
+        user.active = true
         
         unless user.name 
           user.name = info.name
-          user.save!
         end
-
+        
+        user.save!
+        
         warden.set_user user
         redirect "/"
       end

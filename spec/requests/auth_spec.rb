@@ -113,4 +113,13 @@ describe "Authentication" do
       end
     end
   end
+
+  it "activates the user" do
+    p = Person.create! name: "Lukas" do |p|
+      p.uid = "kramerlu"
+      p.active = false
+    end
+    login(p.uid, p.name)
+    p.reload.active.should == true
+  end
 end

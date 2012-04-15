@@ -1,4 +1,6 @@
 require File.expand_path(File.join(File.dirname(__FILE__), 'boot'))
+require 'sinatra'
+
 ENV["API_KEY"] = 'random_string'
 require "tmpdir"
 require 'socket'

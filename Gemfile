@@ -3,7 +3,7 @@ source :rubygems
 gem "rake"
 gem "airbrake"
 
-gem 'sinatra'
+gem 'sinatra', :require => 'sinatra/base'
 gem 'haml'
 gem 'rack-flash'
 gem "redcarpet", "~> 2.0.0b5"

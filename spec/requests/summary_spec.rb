@@ -46,6 +46,10 @@ describe "Instabil::Summary" do
         jonas.tags << Tag.new(name: 'Hallo '+i.to_s, author: anna)
       end
 
+      # Jonas is activated
+      anna.active = false
+      anna.save!
+
       login(jonas.uid, jonas.name)
       get '/summary'
     end
@@ -72,6 +76,11 @@ describe "Instabil::Summary" do
     it "shows the state of tags" do
       last_response.body.should have_selector('tr.person#person_schneijo td.tags.ok')
       last_response.body.should have_selector('tr.person#person_winteran td.tags.fail')
+    end
+
+    it "shows the state of activation" do
+      last_response.body.should have_selector('tr.person#person_schneijo td.signup.ok')
+      last_response.body.should have_selector('tr.person#person_winteran td.signup.fail')
     end
 
     it "shows info about the courses"
