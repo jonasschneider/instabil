@@ -96,7 +96,7 @@
 
 
 .global-count
-  %span= Person.count
+  %span= Person.where(:active.ne => false).count
   registrierte Benutzer
 
 .global-count
