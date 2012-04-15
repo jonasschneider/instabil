@@ -85,4 +85,27 @@ describe "Instabil::Summary" do
 
     it "shows info about the courses"
   end
+
+  context "/comments" do
+    before :each do
+      tag = anna.tags.build name: 'lolz'
+      tag.author = jonas
+      anna.save!
+        
+      login(lukas.uid, lukas.name)
+      get '/comments'
+    end
+
+    it "displays a list of people" do
+      last_response.body.should =~ /Anna/
+    end
+
+    it "displays the already added tags" do
+      last_response.body.should have_selector("tr#person_winteran .tag", content: 'lolz')
+    end
+
+    it "displays a form to enter a new tag" do
+      last_response.body.should have_selector("tr#person_winteran form[action='/people/winteran/tags'][method=post] input[name='tag[name]']")
+    end
+  end
 end

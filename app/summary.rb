@@ -8,6 +8,11 @@ module Instabil::Summary
         end
         haml :summary
       end
+
+      get '/comments' do
+        authenticate!
+        haml :comments
+      end
     end
   end
 end

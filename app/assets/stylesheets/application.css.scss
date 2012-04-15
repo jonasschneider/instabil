@@ -12,6 +12,13 @@ span.wordcount {
   font-size: 75%;
 }
 
+span.tag {
+  background-color: #eee;
+  padding: 9px;
+  margin: 5px;
+  display: inline-block;
+}
+
 #summary {
 
   table {
@@ -179,6 +186,11 @@ p.form-error {
   position: relative;
   top: .2em;
   margin: 5px;
+}
+
+ul#splash li.emph {
+  background-color: #FF9C66;
+  box-shadow: 0 0 20px #FF9C66, inset 0 0 10px #D47D4E;
 }
 
 .speech-bubble {

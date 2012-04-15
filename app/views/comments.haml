@@ -1,0 +1,28 @@
+%h1 Kommentare
+
+%p== Hier kannst du die Kommentare anschauen, die für die jeweilige Person hinterlassen wurden, und selbst neue schreiben.
+
+%table
+  - Person.order_by([:uid, :asc]).each do |p|
+    %tr[p]
+      %td= p.name
+      %td
+        .tags
+          - p.tags.each do |t|
+            %span.tag= t.name
+        %form.ajaxtag{ action: "/people/#{p.uid}/tags", method: 'post' }
+          %input.tagname{ name: 'tag[name]', type: 'text' }
+          %input{ type: 'submit', value: 'Hinzufügen' }
+
+:javascript
+    $('form.ajaxtag').submit(function() {
+      var x = $(this).find('.tagname').val()
+      $(this).data('pending', x)
+    })
+
+    $('form.ajaxtag').ajaxForm({
+      success: function(body, state, xhr, form) {
+        console.log(this)
+        form.prev().append("<span class='tag'>"+form.data('pending')+"</span> ")
+      }
+    });
