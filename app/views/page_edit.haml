@@ -1,7 +1,7 @@
 %h1= @page.name
 
 - if @page.signed_off_by.present?
-  .flash.notice== Als fertig markiert von #{@page.signed_off_by.name}. Ab jetzt können nur noch Mitglieder der Redaktion die Seite bearbeiten
+  .flash.notice== Als fertig markiert von #{@page.signed_off_by.name}. Ab jetzt können nur noch Mitglieder der Redaktion die Seite bearbeiten.
 - else
   - if current_user.moderator?
     Moderator-Aktionen:

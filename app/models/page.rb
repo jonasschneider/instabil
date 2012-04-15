@@ -21,7 +21,7 @@ class Page
   def viewable_by?(user)
     # Course pages are viewable by everyone,
     # Person pages only by the author
-    !person || author == user
+    !person || author == user || user.moderator?
   end
   
   def creatable_by?(user)
