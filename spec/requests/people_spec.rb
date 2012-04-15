@@ -121,11 +121,20 @@ describe Instabil::People do
       end
       
       describe "but some tags" do
-        it "displays the tag" do
+        before :each do
           lukas.reload.tags.create name: 'test', author: jonas
           lukas.save!
+        end
+
+        it "displays the tag for the user himself" do
+          login(lukas.uid, lukas.name)
           get "/people/#{lukas.id}"
           last_response.body.should have_selector('li.tag', content: 'test')
+        end
+
+        it "does not display the tag for others" do
+          get "/people/#{lukas.id}"
+          last_response.body.should_not have_selector('li.tag', content: 'test')
         end
       end
     end
