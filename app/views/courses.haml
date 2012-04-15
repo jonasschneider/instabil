@@ -20,4 +20,6 @@
           - courses.sort_by{|c|c.name}.each do |course|
             %li
               %a{ :href => "/courses/#{course.id}" }= course.name
+              - if course.page.present?
+                == (#{course.page.author.name} schreibt Bericht)
   .clearfix
