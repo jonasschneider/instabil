@@ -26,6 +26,6 @@
     %tr.footer
       %td
       - totals.each do |t|
-        %td= t
+        %td== #{t} (#{((t.to_f / summary.collection.length)*100).to_i}%)
 
   %p== Moderatoren: #{Person.moderator_uids.map{|uid| Person.where(uid: uid).first.try(:name) }.join(', ')}

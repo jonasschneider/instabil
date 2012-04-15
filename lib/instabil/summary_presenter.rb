@@ -9,6 +9,8 @@ module Instabil
       end
     end
 
+    attr_reader :collection
+
     def initialize(collection)
       @collection = collection
     end
