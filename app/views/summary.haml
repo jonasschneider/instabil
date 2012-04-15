@@ -7,7 +7,7 @@
     Fortschritt
     %span== #{((totals.sum.to_f / summary.data_point_count.to_f)*100).to_i}%
   
-  %p== Gesamtzahl Benutzer: #{Person.count}
+  %p== Insgesamt: #{Person.count} Benutzer, #{Person.all.map{|p|p.tags.length}.sum} Kommentare
 
   %table
     %tr
