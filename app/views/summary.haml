@@ -18,7 +18,8 @@
     - results.each do |r|
       - p, result = r
       %tr[p]
-        %td.name= p.name
+        %td.name
+          %a{ :href => "/people/#{p.uid}" }= p.name
         - result.each_with_index do |step_result, i|
           %td{ :class => summary.steps[i][:name].to_s+' '+(step_result ? 'ok' : 'fail')}
         
