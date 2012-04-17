@@ -19,6 +19,14 @@ span.tag {
   display: inline-block;
 }
 
+form.ajax_deletetag {
+  display: inline;
+
+  input {
+    font-size: 60%;
+  }
+}
+
 #summary {
 
   table {

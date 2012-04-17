@@ -3,6 +3,8 @@
 %p
   Hier kannst du die Kommentare anschauen, die für die jeweilige Person hinterlassen wurden, und selbst neue schreiben.
   Nicht sparsam sein, es wird genug Platz geben. Im Normalfall kriegt keiner zu sehen, von wem ein Kommentar ist.
+  %br
+  Du kannst die von die geschriebenen Kommentare und diejenigen über dich löschen, wenn du willst. Schau dazu bei deinem Namen.
 
 %p
   Die Top-Kommentierer:
@@ -21,14 +23,29 @@
       %td
         %a{ :href => "/people/#{p.uid}" }= p.name
       %td
-        %span{style: 'color:#999'}== (#{c=p.tags.where(:author_id.ne => current_user.uid).count} Kommentar#{c!=1 ? 'e' : ''} von anderen)
-        %br
-        .tags
-          - p.tags.where(author_id: current_user.uid).each do |t|
-            %span.tag= t.name
-        %form.ajaxtag{ action: "/people/#{p.uid}/tags", method: 'post' }
-          %input.tagname{ name: 'tag[name]', type: 'text' }
-          %input{ type: 'submit', value: 'Hinzufügen' }
+        - if p == current_user
+          - if p.tags.empty?
+            %span{style: 'color:#999'}== (Das bist du, aber noch keiner hat einen Kommentar geschrieben.)
+          - else
+            %span{style: 'color:#999'}== (Das bist du! Diese Kommentare kannst du löschen.. aber sei kein Spaßverderber!)
+            .tags
+              - p.tags.each do |t|
+                %span[t]
+                  = t.name
+                  %form.ajax_deletetag{ action: "/people/#{p.uid}/untag/#{t.id}", method: 'post' }
+                    %input{ type: 'submit', value: 'Löschen' }
+        - else
+          %span{style: 'color:#999'}== (#{c=p.tags.where(:author_id.ne => current_user.uid).count} Kommentar#{c!=1 ? 'e' : ''} von anderen)
+          %br
+          .tags
+            - p.tags.where(author_id: current_user.uid).each do |t|
+              %span[t]
+                = t.name
+                %form.ajax_deletetag{ action: "/people/#{p.uid}/untag/#{t.id}", method: 'post' }
+                  %input{ type: 'submit', value: 'Löschen' }
+          %form.ajaxtag{ action: "/people/#{p.uid}/tags", method: 'post' }
+            %input.tagname{ name: 'tag[name]', type: 'text' }
+            %input{ type: 'submit', value: 'Hinzufügen' }
 
 :javascript
     $('form.ajaxtag').submit(function() {

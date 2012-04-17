@@ -11,4 +11,8 @@ class Tag
   validates_presence_of :author
   
   embedded_in :person
+
+  def destroyable_by?(user)
+    author == user or person == user
+  end
 end

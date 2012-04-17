@@ -32,6 +32,17 @@ module Instabil::People
           halt 400, @tag.errors.inspect
         end
       end
+
+      post '/people/:uid/untag/:tag_id' do
+        authenticate!
+        @person = Person.find(params[:uid])
+        @tag = @person.tags.find params[:tag_id]
+
+        enforce_destroy_permission(@tag)
+
+        @tag.destroy
+        redirect "/comments"
+      end
     end
   end
 end

@@ -137,5 +137,12 @@ describe "Instabil::Summary" do
     it "displays a form to enter a new tag" do
       last_response.body.should have_selector("tr#person_winteran form[action='/people/winteran/tags'][method=post] input[name='tag[name]']")
     end
+
+    it "displays a form to remove a tag" do
+      anna.tags.length.should == 2
+      last_response.body.should have_selector("tr#person_winteran form[action='/people/winteran/untag/#{anna.tags.first.id}'][method=post]")
+      click_button 'Löschen'
+      anna.reload.tags.length.should == 1
+    end
   end
 end
