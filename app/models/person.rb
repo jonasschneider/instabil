@@ -32,10 +32,6 @@ class Person
   field :lebenswichtig, type: String
   field :nachruf, type: String
 
-  def self.top_taggers
-    Person.all.map{|p|p.tags.map{|t|t.author}}.flatten.inject(Hash.new(0)) { |h,v| h[v] += 1; h }.to_a.sort_by{|x| x.last}.reverse[0, 3]
-  end
-
   if ENV["FOG_STORAGE_BACKEND"]
     STORAGE_BACKEND = (ENV["FOG_STORAGE_BACKEND"] || 'localhost:8000').split(':')
     fog_opts = { 

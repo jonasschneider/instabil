@@ -7,15 +7,7 @@
   Du kannst die von die geschriebenen Kommentare und diejenigen über dich löschen, wenn du willst. Schau dazu bei deinem Namen.
 
 %p
-  Die Top-Kommentierer:
-  %ol
-    - Person.top_taggers.each do |data|
-      %li== <strong>#{data.first.name}</strong> (#{data.last} Kommentare)
-
-%p
   %strong Du siehst nur die Kommentare, die du selber geschrieben hast (bzw. die für dich sind)!
-
-
 
 %table
   - Person.order_by([:uid, :asc]).each do |p|
