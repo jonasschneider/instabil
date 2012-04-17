@@ -5,7 +5,15 @@
   Nicht sparsam sein, es wird genug Platz geben. Im Normalfall kriegt keiner zu sehen, von wem ein Kommentar ist.
 
 %p
+  Die Top-Kommentierer:
+  %ul
+    - Person.top_taggers.each do |data|
+      %li== <strong>#{data.first.name}</strong> (#{data.last} Kommentare)
+
+%p
   %strong Du siehst nur die Kommentare, die du selber geschrieben hast!
+
+
 
 %table
   - Person.order_by([:uid, :asc]).each do |p|
