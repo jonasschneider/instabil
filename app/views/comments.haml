@@ -8,12 +8,12 @@
 
 %p
   Die Top-Kommentierer:
-  %ul
+  %ol
     - Person.top_taggers.each do |data|
       %li== <strong>#{data.first.name}</strong> (#{data.last} Kommentare)
 
 %p
-  %strong Du siehst nur die Kommentare, die du selber geschrieben hast!
+  %strong Du siehst nur die Kommentare, die du selber geschrieben hast (bzw. die für dich sind)!
 
 
 
