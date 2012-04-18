@@ -61,7 +61,7 @@ class Person
   end
 
   def meta_fields
-    %w(lks zukunft nachabi lebenswichtig nachruf).map{|s| s.to_sym }
+    %w(lks zukunft nachabi lebenswichtig).map{|s| s.to_sym }
   end
 
   def meta_complete?
