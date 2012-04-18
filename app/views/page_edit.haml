@@ -8,6 +8,10 @@
     %form{ action: "/pages/#{@page.id}/signoff", method: 'post' }
       %input{ type: 'submit', value: 'Als fertig markieren' }
 
+%p
+  Wenn ihr spezielle Wünsche habt, wie der Bericht aussehen soll (Bilder, bestimmte Form, oder so) schreibt
+  %a{ href: 'mailto:lu@0x83.eu' } Lukas
+  eine Mail.
   
 %form{ action: "/pages/#{@page.id}", method: 'post' }
   = haml :page_form, locals: { page: @page }
