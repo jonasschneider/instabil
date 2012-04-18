@@ -19,7 +19,7 @@ module Instabil
     step :page_assigned, title: 'Bericht <span>eingetragen</span>', check: lambda{|p| p.page.present? }
     step :page_signoff, title: 'Bericht <span>abgesegnet</span>', check: lambda{|p| p.page && p.page.signed_off_by.present? }
     step :metadata, title: 'Metadaten', check: lambda{|p| p.meta_complete? }
-    step :tags, title: 'mind. 10 Tags', check: lambda{|p| p.tags.length > 9 }
+    step :tags, title: 'mind. 5 Tags', check: lambda{|p| p.tags.length > 4 }
     step :photo, title: 'Foto', check: lambda{|p| p.avatar.present? }
     step :final, title: 'Endabnahme'
 
