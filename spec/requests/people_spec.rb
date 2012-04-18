@@ -109,34 +109,6 @@ describe Instabil::People do
       it "shows a link to create the page" do
         last_response.body.should have_selector("a[href='/pages/new?for_person=kramerlu']")
       end
-      
-      it 'displays a form to add a tag' do
-        last_response.body.should have_selector("form[action='/people/kramerlu/tags'][method=post] input[name='tag[name]']")
-        fill_in 'tag[name]', with: 'test'
-        click_button "Hinzufügen"
-        
-        last_response.headers["Location"].should == "http://example.org/people/kramerlu"
-        lukas.reload.tags.first.name.should == 'test'
-        lukas.reload.tags.first.author.should == jonas
-      end
-      
-      describe "but some tags" do
-        before :each do
-          lukas.reload.tags.create name: 'test', author: jonas
-          lukas.save!
-        end
-
-        it "displays the tag for the user himself" do
-          login(lukas.uid, lukas.name)
-          get "/people/#{lukas.id}"
-          last_response.body.should have_selector('li.tag', content: 'test')
-        end
-
-        it "does not display the tag for others" do
-          get "/people/#{lukas.id}"
-          last_response.body.should_not have_selector('li.tag', content: 'test')
-        end
-      end
     end
   end
 end
