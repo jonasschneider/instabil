@@ -24,10 +24,10 @@
   klickst, kannst du deinen Benutzernamen ändern, z.B. ungeliebte Zweitnamen entfernen (das heißt <em>nicht</em> irgendwelche Nicknames eintragen). Bitte trage deine Email-Adresse ein, damit du im Verlauf des Projektes Benachrichtigungen erhältst.
 
 %ul#splash
-  %li
-    %a{ :href => '/#users'}
-      %img{ :src => '/images/icons/id_card.png' }
-      %h3 Steckbriefe
+  %li.emph
+    %a{ :href => 'http://blazing-warrior-7323.heroku.com/'}
+      %img{ :src => '/images/icons/star.png' }
+      %h3 Memoiren/Sprüche
   
     %li
       %a{ :href => '/courses'}
@@ -104,7 +104,7 @@
   %span= Poll.count
   Umfragen und Abstimmungen
 
-%p.small Es werden hier nur Leute angezeigt, die sich schon mal hier angemeldet haben! Das sind also nicht alle Schüler aus der Stufe.
+%p.small Um die Seite für eine Person anzufangen, klick auf den Namen.
 
 %ul
   - Person.order_by(:uid, :asc).each do |person|
