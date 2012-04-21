@@ -10,7 +10,7 @@
   %strong Du siehst nur die Kommentare, die du selber geschrieben hast (bzw. die für dich sind)!
 
 %table
-  - Person.order_by([:uid, :asc]).each do |p|
+  - Person.all.sort_by{|p|p.tags.length}.each do |p|
     %tr[p]
       %td
         %a{ :href => "/people/#{p.uid}" }= p.name
