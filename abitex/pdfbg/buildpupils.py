@@ -53,6 +53,12 @@ for pupil in j :
 		content["text"] = proc.communicate(content["text"].encode("utf-8"))[0].decode("utf-8")
 	else :
 		content["text"] = spoiler;
+	if options.spoiler :
+		content["lks"] = ""
+		content["zukunft"] = ""
+		content["nachruf"] = ""
+		content["lebenswichtig"] = ""
+		content["nachabi"] = ""
 	out = page.substitute(content)
 	out = out.replace("&", "\\&").replace("%", "\\%")
 	f =  open("pupils/" + pupil["uid"] + ".tex", "w")
