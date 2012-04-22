@@ -30,12 +30,12 @@
 
 \newcommand{\persontitle}[3]{
 \setlength{\parindent}{0cm}
-\settoheight{\headheight}{\titlefont \Huge {#1}}
+\settoheight{\headheight}{\titlefont \huge {#1}}
 \begin{textblock*}{\textwidth}(\border,2.5cm-\headheight)
 \flushouter
-\textcolor{white}{\titlefont \Huge {#1}}
+\textcolor{white}{\titlefont \huge {#1}}
 \end{textblock*}
-\settowidth{\headwidth}{\titlefont \Huge {#1}}
+\settowidth{\headwidth}{\titlefont \huge {#1}}
 
 
 \begin{textblock*}{\textwidth}(\border,2.6cm)
@@ -64,9 +64,11 @@
 }
 
 \newcommand{\personmeta}[1]{
-\begin{textblock*}{\textwidth}(\border,4.5cm)
+\begin{textblock*}{\textwidth}(\border,4.2cm)
 \flushouter
+\parbox{13cm}{
 #1 \\
+}
 \end{textblock*}
 }
 
@@ -124,3 +126,15 @@
 \end{textblock*}
 }
 
+\newcommand{\makefoot}{
+\begin{textblock*}{\textwidth}(\border,28cm)
+\flushouter
+\Large\textcolor{white}{\Dekar
+\ifoddpage
+ABI WAN KENOBI \thepage
+\else
+ \thepage \/ ABI WAN KENOBI
+\fi
+}
+\end{textblock*}
+}
