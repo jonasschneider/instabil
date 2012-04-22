@@ -53,7 +53,7 @@ for pupil in j :
 		else :
 			content["name"] += c
 		last = not c.islower()
-	content["name"]=content["name"].upper()[0:20]
+	content["name"]=content["name"].upper().replace(u'ß', 'SS')[0:20]
 	if content["author"] == "":
 		content["author"] = "Dieser Text wurde von ganz vielen geschrieben... "
 	content["name"]=content["name"].upper()[0:20]
