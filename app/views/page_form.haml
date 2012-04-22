@@ -1,5 +1,14 @@
 %p
+  %input{:name => "page[title]", style: 'font-size:140%', placeholder: 'Seitentitel (darf leer sein)', value: page.title, size: 50 }
+  %br
+  %input{:name => "page[subtitle]", style: 'font-size:120%', placeholder: 'Untertitel (darf leer sein)', value: page.subtitle, size: 40 }
+  
+%p
   %textarea{:name => "page[text]", :cols => 100, :rows => 15 }= page.text
+
+%p
+  Angezeigter Autorenname (hier kannst du Mitschreiber eintragen):
+  %input{:name => "page[author_name]", value: (page.author_name.blank? ? current_user.name : page.author_name) }
 
 %h3 Vorschau
 .wmd-preview

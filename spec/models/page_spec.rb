@@ -61,7 +61,7 @@ describe "Page" do
   describe "#compare" do
     it "works for the first version" do
       page.version.should == 1
-      page.compare(0, 1).should == {"text"=>"", "kurs" => 5, "g8" => true }
+      page.compare(0, 1).should == {"text"=>"", "title"=>"", "subtitle"=>"", "author_name"=>"", "kurs"=>5, "g8"=>true}
     end
     
     it "works for a second version" do

@@ -5,6 +5,9 @@ class Page
   include Canable::Ables
   
   field :text, type: String, default: ''
+  field :title, type: String, default: ''
+  field :subtitle, type: String, default: ''
+  field :author_name, type: String, default: ''
   
   belongs_to :author, class_name: 'Person', inverse_of: nil
   validates_presence_of :author

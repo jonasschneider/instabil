@@ -67,12 +67,24 @@ describe "Instabil::Pages" do
       end
       
       describe "when the page exists and was created by the current user" do
-        it "displays a form" do
+        before do 
           get "/pages/#{page.id}/edit"
+        end
+
+        it "displays a form" do
           form = "form[action=\"/pages/#{page.id}\"][method=post]"
           last_response.should have_selector form
           last_response.should have_selector form + ' textarea[name="page[text]"]'
+          last_response.should have_selector form + ' input[name="page[title]"]'
+          last_response.should have_selector form + ' input[name="page[subtitle]"]'
+          last_response.should have_selector form + ' input[name="page[author_name]"][value="Jonas Schneider"]'
           last_response.should have_selector form + ' input[type=submit]'
+        end
+
+        it 'displays the author field when set' do
+          page.update_attribute(:author_name, 'Ich')
+          get "/pages/#{page.id}/edit"
+          last_response.should have_selector 'input[name="page[author_name]"][value="Ich"]'
         end
       end
     end
@@ -130,7 +142,7 @@ describe "Instabil::Pages" do
         end
         
         before :each do
-          post "/pages/#{anna.page.id}", { :page => { :text => 'Next-level' } }
+          post "/pages/#{anna.page.id}", { :page => { :text => 'Next-level', :title => 'Mein Titel' } }
         end
         
         it "redirects to the _person_ page (hacky)" do
@@ -140,6 +152,7 @@ describe "Instabil::Pages" do
         
         it "updates the page" do
           anna.page.reload.text.should == 'Next-level'
+          anna.page.reload.title.should == 'Mein Titel'
         end
         
         it "sets the page author" do

@@ -1,4 +1,5 @@
 \definecolor{tagcolor}{gray}{.5}
+\definecolor{headingcolor}{gray}{0}
 
 \newcommand{\flushinner}{
 \checkoddpage
@@ -20,9 +21,11 @@
 \newcommand{\makebg}{
 \checkoddpage
 \ifoddpage
-\ThisCenterWallPaper{1}{tplt-2.pdf}
+%\ThisULCornerWallPaper{1}{tplt-2.pdf}
+%\ThisCenterWallPaper{1}{tplt-2.pdf}
 \else
-\ThisCenterWallPaper{1}{tplt-1.pdf}
+%\ThisULCornerWallPaper{1}{tplt-1.pdf}
+%\ThisCenterWallPaper{1}{tplt-1.pdf}
 \fi
 }
 
@@ -30,7 +33,7 @@
 \setlength{\parindent}{0cm}
 \begin{textblock}{14.0}(.96,0.7)
 \flushouter
-\textcolor{white}{\titlefont \Huge {#1}}
+\textcolor{headingcolor}{\titlefont \Huge {#1}}
 \end{textblock}
 \settowidth{\headwidth}{\titlefont \Huge {#1}}
 
@@ -38,7 +41,7 @@
 \flushouter
 \parbox{\headwidth}{
 \flushouter
-\textcolor{white}{\Dekar #2}
+\textcolor{headingcolor}{\Dekar #2}
 }
 \end{textblock}
 
@@ -46,7 +49,7 @@
 \flushouter
 \parbox{\headwidth}{
 \flushinner
-\textcolor{white}{\Dekar #3}
+\textcolor{headingcolor}{\Dekar #3}
 }
 \end{textblock}
 }

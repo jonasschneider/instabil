@@ -106,8 +106,12 @@ class Person
         "foto" => self.avatar_url(:medium),
         "foto_mtime" => self.avatar.updated_at,
         
-        "text" => (page || Page.new).text,
-        "author" => (page && page.author.name) || '',
+        "title" => page.try(:title) || '',
+        "subtitle" => page.try(:subtitle) || '',
+
+        "text" => page.try(:text) || '',
+        
+        "author" => page ? (page.author_name.blank? ? page.author.name : page.author_name) : '',
         
         "tags" => tags.map{|t|t.name}
       }
