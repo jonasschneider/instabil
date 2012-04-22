@@ -4,8 +4,11 @@
 \usepackage{scrpage2}
 \usepackage[ngerman]{babel}
 \usepackage{lmodern}
+\usepackage{moresize}
 %\usepackage[cm]{fullpage}
-\usepackage[left=1.3cm,top=.5cm,right=1.3cm,bottom=3.1cm]{geometry}
+\newlength{\border}
+\setlength{\border}{1.3cm}
+\usepackage[left=\border,top=.5cm,right=\border,bottom=3.1cm]{geometry}
 %\usepackage[bottom=1cm,nohead,nofoot]{geometry}
 %\usepackage[utf8]{inputenc}
 \pagestyle{scrheadings}
@@ -31,8 +34,10 @@
 \lefoot{\Large\textcolor{white}{\Dekar \thepage \/ ABI WAN KENOBI}}
 \rofoot{\Large\textcolor{white}{\Dekar ABI WAN KENOBI \/ \thepage}}
 \setlength{\parskip}{0cm}
+\setlength{\footskip}{1.2cm}
+\newcommand{\kathisize}{\fontsize{9.2pt}{11.04pt}\selectfont}
 \begin{document}
-\newlength{\headwidth}
+
 Titel
 \newpage
 

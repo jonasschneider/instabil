@@ -1,4 +1,6 @@
 \definecolor{tagcolor}{gray}{.5}
+\newlength{\headwidth}
+%\newlength{\haadheight}
 
 \newcommand{\flushinner}{
 \checkoddpage
@@ -28,60 +30,63 @@
 
 \newcommand{\persontitle}[3]{
 \setlength{\parindent}{0cm}
-\begin{textblock}{14.0}(.96,0.7)
+\settoheight{\headheight}{\titlefont \Huge {#1}}
+\begin{textblock*}{\textwidth}(\border,2.5cm-\headheight)
 \flushouter
 \textcolor{white}{\titlefont \Huge {#1}}
-\end{textblock}
+\end{textblock*}
 \settowidth{\headwidth}{\titlefont \Huge {#1}}
 
-\begin{textblock}{14.0}(1,1.4)
+
+\begin{textblock*}{\textwidth}(\border,2.6cm)
 \flushouter
 \parbox{\headwidth}{
 \flushouter
-\textcolor{white}{*\Dekar #2}
+\textcolor{white}{* \Dekar #2}
 }
-\end{textblock}
+\end{textblock*}
 
-\begin{textblock}{14.0}(1,1.4)
+\begin{textblock*}{\textwidth}(\border,2.6cm)
 \flushouter
 \parbox{\headwidth}{
 \flushinner
 \textcolor{white}{\Dekar #3}
 }
-\end{textblock}
+\end{textblock*}
 }
 
 \newcommand{\personava}[1]{
-\begin{textblock}{14.0}(1,.42)
+\begin{textblock*}{\textwidth}(\border,1cm)
 \flushinner
 \includegraphics[width=4.2cm]{#1}
 
-\end{textblock}
+\end{textblock*}
 }
 
 \newcommand{\personmeta}[1]{
-\begin{textblock}{14.0}(1,2.4)
+\begin{textblock*}{\textwidth}(\border,4.5cm)
 \flushouter
 #1 \\
-\end{textblock}
+\end{textblock*}
 }
 
 \newcommand{\persontext}[3]{
-\begin{textblock}{13.4}(1.3,4.3)
+\begin{textblock*}{\textwidth}(\border+5mm,7.8cm)
 \flushouter
 \large{#1}
 
 \vspace*{-1mm}
 \emph{#2}\\
-\end{textblock}
+\end{textblock*}
 \null
-\vspace*{7.8cm}
+\begin{textblock*}{\textwidth}(\border,8.6cm)
 %\parbox[top][17cm][t]{\textwidth}{
 \setlength{\parindent}{5mm}
 \begin{multicols}{2}
 \noindent
 #3
 \end{multicols}
+
 %}
 }
 
@@ -116,5 +121,6 @@
 \Slab
 \textcolor{tagcolor}{#1}
 }
+\end{textblock*}
 }
 
