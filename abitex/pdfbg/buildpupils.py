@@ -34,6 +34,7 @@ j = json.loads(blah)
 temp = open("temp/pupil.tex").read()
 pupillist = []
 emails = 0
+print 'Namen zu lang:'
 for pupil in j :
 	page = Template(temp.decode("utf-8"))
 	
@@ -41,7 +42,7 @@ for pupil in j :
 	if pupil["email"] != None and pupil["email"] != "" :
 		#print pupil["email"]
 		emails += 1
-	print pupil["uid"]
+	
 	content["uid"] = pupil["uid"]
 	pupillist.append(pupil["uid"])
 	#print "tex/pupils/" + pupil["uid"] + ".tex"last = True
@@ -53,6 +54,8 @@ for pupil in j :
 		else :
 			content["name"] += c
 		last = not c.islower()
+	if len(content["name"].upper().replace(u'ß', 'SS')) > 20:
+		print pupil["uid"] + ' - ' + pupil["name"]
 	content["name"]=content["name"].upper().replace(u'ß', 'SS')[0:20]
 	if content["author"] == "":
 		content["author"] = "Dieser Text wurde von ganz vielen geschrieben... "
@@ -78,12 +81,7 @@ for pupil in j :
 		content["text"] = proc.communicate(content["text"].encode("utf-8"))[0].decode("utf-8")
 	else :
 		content["text"] = spoiler;
-	if options.spoiler :
-		content["lks"] = ""
-		content["zukunft"] = ""
-		content["nachruf"] = ""
-		content["lebenswichtig"] = ""
-		content["nachabi"] = ""
+
 	out = page.substitute(content)
 	out = out.replace("&", "\\&").replace("%", "\\%").replace("^", "\\^{}")
 	f =  open("pupils/" + pupil["uid"] + ".tex", "w")
