@@ -18,7 +18,7 @@ class Page
   belongs_to :signed_off_by, class_name: "Person"
 
   def responsible
-    self.versions.last.try(:author) || self.author
+    self.versions.sort_by{|v|v.updated_at}.first.try(:author) || self.author
   end
 
   def name
