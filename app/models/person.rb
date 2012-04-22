@@ -133,7 +133,7 @@ class Person
   end
 
   def assigned_pages
-    Page.where(:author_id => id)
+    Page.all.select{|p| p.responsible == self}
   end
 
   def moderator?

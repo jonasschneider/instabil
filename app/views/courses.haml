@@ -21,5 +21,5 @@
             %li
               %a{ :href => "/courses/#{course.id}" }= course.name
               - if course.page.present?
-                == (#{course.page.author.name} schreibt Bericht)
+                == (#{course.page.responsible.name} schreibt Bericht)
   .clearfix

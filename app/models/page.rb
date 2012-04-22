@@ -16,7 +16,11 @@ class Page
   has_one :course
 
   belongs_to :signed_off_by, class_name: "Person"
-  
+
+  def responsible
+    self.versions.first.try(:author) || self.author
+  end
+
   def name
     person ? "Personenbericht für #{person.name}" : (course ? "Kursbericht für #{course.name}" : "<Seite>")
   end

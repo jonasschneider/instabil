@@ -115,4 +115,4 @@
     %li
       %a{ :href => "/people/#{person.uid}" }= person.name
       - if person.page.present?
-        %span== (#{person.page.author.name} schreibt die Seite)
+        %span== (#{person.page.responsible.name} schreibt die Seite)
