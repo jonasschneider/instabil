@@ -71,6 +71,8 @@ for pupil in j :
 		content["author"] = "Dieser Text wurde von ganz vielen geschrieben... "
 	content["name"]=content["name"].upper()[0:20]
 	content["name"] = content["name"].replace(u"ё", '"e')
+	if content["uid"] == "mahlerda":
+		content["name"] = "\LARGE "+content["name"]
 	if content["g8"]==1 :
 		content["g8"] = "G8"
 	elif content["g8"]==0 :
