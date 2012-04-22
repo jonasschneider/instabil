@@ -1,9 +1,29 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
+
 import json, os
 from string import Template
 from optparse import OptionParser
 import subprocess
+
+def beautiy_quotation(text) :
+	quotation  = ","
+	out = ""
+	text = text.replace(u"—", "--")
+
+	text = text.replace("&nbsp;", "\\/")
+	for c in text :
+		if c != '"' :
+			out += c
+		else :
+			if quotation == "," :
+				out += quotation*2
+				quotation = "'"
+			else :
+				out += quotation*2
+				quotation = ","
+	return out
+
 parser = OptionParser()
 parser.add_option("-s", "--spoiler", dest="spoiler", help="Spolier text", action="store_true")
 (options, args) = parser.parse_args()
@@ -46,7 +66,10 @@ for pupil in j :
 		content["g8"] = "G8/G9 \\em{fixme}"
 	#print type(content["tags"])
 	if content["tags"] != None and not options.spoiler:
-		content["tags"] = " +++ ".join(content["tags"])
+		tags = []
+		for t in content["tags"] :
+			tags.append(beautiy_quotation(t))
+		content["tags"] = " +++ ".join(tags)
 	else : 
 		content["tags"] = "Hier kommen Tags hin!"
 	
@@ -62,7 +85,7 @@ for pupil in j :
 		content["lebenswichtig"] = ""
 		content["nachabi"] = ""
 	out = page.substitute(content)
-	out = out.replace("&", "\\&").replace("%", "\\%").replace('"', "''")
+	out = out.replace("&", "\\&").replace("%", "\\%")
 	f =  open("pupils/" + pupil["uid"] + ".tex", "w")
 	f.write(out.encode("utf-8"))
 print "%i Schüler, %i mit email"%(len(pupillist), emails)
