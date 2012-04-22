@@ -6,6 +6,16 @@ from string import Template
 from optparse import OptionParser
 import subprocess
 
+def esc(foo) :
+	return foo.lower().replace("ö", "oe").replace("ß", "ss").replace("ü", "ue").replace("ä", "ae").replace(" ", "")
+
+dates= {}
+for l in open("dates").readlines() :
+	m = l.split("\t")
+	lastname = m[3]
+	firstname = m[4]
+	dates[esc(lastname)[0:6]+esc(firstname)[0:2]]=m[0]
+
 def beautiy_quotation(text) :
 	quotation  = ","
 	out = ""
@@ -68,6 +78,7 @@ for pupil in j :
 	elif content["g8"]==2 :
 		content["g8"] = "G8/G9 \\em{fixme}"
 	#print type(content["tags"])
+	content["geb"] = dates[content["uid"][0:8]]
 	if content["tags"] != None and not options.spoiler:
 		tags = []
 		for t in content["tags"] :
