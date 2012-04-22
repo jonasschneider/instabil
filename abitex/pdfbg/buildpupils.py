@@ -34,7 +34,9 @@ for pupil in j :
 			content["name"] += c
 		last = not c.islower()
 	content["name"]=content["name"].upper()[0:20]
-	
+	if content["author"] == "":
+		content["author"] = "Dieser Text wurde von ganz vielen geschrieben... "
+	content["name"]=content["name"].upper()[0:20]
 	content["name"] = content["name"].replace(u"ё", '"e')
 	if content["g8"]==1 :
 		content["g8"] = "G8"
@@ -44,7 +46,7 @@ for pupil in j :
 		content["g8"] = "G8/G9 \\em{fixme}"
 	#print type(content["tags"])
 	if content["tags"] != None and not options.spoiler:
-		content["tags"] = "+++".join(content["tags"])
+		content["tags"] = " +++ ".join(content["tags"])
 	else : 
 		content["tags"] = "Hier kommen Tags hin!"
 	
