@@ -62,7 +62,7 @@ for pupil in j :
 		content["lebenswichtig"] = ""
 		content["nachabi"] = ""
 	out = page.substitute(content)
-	out = out.replace("&", "\\&").replace("%", "\\%")
+	out = out.replace("&", "\\&").replace("%", "\\%").replace('"', "''")
 	f =  open("pupils/" + pupil["uid"] + ".tex", "w")
 	f.write(out.encode("utf-8"))
 print "%i Schüler, %i mit email"%(len(pupillist), emails)

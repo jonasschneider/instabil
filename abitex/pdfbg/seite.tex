@@ -1,3 +1,5 @@
+\definecolor{tagcolor}{rgb}{.7,.7,.7}
+
 \newcommand{\flushinner}{
 \checkoddpage
 \ifoddpage
@@ -107,11 +109,12 @@
 \newcommand{\persontagsb}[1]{
 \noindent
 \parbox{\textwidth}{
+\vspace{1em}
 %\flushinner
 %\sloppy
 \scriptsize
 \Slab
-#1
+\textcolor{tagcolor}{#1}
 }
 }
 
