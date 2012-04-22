@@ -8,7 +8,7 @@ abitex/fetchcourses.sh
 abitex/*.json
 
 abitex/*.pdf
-abitex/**/*.pdf
+abitex/tex/abi.pdf
 abitex/tex/pupils/*
 abitex/tex/coursereports/*
 abitex/tex/abi.maf
@@ -26,6 +26,7 @@ abitex/tex/pupilspages.tex
 abitex/tex/courses.tex
 
 abitex/mongourl
+abitex/dates
 abitex/backup/*
 abitex/dump.sh
 .sass-cache
