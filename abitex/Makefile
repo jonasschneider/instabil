@@ -1,7 +1,7 @@
 SRC = abi
-all: fetchpupils fetchcourses avatars pupils courses pdf
+all: fetchpupils spoiler pdf
 
-fast : pupils courses pdf
+fast : pupils pdf
 
 dump :
 	./dump.sh
@@ -12,6 +12,8 @@ clean:
 	rm tex/abi.pdf
 	rm tex/abi.mtc*
 	rm tex/abi.aux
+	rm tex/pupils/*
+	rm tex/pupilspages.tex
 
 fetchpupils:
 	./fetchpupils.sh
@@ -31,11 +33,8 @@ courses:
 memoirs:
 	./memoirs.py > tex/mems.tex
  
-pdf: rev
+pdf:
 	make -C tex
-	
-rev :
-	./rev.py > tex/rev.tex
 
 avatars:
 	./fetchavas.py | sh

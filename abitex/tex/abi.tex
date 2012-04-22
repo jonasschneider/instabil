@@ -1,68 +1,41 @@
-\documentclass[11pt,a4paper,twoside,DIV10,titlepage]{scrartcl}	% KOMASCRIPT :>
-\usepackage{minitoc}
-%\usepackage{a4}	% LOKAL erforderlich! soll angeblich nicht mehr benutzt werden
-\usepackage[ngerman]{babel} 		% deutsche Silbentrennung
-\usepackage[utf8]{inputenc} 	% wegen deutschen Umlauten
-\usepackage{graphicx}						% für die Abb.: Einbindung Graphiken!
-\usepackage[T1]{fontenc}
-\usepackage{printlen}
-\usepackage[margin=2cm]{geometry}
-%\usepackage[light,math]{iwona}
-%\usepackage{fixltx2e}
-\usepackage{multicol}
+%\documentclass[12pt,a4paper,DIV12]{scrartcl}	% KOMASCRIPT :>
+%\usepackage{fullpage}
+\documentclass[12pt,a4paper,DIV12,twoside]{scrartcl}	% KOMASCRIPT :>
+\usepackage{scrpage2}
+\usepackage[ngerman]{babel}
+\usepackage{lmodern}
+%\usepackage[cm]{fullpage}
+\usepackage[left=1.3cm,top=.5cm,right=1.3cm,bottom=3.1cm]{geometry}
+%\usepackage[bottom=1cm,nohead,nofoot]{geometry}
+%\usepackage[utf8]{inputenc}
+\pagestyle{scrheadings}
+\usepackage{changepage}
+\usepackage{color}
 \usepackage{calc}
-%\usepackage[showboxes]{textpos}
-\usepackage{textpos}
-\renewcommand{\stctitle}{}
-\newcommand{\hiddensection}[1]{\phantomsection \addtocounter{section}{1} \addcontentsline{toc}{section}{\protect\numberline{\thesection}{#1}}}
-%\nostcpagenumbers
-\nostcrule
-\setlength{\stcindent}{-10pt}
-\dosecttoc
-			
-%\usepackage{palatino}
- %\usepackage{helvet}
-
-
-\usepackage{draftwatermark}
-\SetWatermarkText{\textsc{Entwurf}}
-\SetWatermarkScale{2}
-
-\usepackage[gray]{datapie}
-\DTLnewdb{pupilstats}
-\DTLnewrow{pupilstats}
-\DTLnewdbentry{pupilstats}{type}{Nicht registriert}
-\DTLnewdbentry{pupilstats}{n}{123}
-\DTLnewrow{pupilstats}
-\DTLnewdbentry{pupilstats}{type}{Registriert}
-\DTLnewdbentry{pupilstats}{n}{30}
-\DTLnewrow{pupilstats}
-\DTLnewdbentry{pupilstats}{type}{Mit Email}
-\DTLnewdbentry{pupilstats}{n}{7}
-\pagestyle{headings}
-\usepackage{datetime}
+\usepackage{graphicx}
 \usepackage{wallpaper}
-\usepackage[colorlinks=true,
-	pdftitle={instABIl},
-	pdfauthor={AbiTeX},
-	bookmarks = true,
-	pdfstartview = {FitH},
-	pdfpagelayout = {OneColumn},
-	linkcolor = blue,
-	citecolor = blue,
-	urlcolor = blue
-]{hyperref}			
-%\usepackage[all]{hypcap}		
+\usepackage{textcomp}
+\usepackage{multicol}
+\usepackage[absolute]{textpos}
+\input{seite}
+%\setlength{\columnseprule}{0.2pt}
+%\setlength{\columnsep}{30pt}
+%\usepackage[compact]{titlesec}
+%\author{Lukas Kramer \\ \texttt{lu@0x83.eu}}
+
+
+\usepackage{xltxtra}
+\newfontfamily\titlefont[Scale=1.6]{Dekar}
+\newfontfamily\Dekar{Dekar}
+\newfontfamily\Slab{Museo Slab}
+\lefoot{\Large\textcolor{white}{\Dekar \thepage \/ ABI WAN KENOBI}}
+\rofoot{\Large\textcolor{white}{\Dekar ABI WAN KENOBI \/ \thepage}}
+\setlength{\parskip}{0cm}
 \begin{document}
-\input{title.tex}
-\setcounter{tocdepth}{1}
-\tableofcontents
+\newlength{\headwidth}
+Titel
 \newpage
-\input{rev.tex}
-%\input{stats.tex}
-\input{pupils.tex}
-\input{coursereports.tex}
-%\input{photos.tex}
-\input{memoirs.tex}
+
+\input{pupilspages.tex}
 
 \end{document}

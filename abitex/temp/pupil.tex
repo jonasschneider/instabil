@@ -1,37 +1,14 @@
-\subsection*{$name, Kurs $kurs, $g8}
-\addcontentsline{toc}{subsection}{$name}
-\begin{textblock}{2.5}(0,0)
-	\noindent\mbox{\includegraphics[height=4cm ]{avatars/${uid}.jpg}}
-\end{textblock}
-
-\begin{textblock}{7.75}(3.5,0)
-	\setlength{\parindent}{-0.5em}
-	\setlength{\hangindent}{0cm}
-	*<<Geburtstag>> 
-	
-	Vierstündig: $lks 
-	
-	Zukunft: Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit...
-	
-	Ich vergaß... 
-	
-	Ohne <<was auch immer>> hätte ich das Abi nicht geschafft.
-	
-	Nach dem Abi 
-	
-\end{textblock}
-
-\vspace{4.3cm}
-$text
-
-\vspace{3mm}
-%\setlength{\parindent}{2cm}
-von $author
-\vfill
-\hrule
-\vspace{2mm}
-{\small
-$tags
+\makebg
+\persontitle{$name}{geb. $geb}{Kurs ${kurs}, $g8}
+\personava{none.jpg}
+\personmeta{Meister in $lks, \\
+Später werd' ich mal $zukunft \\
+Ach, und übrigens $nachruf \\
+Ohne $lebenswichtig hätte ich das Abi nicht geschafft \\
+Nach dem Abi $nachabi
 }
-
+\persontext{$title}{$subtitle}{\small $text}
+\personauthorb{$author}
+\persontagsb{$tags}
 \newpage
+
