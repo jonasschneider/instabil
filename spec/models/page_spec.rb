@@ -30,6 +30,18 @@ describe "Page" do
     page.updatable_by?(anna).should == false
   end
 
+  describe "after edited by a moderator" do
+    before :each do
+      page.author = me
+      page.text = 'asdf'
+      page.save!
+    end
+
+    it "is still editable for the original author" do
+      page.updatable_by?(lukas).should == true
+    end
+  end
+
   describe "when signed off" do
     before :each do
       page.signed_off_by = me

@@ -36,7 +36,7 @@ class Page
   end
   
   def updatable_by?(user)
-    (author == user && signed_off_by.nil?) || user.moderator?
+    (responsible == user && signed_off_by.nil?) || user.moderator?
   end
 
   def destroyable_by?(user)
