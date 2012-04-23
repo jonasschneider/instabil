@@ -58,8 +58,6 @@
   %input{ type: 'submit', value: 'Senden' }
 %ul#chat
   :javascript
-    var pusher = new Pusher('#{Pusher.key}');
-    
     function renderMessage(msg) {
       var a = $("<li>")
         .append("<span class=author>"+msg.author+"</span>")
@@ -89,7 +87,6 @@
 
 %h2 Alle Benutzer
 %a{ name: 'users' }
-
 
 .global-count
   %span= Person.where(:active.ne => false).count

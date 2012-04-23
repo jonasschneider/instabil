@@ -7,6 +7,19 @@
   font-weight: bold;
 }
 
+.notification {
+  position: fixed;
+  top: 30%;
+  left: 0;
+  display: inline-block;
+  font-size: 140%;
+  $base: #A12544;
+  color: white;
+  padding: 30px;
+  
+  background: rgba(desaturate($base, 20%), 0.8);
+}
+
 span.wordcount {
   color: #777;
   font-size: 75%;

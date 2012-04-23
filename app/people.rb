@@ -27,6 +27,7 @@ module Instabil::People
         @tag.author = current_user
         
         if @tag.save
+          Pusher[@person.uid].trigger :tagged, name: @tag.name
           redirect "/people/#{@person.id}"
         else
           halt 400, @tag.errors.inspect
