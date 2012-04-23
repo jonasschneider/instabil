@@ -95,7 +95,7 @@ for pupil in j :
 		content["text"] = spoiler;
 
 	out = page.substitute(content)
-	out = out.replace("&", "\\&").replace("%", "\\%").replace("^", "\\^{}")
+	out = out.replace("&", " \\& ").replace("%", "\\%").replace("^", "\\^{}").replace(u"♥", "$\\heartsuit$")
 	f =  open("tex/pupils/" + pupil["uid"] + ".tex", "w")
 	f.write(out.encode("utf-8"))
 print "%i Schüler, %i mit email"%(len(pupillist), emails)
