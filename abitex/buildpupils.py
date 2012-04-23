@@ -64,7 +64,7 @@ for pupil in j :
 		else :
 			content["name"] += c
 		last = not c.islower()
-	print pupil["uid"] + ' - ' + pupil["name"]
+	print pupil["uid"]
 	content["name"]=content["name"].upper().replace(u'ß', 'SS')
 	if content["author"] == "":
 		content["author"] = "Dieser Text wurde von ganz vielen geschrieben... "
