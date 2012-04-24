@@ -69,6 +69,13 @@ describe "Person" do
       jonas.api_attributes['page']['text'].should == 'asdf'
       jonas.api_attributes['page']['author'].should == 'Jonas Schneider'
     end
+
+    it "returns the page text when set" do
+      jonas.tags.create name: 'asdf', author: lukas
+      jonas.tags.create name: 'asdf', author: lukas
+      t1, t2 = jonas.tags.to_a
+      jonas.api_attributes['page']['tags'].should == [[t1.name, t1.id.to_s], [t2.name, t2.id.to_s]]
+    end
     
     it "g8 is 2 when nil" do
       jonas.api_attributes['page']['g8'].should == 1
