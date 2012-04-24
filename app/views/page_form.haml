@@ -1,3 +1,8 @@
+- if page.person.present?
+  %p
+    %h4 Ach übrigens!
+    == #{page.person.name} hat bereits <strong>#{page.person.tags.length} Kommentare</strong> mit einer Gesamtlänge von <strong>#{page.person.tag_length} Zeichen</strong> (in kleinerer Schrift). Ohne Kommentare haben wir Platz für uuungefäähr <emph>600 Wörter</emph> (länger geht schon, wird dann aber sehr kleine Schrift). Bitte bedenke das für den Bericht, sonst müssen wir kürzen (wenn genug Zeit ist, fragen wir bei dir nach, was, wenn nicht, nicht).
+
 %p
   %input{:name => "page[title]", style: 'font-size:140%', placeholder: 'Seitentitel (darf leer sein)', value: page.title, size: 50 }
   %br
