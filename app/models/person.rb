@@ -113,7 +113,7 @@ class Person
         
         "author" => page ? (page.author_name.blank? ? page.author.name : page.author_name) : '',
         
-        "tags" => tags.map{|t|t.name}
+        "tags" => tags.map{|t|[t.name, t.id.to_s]}
       }
     }
   end
