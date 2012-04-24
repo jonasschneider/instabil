@@ -37,7 +37,8 @@ describe "Page" do
       page.save!
     end
 
-    it "is still editable for the original author" do
+    it "is still viewable & editable for the original author" do
+      page.viewable_by?(lukas).should == true
       page.updatable_by?(lukas).should == true
     end
   end

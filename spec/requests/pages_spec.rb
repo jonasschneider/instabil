@@ -42,6 +42,21 @@ describe "Instabil::Pages" do
         last_response.body.should include('Als fertig markiert von Jonas Schneider')
       end
     end
+
+    describe "un-signing as a moderator" do
+      before :each do
+        Person.moderator_uids = %w(schneijo)
+        page.signed_off_by = jonas
+        page.save!
+      end
+
+      it "shows a button as moderator" do
+        get "/pages/#{page.id}/edit"
+        click_button 'Als unfertig markieren'
+        anna.reload.page.signed_off_by.should be_nil
+        last_response.body.should_not include('Als fertig markiert von Jonas Schneider')
+      end
+    end
     
     describe "visiting /pages/new?for_person=<uid>" do
       it "displays a form" do
