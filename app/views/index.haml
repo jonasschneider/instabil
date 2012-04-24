@@ -3,13 +3,15 @@
   %ul#dashboard
     - current_user.assigned_pages.each do |p|
       %li
-        %a{ href: "/pages/#{p.id}/edit"}= p.name
+        - if p.person.present?
+          %a{ href: "/people/#{p.person.uid}"}= p.name
+        - else
+          %a{ href: "/pages/#{p.id}/edit"}= p.name
         %span.wordcount== (#{p.wordcount} Wörter)
 
 %h1 Abi Wan Kenobi — Möge G8 mit dir sein!
 %p
-  Die Seite soll uns den großen Organisationsaufwand für die Abisachen abnehmen. Da wir so viele sind, wirds sonst schnell
-  mal unübersichtlich. Hier können 
+  Die Seite soll uns den großen Organisationsaufwand für die Abisachen abnehmen. Da wir so viele sind, wirds sonst schnell mal unübersichtlich. Hier können 
   = succeed ',' do
     %a{ :href => '/#users'} Steckbriefe
   %a{ :href => '/courses'} Kursberichte
