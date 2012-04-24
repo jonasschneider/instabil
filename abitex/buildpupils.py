@@ -34,6 +34,13 @@ def beautiy_quotation(text) :
 				quotation = ","
 	return out
 
+def md2tex(text) :
+	proc = subprocess.Popen("./md2tex.sh", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+	return proc.communicate(text.encode("utf-8"))[0].decode("utf-8")
+
+def escape_tex(text) :
+	return text.replace(u"♥", "<3").replace(u"☺", " :) ").replace("&#3232;", u"{\\Tunga ಠ}").replace("&", "\\&").replace("#", "\\#").replace("_", "\\_").replace("^", "\^{}").replace(u"%", "\%")
+
 parser = OptionParser()
 parser.add_option("-s", "--spoiler", dest="spoiler", help="Spolier text", action="store_true")
 (options, args) = parser.parse_args()
@@ -44,6 +51,10 @@ j = json.loads(blah)
 temp = open("temp/pupil.tex").read()
 pupillist = []
 emails = 0
+
+fixes = {"4f8b0655146fa40001000014" : "{\\Chinese %s}",
+"4f96b816079d0500010000fd":"{\\Fixed %s}"}
+
 print 'Namen zu lang:'
 for pupil in j :
 	page = Template(temp.decode("utf-8"))
@@ -78,17 +89,24 @@ for pupil in j :
 		content["g8"] = "G9"
 	elif content["g8"]==2 :
 		content["g8"] = "G8/G9 \\em{fixme}"
+	content["lks"] = escape_tex(content["lks"] or "")
+	content["lebenswichtig"] = escape_tex(content["lebenswichtig"] or "")
 	#print type(content["tags"])
 	content["geb"] = dates[content["uid"][0:8]]
 	if content["tags"] != None and not options.spoiler:
 		tags = []
 		for t in content["tags"] :
-			tags.append(beautiy_quotation(t))
+			if t[1] in fixes :
+				tags.append(escape_tex(beautiy_quotation(fixes[t[1]]%t[0])))
+			else:
+				tags.append(escape_tex(beautiy_quotation(t[0])))
 		content["tags"] = " +++ ".join(tags)
+		 
+		 
 	
 	else : 
 		content["tags"] = "Hier kommen Tags hin!"
-	content["tags"] = content["tags"].replace("%", "\\%")
+	#content["tags"] = content["tags"].replace("%", "\\%")
 	if content["text"] != None and not options.spoiler:
 		proc = subprocess.Popen("./md2tex.sh", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 		content["text"] = proc.communicate(content["text"].encode("utf-8"))[0].decode("utf-8")
@@ -96,7 +114,7 @@ for pupil in j :
 		content["text"] = spoiler;
 
 	out = page.substitute(content)
-	out = out.replace("^", "\\^{}").replace(u"♥", "$\\heartsuit$").replace(u"☺", " :) ").replace("&#3232;", u"{\\Tunga ಠ}").replace("_", " \\textunderscore ").replace("&", " \\& ")
+	#out = out
 	f =  open("tex/pupils/" + pupil["uid"] + ".tex", "w")
 	f.write(out.encode("utf-8"))
 print "%i Schüler, %i mit email"%(len(pupillist), emails)
