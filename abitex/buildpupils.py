@@ -79,6 +79,8 @@ for pupil in j :
 	content["name"]=content["name"].upper().replace(u'ß', 'SS')
 	if content["author"] == "":
 		content["author"] = "Dieser Text wurde von ganz vielen geschrieben... "
+	else :
+		content["author"] = escape_tex(content["author"])
 	content["name"]=content["name"].upper()
 	content["name"] = content["name"].replace(u"ё", '"e')
 	if content["uid"] == "mahlerda":
