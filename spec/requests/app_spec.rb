@@ -155,8 +155,8 @@ describe "The app" do
       
       describe "by someone else" do
         it "shows no link to edit the page" do
-          page.author = jonas
-          page.save!
+          course.page = Page.create! text: 'bla', author: jonas
+          course.save!
           get "/courses/#{course.id}"
           last_response.body.should_not have_selector "a[href='/pages/#{page.id}/edit']"
         end
