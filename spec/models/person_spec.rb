@@ -45,6 +45,14 @@ describe "Person" do
       jonas.meta_complete?.should == true
     end
   end
+
+  describe "#tag_length" do
+    it "returns the total length of all tags plus space for separator" do
+      jonas.tags.create name: 'asdf', author: lukas
+      jonas.tags.create name: 'lol', author: lukas
+      jonas.tag_length.should == (7 + 3 * 2)
+    end
+  end
   
   describe "#api_attributes" do
     it "returns a hash of attributes" do

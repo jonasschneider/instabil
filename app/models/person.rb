@@ -60,6 +60,10 @@ class Person
     end
   end
 
+  def tag_length
+    tags.map{|t|t.name.length}.sum + 3 * tags.length
+  end
+
   def meta_fields
     %w(lks zukunft nachabi lebenswichtig nachruf).map{|s| s.to_sym }
   end
