@@ -85,9 +85,10 @@ for pupil in j :
 		for t in content["tags"] :
 			tags.append(beautiy_quotation(t))
 		content["tags"] = " +++ ".join(tags)
+	
 	else : 
 		content["tags"] = "Hier kommen Tags hin!"
-	
+	content["tags"] = content["tags"].replace("%", "\\%")
 	if content["text"] != None and not options.spoiler:
 		proc = subprocess.Popen("./md2tex.sh", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 		content["text"] = proc.communicate(content["text"].encode("utf-8"))[0].decode("utf-8")
@@ -95,7 +96,7 @@ for pupil in j :
 		content["text"] = spoiler;
 
 	out = page.substitute(content)
-	out = out.replace("&", " \\& ").replace("%", "\\%").replace("^", "\\^{}").replace(u"♥", "$\\heartsuit$")
+	out = out.replace("^", "\\^{}").replace(u"♥", "$\\heartsuit$").replace(u"☺", " :) ").replace("&#3232;", u"{\\Tunga ಠ}").replace("_", " \\textunderscore ").replace("&", " \\& ")
 	f =  open("tex/pupils/" + pupil["uid"] + ".tex", "w")
 	f.write(out.encode("utf-8"))
 print "%i Schüler, %i mit email"%(len(pupillist), emails)
