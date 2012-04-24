@@ -5,6 +5,7 @@
 \usepackage[ngerman]{babel}
 \usepackage{lmodern}
 \usepackage{mdwlist}
+\usepackage{eurosym}
 \usepackage{moresize}
 %\usepackage[cm]{fullpage}
 \newlength{\border}
@@ -28,7 +29,10 @@
 %\usepackage[compact]{titlesec}
 %\author{Lukas Kramer \\ \texttt{lu@0x83.eu}}
 
-\addtokomafont{subsubsection}{\rmfamily}
+\addtokomafont{subsubsection}{\rmfamily\normalsize}
+\addtokomafont{subsection}{\rmfamily}
+\usepackage[compact]{titlesec}
+%\titlespacing{\subsubsection}{0pt}{*1}{*0}
 \usepackage{xltxtra}
 \newfontfamily\titlefont[Scale=1.6]{Dekar}
 \newfontfamily\Dekar{Dekar}

@@ -1,14 +1,11 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
-import pymongo, re
+import re,json
 
-c = pymongo.Connection(open("mongourl").read().strip())
-coll =  c.memoirs_production.memoirs
-l = coll.find()
-memoirs = []
-for x in l:
-	memoirs.append(x)
+f = open("memoirs.json")
+blah = f.read()
+memoirs = json.loads(blah)
 
 def beautiy_quotation(text) :
 	quotation  = ","
@@ -26,16 +23,17 @@ def beautiy_quotation(text) :
 		else :
 			if quotation == "," :
 				out += quotation*2
-				quotation = "'"
+				quotation = "`"
 			else :
-				out += quotation*2
+				out += "{}"+quotation*2
 				quotation = ","
 	return out
 			
 
 def parse_memoir(mem) :
 	print ""
-	print "\\vspace{3mm}"
+	print "\\vspace{4mm}"
+	print "\parbox{\\columnwidth}{"
 	#print "\\rule{1cm}{}"
 	#print "\\vspace{1.5mm}"
 	#print mem["text"].encode("utf-8")
@@ -51,27 +49,29 @@ def parse_memoir(mem) :
 			
 			if left:
 				print "\\hangindent=0.7cm"
-				print "\\raggedright \\textsc{\\footnotesize "+p+"} ,,"+beautiy_quotation(line.split("]")[1].strip())+"''\\\\"
+				print "\\raggedright \\textsc{\\footnotesize "+p+"} ,,{}"+beautiy_quotation(line.split("]")[1].strip())+"{}``\\\\"
 			else :
-				print "\\raggedleft ,,"+beautiy_quotation(line.split("]")[1].strip())+"'' \\textsc{\\footnotesize "+p+"}\\\\"
+				print "\\raggedleft ,,"+beautiy_quotation(line.split("]")[1].strip())+"{}`` \\textsc{\\footnotesize "+p+"}\\\\"
 			left ^= True
 		else :
 			if "(" in line :
 				print "\\raggedright \\emph{\\footnotesize "+beautiy_quotation(line)+"}\\\\"
 				left ^= True
 			else :
-				print "{\\raggedright " + (beautiy_quotation(line.strip())) + "}\\\\"
+				if line.strip() != "" :
+					print "{\\raggedright " + (beautiy_quotation(line.strip())) + "}\\\\"
+		print "\\vspace{1mm}"
 	
 	if mem["person"] != "Jonas" and "[" not in mem["text"] :
 		print "\\raggedleft \\textsc{\\footnotesize --\\/"+mem["person"].encode("utf-8")+"}\\\\"
 	
-	
+	print "}"
 memoirs.reverse()
 i = 0
 for n in memoirs :
 	parse_memoir(n)
-	if i == 10:
+	"""if i == 10:
 		break
-	i+=1
+	i+=1"""
 
 
