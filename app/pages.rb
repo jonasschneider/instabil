@@ -89,6 +89,17 @@ module Instabil::Pages
 
         haml :page_edit
       end
+
+      post '/pages/:id/un_signoff' do
+        authenticate!
+        halt 403 unless current_user.moderator?
+        @page = Page.find(params[:id])
+
+        @page.signed_off_by = nil
+        @page.save!
+
+        haml :page_edit
+      end
     end
   end
 end

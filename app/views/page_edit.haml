@@ -2,6 +2,11 @@
 
 - if @page.signed_off_by.present?
   .flash.notice== Als fertig markiert von #{@page.signed_off_by.name}. Ab jetzt können nur noch Mitglieder der Redaktion die Seite bearbeiten.
+  - if current_user.moderator?
+    Moderator-Aktionen:
+    %form{ action: "/pages/#{@page.id}/un_signoff", method: 'post' }
+      %input{ type: 'submit', value: 'Als unfertig markieren' }
+
 - else
   - if current_user.moderator?
     Moderator-Aktionen:
