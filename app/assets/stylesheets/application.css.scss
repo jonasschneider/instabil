@@ -2,6 +2,7 @@
 //= require gollum
 //= require template
 //= require nomail-blocker
+//= require courses
 
 .user_name {
   font-weight: bold;
@@ -369,29 +370,6 @@ ul#splash li.emph {
 .clearfix {
   clear: both;
 }
-
-.courses {
-}
-
-.course-group {
-  display: inline;
-  float: left;
-  margin: 20px;
-  padding: 20px;
-  background: #eee;
-  box-shadow: 0 0 10px #bbb;
-  border-radius: 5px;
-}
-
-.course-group h3 {
-  display: inline;
-}
-
-.course-group ul {
-  display: inline;
-}
-
-
 
 .download-button {
   margin: 20px auto 30px;

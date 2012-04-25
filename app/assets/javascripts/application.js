@@ -22,3 +22,22 @@ userChannel.bind('tagged',
     $(el).fadeIn()
   }
 );
+
+$(function() {
+  $('form.ajaxtag').submit(function() {
+    var f = $(this)
+
+    var x = f.find('.tagname').val()
+    f.data('pending', x)
+    
+    setTimeout(function() {
+      f.find('.tagname').val('')
+    }, 200)
+  })
+
+  $('form.ajaxtag').ajaxForm({
+    success: function(body, state, xhr, form) {
+      form.prev().append("<span class='tag'>"+form.data('pending')+"</span> ")
+    }
+  });
+})

@@ -1,25 +1,56 @@
-- if Course.all.empty?
-  %p Es wurden noch keine Kurse eingetragen. Das kann sich nur noch um Stunden handeln...
-- else
-  %h1 Vierstündige Kurse
-  .courses
-    - Course.all.select{|c|c.num==4}.group_by{|c|c.fach}.sort_by{|x|x[0]}.each do |fach, courses|
-      .course-group
-        %h3= fach
-        %ul
-          - courses.sort_by{|c|c.name}.each do |course|
-            %li
-              %a{ :href => "/courses/#{course.id}" }= course.name
-  .clearfix
-  %h1 Zweistündige Kurse
-  .courses
-    - Course.all.select{|c|c.num==2}.group_by{|c|c.fach}.sort_by{|x|x[0]}.each do |fach, courses|
-      .course-group
-        %h3= fach
-        %ul
-          - courses.sort_by{|c|c.name}.each do |course|
-            %li
-              %a{ :href => "/courses/#{course.id}" }= course.name
-              - if course.page.present?
-                == (#{course.page.responsible.name} schreibt Bericht)
-  .clearfix
+%h1 Kursberichte
+%p
+  Hier kannst du Kursberichte und Kommentare zu deinen Kursen eintragen.
+  Wenn dein Kurs noch nicht aufgeführt ist, erstell ihn einfach!
+
+- [4, 2].each do |num|
+  - name = num == 4 ? 'Vierstündig' : 'Zweistündig'
+
+  %h2== #{name}e Kurse
+  %form{ action: '/courses', method: 'post' }
+    %input{ type: 'hidden', name: 'course[num]', value: num }
+    .course
+      .metaform
+        %select.dataz{ name: 'course[subject]' }
+          %option{ value: '' } (Fach)
+          - Instabil::SUBJECT_MAP.each do |k, v|
+            %option{ value: k }= v
+        == #{name.downcase} bei Herr/Frau
+        = succeed ',' do
+          %input.dataz{ name: 'course[teacher]', placeholder: 'z.B. Schürer' }
+        = num == 4 ? 'Doppelstunde am' : 'erste Stunde in der Woche am'
+        %select.dataz{ name: 'course[weekday]' }
+          %option{ value: '' } (Wochentag)
+          - Instabil::WEEKDAYS.each_with_index do |d, i|
+            %option{ value: i }= d
+        %br
+        %input.dataz{ type: 'submit', value: "Als #{name}en Kurs eintragen" }
+
+  - Course.where(num: num).group_by{|c|c.subject}.sort_by{|x|x[0]}.each do |fach, courses|
+    %h4= Instabil::SUBJECT_MAP[fach]
+    - courses.each do |course|
+      .course[course]
+        .meta
+          %strong= Instabil::SUBJECT_MAP[course.subject]
+          == #{name.downcase} bei
+          = succeed ',' do
+            %strong= course.teacher
+          = num == 4 ? 'Doppelstunde am' : 'erste Stunde in der Woche am'
+          %strong= course.weekday_name
+
+          %br
+
+          - if course.page.present?
+            %a{ href: "/courses/#{course.id}" } Kursbericht anschauen
+          - else
+            %a{ href: "/pages/new?for_course=#{course.id}" } Kursbericht schreiben
+
+        .tags
+          - course.tags.each do |tag|
+            %span.tag= tag.name
+
+        %form.ajaxtag{ action: "/courses/#{course.id}/tags", method: 'post' }
+          %input.tagname{ name: 'tag[name]', type: 'text' }
+          %input{ type: 'submit', value: 'Kommentar hinzufügen' }
+  %br
+  %br

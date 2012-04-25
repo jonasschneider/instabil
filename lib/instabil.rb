@@ -1,4 +1,6 @@
 module Instabil
+  WEEKDAYS = %w(Montag Dienstag Mittwoch Donnerstag Freitag)
+  
   SUBJECT_MAP = {
     "d" => "Deutsch",
     "m" => "Mathe",

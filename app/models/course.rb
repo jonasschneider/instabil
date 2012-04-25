@@ -4,36 +4,41 @@ class Course
   
   default_scope order_by(:name)
   
-  field :name
-  validates_presence_of :name
-  validates_uniqueness_of :name
-  
+  field :subject
+  field :teacher
+  field :weekday, type: Fixnum
+  field :num, type: Fixnum
+
+  validates_presence_of :subject, :teacher, :weekday, :num, :creator
+
+  belongs_to :creator, class_name: 'Person', inverse_of: nil
   belongs_to :page
-  
-  REGEX = /^(\d+)([^\d]+)\d\d$/
-  
-  def fach
-    return nil if name.nil?
-    
-    return Instabil::SUBJECT_MAP[$2.downcase] if name.match(REGEX)
-    'Sonstiges'
+
+  embeds_many :tags, class_name: 'CourseTag'
+
+  def weekday_name
+    Instabil::WEEKDAYS[self.weekday]
   end
-  
-  def num
-    return nil if name.nil?
-    $1.to_i if name.match(REGEX)
+
+  def subject_name
+    Instabil::SUBJECT_MAP[self.subject]
+  end
+
+  def name
+    "#{subject_name} #{num == 4 ? 'vier' : 'zwei'}stündig bei #{teacher}, #{num == 4 ? 'Doppelstunde am' : 'erste Stunde in der Woche am'} #{weekday_name}"
   end
   
   def api_attributes
     {
-      "fach" => self.fach,
+      "fach" => Instabil::SUBJECT_MAP[self.subject],
+      "weekday" => weekday_name,
       "num" => self.num,
-      "name" => self.name,
-      
-      "lehrer" => "XX",
+      "lehrer" => self.teacher,
       
       "foto" => "http://image.shutterstock.com/display_pic_with_logo/195/195,1159450466,2/stock-vector-group-of-people-vector-1914678.jpg",
       
+      "tags" => [],
+
       "text" => (page && page.text) || "",
       "author" => (page && page.author.name) || ""
     }

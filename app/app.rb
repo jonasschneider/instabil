@@ -14,6 +14,7 @@ require "#{dir}/summary"
 require "#{dir}/models/page"
 require "#{dir}/models/tag"
 require "#{dir}/models/course"
+require "#{dir}/models/course_tag"
 require "#{dir}/models/person"
 require "#{dir}/models/message"
 require "#{dir}/models/answer"
@@ -174,10 +175,34 @@ class Instabil::App < Sinatra::Base
     authenticate!
     haml :courses
   end
+
+  post '/courses' do
+    c = Course.create params[:course]
+    c.creator = current_user
+    c.save!
+    redirect "/courses#course_#{c.id}"
+  end
   
   get '/courses/:id' do
     authenticate!
     @course = Course.find params[:id]
-    haml :course
+    if @course.page.present?
+      haml :course_page
+    else
+      halt 404
+    end
+  end
+
+  post '/courses/:id/tags' do
+    authenticate!
+    @course = Course.find params[:id]
+    @tag = @course.tags.build params[:tag]
+    @tag.author = current_user
+    
+    if @tag.save
+      redirect "/courses"
+    else
+      halt 400, @tag.errors.inspect
+    end
   end
 end
