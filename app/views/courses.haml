@@ -27,7 +27,7 @@
         %input.dataz{ type: 'submit', value: "Als #{name}en Kurs eintragen" }
 
   - Course.where(num: num).group_by{|c|c.subject}.sort_by{|x|x[0]}.each do |fach, courses|
-    %h4= Instabil::SUBJECT_MAP[fach]
+    %h4.subject= Instabil::SUBJECT_MAP[fach]
     - courses.each do |course|
       .course[course]
         .meta
