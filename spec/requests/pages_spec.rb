@@ -182,14 +182,12 @@ describe "Instabil::Pages" do
   end
   
   describe "course pages" do
-    let(:course) { Course.create! name: '4Bio1' }
+    let(:course) { Course.create! subject: 'bio', num: 4, teacher: 'Kunz', weekday: 3, creator: jonas }
     let(:page) { course.page = Page.create!(text: 'Ohai', author: jonas); course.save!; course.page }
     
     describe "visiting /pages/new?for_course=<course_id>" do
       it "displays a form" do
         get "/pages/new?for_course=#{course.id}"
-        
-        last_response.body.should include("4Bio1")
         
         form = "form[action=\"/pages\"][method=post]"
         last_response.should have_selector form

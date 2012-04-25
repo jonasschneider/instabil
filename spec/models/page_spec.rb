@@ -91,12 +91,12 @@ describe "Page" do
       me.page.name.should == 'Personenbericht für Jonas'
     end
 
-    let(:course) { Course.create! name: '4BIO02' }
+    let(:course) { Course.create! subject: 'bio', num: 4, teacher: 'Kunz', weekday: 3, creator: me }
     
     it "works for course pages" do
       course.page = Page.create text: 'ohai', author: me
 
-      course.page.name.should == 'Kursbericht für 4BIO02'
+      course.page.name.should == "Kursbericht für #{course.name}"
     end
   end
 

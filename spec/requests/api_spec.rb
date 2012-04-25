@@ -38,7 +38,7 @@ describe "App API endpoint" do
       end
       
       it 'returns something when there are courses' do
-        Course.create! name: '4Bi01'
+        Course.create! subject: 'bio', num: 4, teacher: 'Kunz', weekday: 3, creator: make_person(name: 'Jonas', uid: 'schneijo')
         
         get '/api/courses.json', :key => key
         
