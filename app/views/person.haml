@@ -9,20 +9,23 @@
 
 %h2 Steckbrief
 %p
-  Meister in ...
+  Ich bin Meister in
   %strong= @person.lks || 'XXX'
-%p
-  Nach dem Abi:
-  %strong= @person.nachabi || 'XXX'
-%p
-  Später mal:
+  ,
+  %br
+  und später werd' ich mal
   %strong= @person.zukunft || 'XXX'
-%p
-  Ohne
+  == .
+  %br
+
+  Jetzt nach dem Abi
+  %strong= @person.nachabi || 'XXX'
+  , aber ohne
   %strong= @person.lebenswichtig || 'XXX'
-  hätte ich das Abi nicht geschafft.
-%p
-  Was ich euch schon immer mal sagen wollte:
+  hätte ich's nicht geschafft.
+
+  %br
+  Ach, und übrigens:
   %strong= @person.nachruf || 'XXX'
 
 %h2 Abizeitungs-Seite
