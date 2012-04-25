@@ -55,7 +55,7 @@ emails = 0
 fixes = {"4f8b0655146fa40001000014" : "{\\Chinese %s}",
 "4f96b816079d0500010000fd":"{\\Fixed %s}"}
 
-smallnames = ("mahlerda", "leikerch", "meissnna")
+smallnames = ("mahlerda", "leikerch", "meissnna", "burgerma")
 
 print 'Namen zu lang:'
 for pupil in j :

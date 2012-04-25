@@ -7,9 +7,9 @@ Jetzt nach dem Abi \textbf{$nachabi},
 aber ohne \textbf{$lebenswichtig} hätte ich's nicht geschafft.
 Ach, und übrigens: \textbf{$nachruf}
 }
-\persontext{$title}{$subtitle}{$text}
+\persontext{$title}{$subtitle \ifnum\zposy{$uid}<2380678 {\color{red} SEITE ZU LANG} \fi}{$text}
 \personauthorb{$author}
-\persontagsb{$tags}
+\persontagsb{$tags \zsavepos{$uid}}
 \makefoot
 \newpage
 
