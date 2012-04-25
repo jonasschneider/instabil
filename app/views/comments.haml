@@ -9,6 +9,10 @@
 %p
   %strong Du siehst nur die Kommentare, die du selber geschrieben hast, und die, die für dich sind!
 
+%p
+  Du kannst hier bis zum <strong>13. Mai</strong> Kommentare schreiben. Danach hat dann noch jeder bis zum <strong>16. Mai</strong>
+  Zeit, seine eigenen Kommentare ggf. zu löschen.
+
 %table
   - Person.order_by([:uid, :asc]).each do |p|
     %tr[p]
