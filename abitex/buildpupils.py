@@ -55,6 +55,8 @@ emails = 0
 fixes = {"4f8b0655146fa40001000014" : "{\\Chinese %s}",
 "4f96b816079d0500010000fd":"{\\Fixed %s}"}
 
+smallnames = ("mahlerda", "leikerch", "meissnna")
+
 print 'Namen zu lang:'
 for pupil in j :
 	page = Template(temp.decode("utf-8"))
@@ -83,7 +85,7 @@ for pupil in j :
 		content["author"] = escape_tex(content["author"])
 	content["name"]=content["name"].upper()
 	content["name"] = content["name"].replace(u"ё", '"e')
-	if content["uid"] == "mahlerda":
+	if content["uid"] in smallnames:
 		content["name"] = "\LARGE "+content["name"]
 	if content["g8"]==1 :
 		content["g8"] = "G8"
