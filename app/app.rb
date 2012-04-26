@@ -205,4 +205,15 @@ class Instabil::App < Sinatra::Base
       halt 400, @tag.errors.inspect
     end
   end
+
+  post '/courses/:id/untag/:tag_id' do
+    authenticate!
+    @course = Course.find params[:id]
+    @tag = @course.tags.find params[:tag_id]
+
+    enforce_destroy_permission(@tag)
+
+    @tag.destroy
+    redirect "/courses"
+  end
 end

@@ -38,6 +38,20 @@ describe "Instabil::Courses" do
       last_response.body.should_not have_selector "a[href='/courses/#{course.id}']"
     end
 
+    it "shows a link to remove a tag by the user" do
+      course.tags.create name: 'lol', author: lukas
+      visit '/courses'
+      last_response.body.should have_selector("form[action='/courses/#{course.id}/untag/#{course.tags.first.id}'][method=post]")
+      click_button 'Löschen'
+      course.reload.tags.should == []
+    end
+
+    it "shows no link to remove a tag by another user" do
+      course.tags.create name: 'lol', author: jonas
+      visit '/courses'
+      last_response.body.should_not have_selector("form[action='/courses/#{course.id}/untag/#{course.tags.first.id}'][method=post]")
+    end
+
     it "shows a link to the course page if there is one" do
       course.page = page
       course.save!

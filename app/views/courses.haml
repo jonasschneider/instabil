@@ -47,7 +47,12 @@
 
         .tags
           - course.tags.each do |tag|
-            %span.tag= tag.name
+            %span.tag
+              = tag.name
+              
+              - if current_user.can_destroy? tag
+                %form.ajax_deletetag{ action: "/courses/#{course.id}/untag/#{tag.id}", method: 'post' }
+                  %input{ type: 'submit', value: 'Löschen' }
 
         %form.ajaxtag{ action: "/courses/#{course.id}/tags", method: 'post' }
           %input.tagname{ name: 'tag[name]', type: 'text' }
