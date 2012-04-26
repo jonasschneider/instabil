@@ -19,6 +19,7 @@ module Instabil
     "g" => "Geschichte",
     "gk" => "Gemeinschaftskunde",
     "geogr" => "Erdkunde",
+    "geol" => "Geologie",
     
     "s" => "Sport",
     "inf" => "Informatik",
