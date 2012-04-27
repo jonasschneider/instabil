@@ -1,5 +1,5 @@
 SRC = abi
-all: fetchpupils spoiler pdf
+all: fetchpupils pupils pdf
 
 fast : pupils pdf
 

@@ -39,7 +39,7 @@ def md2tex(text) :
 	return proc.communicate(text.encode("utf-8"))[0].decode("utf-8")
 
 def escape_tex(text) :
-	return text.replace(u"♥", "<3").replace(u"☺", " :) ").replace("&#3232;", u"{\\Tunga ಠ}").replace("&", "\\&").replace("#", "\\#").replace("_", "\\_").replace("^", "\^{}").replace(u"%", "\%")
+	return text.replace(u"♥", "<3").replace(u"☺", " :) ").replace("&#3232;", u"{\\Tunga ಠ}").replace("&", "\\&").replace("#", "\\#").replace("_", "\\_").replace("^", "\^{}").replace(u"%", "\%").replace(u"λ", "$\\lambda$").replace(u"✚", u"{\\DjVu ✚}").replace(u"‿", u"{\\DjVu ‿}").replace(u"✿", u"{\\DjVu ✿}")
 
 parser = OptionParser()
 parser.add_option("-s", "--spoiler", dest="spoiler", help="Spolier text", action="store_true")
@@ -55,7 +55,7 @@ emails = 0
 fixes = {"4f8b0655146fa40001000014" : "{\\Chinese %s}",
 "4f96b816079d0500010000fd":"{\\Fixed %s}"}
 
-smallnames = ("mahlerda", "leikerch", "meissnna", "burgerma")
+smallnames = ("mahlerda", "leikerch", "meissnna", "burgerma", "hoffmelo")
 
 print 'Namen zu lang:'
 for pupil in j :
@@ -104,7 +104,7 @@ for pupil in j :
 				tags.append(escape_tex(beautiy_quotation(fixes[t[1]]%t[0])))
 			else:
 				tags.append(escape_tex(beautiy_quotation(t[0])))
-		content["tags"] = " +++ ".join(tags)
+		content["tags"] = " // ".join(tags)
 		 
 		 
 	
