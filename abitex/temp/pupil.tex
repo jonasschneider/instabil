@@ -7,9 +7,9 @@ Jetzt nach dem Abi \textbf{$nachabi},
 aber ohne \textbf{$lebenswichtig} hätte ich's nicht geschafft.
 Ach, und übrigens: \textbf{$nachruf}
 }
-\persontext{$title}{$subtitle \ifnum\zposy{$uid}<2218500 {\color{red} SEITE ZU LANG} \PackageWarning{abitex}{seite von $uid $name zu lang} \fi}{$text}
-\personauthorb{$author}
-\persontagsb{$tags \zsavepos{$uid}}
+\persontext{$title}{$subtitle \ifnum\zposy{$uid-tags}>\zposy{$uid-author} {\color{red} SEITE ZU LANG} \PackageWarning{abitex}{seite von $uid $name zu lang} \fi}{$text}
+\personauthorb{$author \zsavepos{$uid-author}}
+\persontagsb{\zsavepos{$uid-tags} $tags}
 \makefoot
 \newpage
 
