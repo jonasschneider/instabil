@@ -92,19 +92,7 @@
 %}
 }
 
-\newcommand{\personauthor}[1]{
-\begin{textblock}{14.0}(1,14.15)
-\flushouter
-#1
-\end{textblock}
-}
 
-\newcommand{\persontags}[1]{
-\begin{textblock}{14.0}(1,14.55)
-\flushinner
-#1
-\end{textblock}
-}
 
 \newcommand{\personauthorb}[1]{
 \noindent
@@ -112,16 +100,19 @@
 \flushouter
 #1
 }
+\end{textblock*}
 }
 \newcommand{\persontagsb}[1]{
-\noindent
-\parbox{\textwidth}{
+\begin{textblock*}{\textwidth}(\border,8.6cm)
+
+\parbox[top][19.8cm][t]{\textwidth}{
 \vspace{1em}
 %\flushinner
 %\sloppy
 \scriptsize
 \Slab
-\textcolor{tagcolor}{#1}
+\textcolor{tagcolor}{\vfill
+\noindent #1}
 }
 \end{textblock*}
 }
