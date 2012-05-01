@@ -48,3 +48,6 @@ push :
 missing: fetchpupils
 	./buildpupils.py | head -n -1 > users
 	./qusers.py > missing
+	
+prevu : spoiler pdf
+	./prevu.py

@@ -32,7 +32,7 @@ def beautiy_quotation(text) :
 
 def parse_memoir(mem) :
 	print ""
-	print "\\vspace{4mm}"
+	#print "\\vspace{2mm}"
 	print "\parbox{\\columnwidth}{"
 	#print "\\rule{1cm}{}"
 	#print "\\vspace{1.5mm}"
@@ -48,24 +48,26 @@ def parse_memoir(mem) :
 			p = m.group(1)[1:-1]
 			
 			if left:
-				print "\\hangindent=0.7cm"
-				print "\\raggedright \\textsc{\\footnotesize "+p+"} ,,{}"+beautiy_quotation(line.split("]")[1].strip())+"{}``\\\\"
+				#print "\\hangindent=0.7cm"
+				#print "\\textsc{\\footnotesize "+p+"} ,,{}"+beautiy_quotation(line.split("]")[1].strip())+"{}``\\\\"
+				print "\\say{"+p+"}{"+beautiy_quotation(line.split("]")[1].strip())+"}"
+				
 			else :
 				print "\\raggedleft ,,"+beautiy_quotation(line.split("]")[1].strip())+"{}`` \\textsc{\\footnotesize "+p+"}\\\\"
-			left ^= True
+			#left ^= True
 		else :
 			if "(" in line :
-				print "\\raggedright \\emph{\\footnotesize "+beautiy_quotation(line)+"}\\\\"
-				left ^= True
+				print "\\emph{\\footnotesize "+beautiy_quotation(line)+"}\\\\"
+				#left ^= True
 			else :
 				if line.strip() != "" :
-					print "{\\raggedright " + (beautiy_quotation(line.strip())) + "}\\\\"
-		print "\\vspace{1mm}"
+					print "{" + (beautiy_quotation(line.strip())) + "}\\\\"
+		#print "\\vspace{1mm}"
 	
-	if mem["person"] != "Jonas" and "[" not in mem["text"] :
-		print "\\raggedleft \\textsc{\\footnotesize --\\/"+mem["person"].encode("utf-8")+"}\\\\"
+	if mem["person"] != "Jonas" and "[" not in mem["text"] and mem["person"].strip() != "":
+		print "\\vspace*{-2em} \\begin{flushright} \\textsc{\\footnotesize --\\/"+mem["person"].encode("utf-8")+"}\\end{flushright}"
 	
-	print "}"
+	print "\\ornament }"
 memoirs.reverse()
 i = 0
 for n in memoirs :

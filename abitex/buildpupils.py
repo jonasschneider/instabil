@@ -39,7 +39,7 @@ def md2tex(text) :
 	return proc.communicate(text.encode("utf-8"))[0].decode("utf-8")
 
 def escape_tex(text) :
-	return text.replace(u"♥", "<3").replace(u"☺", " :) ").replace("&#3232;", u"{\\Tunga ಠ}").replace("&", "\\&").replace("#", "\\#").replace("_", "\\_").replace("^", "\^{}").replace(u"%", "\%").replace(u"λ", "$\\lambda$").replace(u"✚", u"{\\DjVu ✚}").replace(u"‿", u"{\\DjVu ‿}").replace(u"✿", u"{\\DjVu ✿}")
+	return text.replace("\\", "\\textbackslash\\/").replace(u"♥", "<3").replace(u"☺", " :) ").replace("&#3232;", u"{\\Tunga ಠ}").replace("&", "\\&").replace("#", "\\#").replace("_", "\\_").replace("^", "\^{}").replace(u"%", "\%").replace(u"λ", "$\\lambda$").replace(u"✚", u"{\\DjVu ✚}").replace(u"‿", u"{\\DjVu ‿}").replace(u"✿", u"{\\DjVu ✿}").replace(u"ё", '"e').replace(u"§nl§", u"\\\\")
 
 parser = OptionParser()
 parser.add_option("-s", "--spoiler", dest="spoiler", help="Spolier text", action="store_true")
@@ -48,11 +48,15 @@ spoiler = open("spoilertext").read()
 f = open("pupils.json")
 blah = f.read()
 j = json.loads(blah)
-temp = open("temp/pupil.tex").read()
+if options.spoiler :
+	temp = open("temp/spoiler.tex").read()
+else: 
+	temp = open("temp/pupil.tex").read()
 pupillist = []
 emails = 0
 
 fixes = {"4f8b0655146fa40001000014" : "{\\Chinese %s}",
+"4f9d12f52ca3a7000100004a" : "{\\Chinese %s}",
 "4f96b816079d0500010000fd":"{\\Fixed %s}"}
 
 smallnames = ("mahlerda", "leikerch", "meissnna", "burgerma", "hoffmelo")
@@ -84,7 +88,7 @@ for pupil in j :
 	else :
 		content["author"] = escape_tex(content["author"])
 	content["name"]=content["name"].upper()
-	content["name"] = content["name"].replace(u"ё", '"e')
+	content["name"] = content["name"].replace(u"ё", '"e').replace(u"Ё", '"E')
 	if content["uid"] in smallnames:
 		content["name"] = "\LARGE "+content["name"]
 	if content["g8"]==1 :
@@ -95,13 +99,17 @@ for pupil in j :
 		content["g8"] = "G8/G9 \\em{fixme}"
 	content["lks"] = escape_tex(content["lks"] or "")
 	content["lebenswichtig"] = escape_tex(content["lebenswichtig"] or "")
+	content["nachruf"] = escape_tex(content["nachruf"] or "")
+	content["nachabi"] = escape_tex(content["nachabi"] or "")
+	content["title"] = escape_tex(content["title"] or "")
+	content["subtitle"] = escape_tex(content["subtitle"] or "")
 	#print type(content["tags"])
 	content["geb"] = dates[content["uid"][0:8]]
 	if content["tags"] != None and not options.spoiler:
 		tags = []
 		for t in content["tags"] :
 			if t[1] in fixes :
-				tags.append(escape_tex(beautiy_quotation(fixes[t[1]]%t[0])))
+				tags.append(beautiy_quotation(fixes[t[1]]%escape_tex(t[0])))
 			else:
 				tags.append(escape_tex(beautiy_quotation(t[0])))
 		content["tags"] = " // ".join(tags)
@@ -111,7 +119,7 @@ for pupil in j :
 	else : 
 		content["tags"] = "Hier kommen Tags hin!"
 	#content["tags"] = content["tags"].replace("%", "\\%")
-	if content["text"] != None and not options.spoiler:
+	if content["text"] != None:
 		proc = subprocess.Popen("./md2tex.sh", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 		content["text"] = proc.communicate(content["text"].encode("utf-8"))[0].decode("utf-8")
 	else :
