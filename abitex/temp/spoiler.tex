@@ -1,0 +1,5 @@
+\persontext{$title}{$subtitle \ifnum\zposy{$uid-tags}>\zposy{$uid-author} {\color{red} SEITE ZU LANG} \PackageWarning{abitex}{seite von $uid $name zu lang} \fi}{$text}
+\personauthorb{$author \zsavepos{$uid-author}}
+\persontagsb{\zsavepos{$uid-tags} $tags}
+\newpage
+
