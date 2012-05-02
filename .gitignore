@@ -31,3 +31,4 @@ abitex/backup/*
 abitex/dump.sh
 .sass-cache
 contrib/allusers
+abitex/linked

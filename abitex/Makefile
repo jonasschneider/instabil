@@ -42,8 +42,8 @@ avatars:
 view :
 	evince tex/abi.pdf& 2> /dev/null
 	
-push :
-	./push.sh
+deploy:
+	cp tex/abi.pdf linked/personenberichte.pdf
 
 missing: fetchpupils
 	./buildpupils.py | head -n -1 > users
