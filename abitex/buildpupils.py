@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
-import json, os
+import json, os, os.path
 from string import Template
 from optparse import OptionParser
 import subprocess
@@ -66,6 +66,8 @@ for pupil in j :
 	page = Template(temp.decode("utf-8"))
 	
 	content = pupil["page"]
+	content["special"] = ""
+	
 	if pupil["email"] != None and pupil["email"] != "" :
 		#print pupil["email"]
 		emails += 1
@@ -124,7 +126,11 @@ for pupil in j :
 		content["text"] = proc.communicate(content["text"].encode("utf-8"))[0].decode("utf-8")
 	else :
 		content["text"] = spoiler;
-
+	
+	if os.path.isfile("temp/"+pupil["uid"]+".tex") :
+		special = Template(open("temp/"+pupil["uid"]+".tex").read().decode("utf-8"))
+		content["text"] = special.substitute(content)
+	
 	out = page.substitute(content)
 	#out = out
 	f =  open("tex/pupils/" + pupil["uid"] + ".tex", "w")

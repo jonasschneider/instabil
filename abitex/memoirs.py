@@ -49,7 +49,6 @@ def parse_memoir(mem) :
 		m2 = rg2.search(line)
 		if m :
 			p = m.group(1)[1:-1]
-			
 			if left:
 				#print "\\hangindent=0.7cm"
 				#print "\\textsc{\\footnotesize "+p+"} ,,{}"+beautiy_quotation(line.split("]")[1].strip())+"{}``\\\\"
