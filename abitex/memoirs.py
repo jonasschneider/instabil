@@ -42,15 +42,21 @@ def parse_memoir(mem) :
 	for line in text :
 		line = line.encode("utf-8")
 		re1='(\\[.*?\\])'	# Square Braces 1
+		re2='(\\(.*?\\))'	# Braces 1
 		rg = re.compile(re1,re.IGNORECASE|re.DOTALL)
+		rg2 = re.compile(re2,re.IGNORECASE|re.DOTALL)
 		m = rg.search(line)
+		m2 = rg2.search(line)
 		if m :
 			p = m.group(1)[1:-1]
 			
 			if left:
 				#print "\\hangindent=0.7cm"
 				#print "\\textsc{\\footnotesize "+p+"} ,,{}"+beautiy_quotation(line.split("]")[1].strip())+"{}``\\\\"
-				print "\\say{"+p+"}{"+beautiy_quotation(line.split("]")[1].strip())+"}"
+				if m2 == None:
+					print "\\say{"+p+"}{"+beautiy_quotation(line.split("]")[1].strip())+"}"
+				else :
+					print "\\saya{"+p+"}{"+m2.group(1)+"}{"+beautiy_quotation(line.split("]")[1].strip().split(")")[1].strip())+"}"
 				
 			else :
 				print "\\raggedleft ,,"+beautiy_quotation(line.split("]")[1].strip())+"{}`` \\textsc{\\footnotesize "+p+"}\\\\"
