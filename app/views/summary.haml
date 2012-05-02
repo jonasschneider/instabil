@@ -34,7 +34,6 @@
     %tr
       %th Kurs
       %th Kursbericht eingetragen
-      %th mehr als 5 Kommentare
 
     - Course.all.each do |c|
       %tr[p]
@@ -43,7 +42,8 @@
 
         %td{ :class => (c.page.present? ? 'ok' : 'fail') }
 
-        %td{ :class => (c.tags.count > 5 ? 'ok' : 'fail') }
-      
+    %tr.footer
+      %td
+      %td== #{Course.where(:page_id.ne => nil).count} (#{((Course.where(:page_id.ne => nil).count.to_f / Course.count)*100).to_i}%)
 
   %p== Moderatoren: #{Person.moderator_uids.map{|uid| Person.where(uid: uid).first.try(:name) }.join(', ')}
