@@ -54,26 +54,3 @@
 \setlength{\parskip}{0cm}
 \setlength{\footskip}{1.2cm}
 \newcommand{\kathisize}{\fontsize{9.2pt}{11.04pt}\selectfont}
-\begin{document}
-
-Titel
-\newpage
-
-\input{pupilspages.tex}
-werbung
-\newpage
-\ghon
-\AddEverypageHook{\ifnum\value{usegenericheaderc}=1 \makebgg \makefoot \generichead{\generictitle} \fi}
-%\makebgg
-
-%\makefoot
-\renewcommand{\generictitle}{Memoiren}
-\begin{multicols}{2}
-%\input{mems}
-\end{multicols}
-\null
-\newpage
-\null
-\newpage
-%\studienfahrt{Österreich}{o}
-\end{document}

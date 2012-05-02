@@ -1,6 +1,12 @@
-\section{Memoiren}
-\begin{multicols*}{2}
-\setlength\columnseprule{.4pt}
-\hangindent=0.7cm 
+\input{header}
+\begin{document}
+
+\ghon
+\AddEverypageHook{\ifnum\value{usegenericheaderc}=1 \makebgg \makefoot \generichead{\generictitle} \fi}
+
+
+\renewcommand{\generictitle}{Memoiren}
+\begin{multicols}{2}
 \input{mems}
-\end{multicols*}
+\end{multicols}
+\end{document}

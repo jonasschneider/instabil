@@ -32,9 +32,10 @@ courses:
 
 memoirs:
 	./memoirs.py > tex/mems.tex
+	make memoirs -C tex 
  
 pdf:
-	make -C tex
+	make persons -C tex 
 
 avatars:
 	./fetchavas.py | sh
@@ -43,7 +44,8 @@ view :
 	evince tex/abi.pdf& 2> /dev/null
 	
 deploy:
-	cp tex/abi.pdf linked/personenberichte.pdf
+	cp tex/personenberichte.pdf  linked/personenberichte.pdf
+	cp tex/memoirs.pdf  linked
 
 missing: fetchpupils
 	./buildpupils.py | head -n -1 > users
