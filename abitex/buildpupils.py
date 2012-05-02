@@ -118,7 +118,10 @@ for pupil in j :
 			if t[1] in fixes :
 				tags.append(beautiy_quotation(fixes[t[1]]%escape_tex(t[0])))
 			else:
-				tags.append(escape_tex(beautiy_quotation(t[0])))
+				if t[1] == "4fa15969829ee30001000033" :
+					tags.append(u"$e^{\\mathrm{i}\\pi}=-1$; ,,schön''")
+				else:
+					tags.append(escape_tex(beautiy_quotation(t[0])))
 		content["tags"] = " // ".join(tags)
 		 
 		 
