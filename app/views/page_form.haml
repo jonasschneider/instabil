@@ -15,8 +15,6 @@
   Angezeigter Autorenname (hier kannst du Mitschreiber eintragen):
   %input{:name => "page[author_name]", value: (page.author_name.blank? ? current_user.name : page.author_name) }
 
-%h3 Vorschau
-.wmd-preview
 :javascript
   // to set WMD's options programatically, define a "wmd_options" object with whatever settings
   // you want to override.  Here are the defaults:
