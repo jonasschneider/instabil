@@ -31,14 +31,14 @@
 \newcommand{\persontitle}[3]{
 \setlength{\parindent}{0cm}
 \settoheight{\headheight}{\titlefont \huge {#1}}
-\begin{textblock*}{\textwidth}(\border,2.5cm-\headheight)
+\begin{textblock*}{\textwidth}(\border,2cm-\headheight)
 \flushouter
 \textcolor{white}{\titlefont \huge {#1}}
 \end{textblock*}
 \settowidth{\headwidth}{\titlefont \huge {#1}}
 
 
-\begin{textblock*}{\textwidth}(\border,2.6cm)
+\begin{textblock*}{\textwidth}(\border,2.2cm)
 \flushouter
 \parbox{\headwidth}{
 \flushouter
@@ -46,7 +46,7 @@
 }
 \end{textblock*}
 
-\begin{textblock*}{\textwidth}(\border,2.6cm)
+\begin{textblock*}{\textwidth}(\border,2.2cm)
 \flushouter
 \parbox{\headwidth}{
 \flushinner
@@ -64,7 +64,7 @@
 }
 
 \newcommand{\personmeta}[1]{
-\begin{textblock*}{\textwidth}(\border,4.2cm)
+\begin{textblock*}{\textwidth}(\border,3.2cm)
 \flushouter
 \parbox{13cm}{
 #1 \\
@@ -73,7 +73,7 @@
 }
 
 \newcommand{\persontext}[4]{
-\begin{textblock*}{\textwidth}(\border+5mm,7.8cm)
+\begin{textblock*}{\textwidth}(\border+5mm,6.8cm)
 \flushouter
 \large{#1}
 
@@ -81,7 +81,7 @@
 \emph{#2}\\
 \end{textblock*}
 \null
-\begin{textblock*}{\textwidth}(\border,8.6cm)
+\begin{textblock*}{\textwidth}(\border,7.6cm)
 %\parbox[top][17cm][t]{\textwidth}{
 \setlength{\parindent}{5mm}
 \begin{multicols}{2}
