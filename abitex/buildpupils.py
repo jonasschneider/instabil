@@ -59,7 +59,10 @@ fixes = {"4f8b0655146fa40001000014" : "{\\Chinese %s}",
 "4f9d12f52ca3a7000100004a" : "{\\Chinese %s}",
 "4f96b816079d0500010000fd":"{\\Fixed %s}"}
 
-smallnames = ("mahlerda", "leikerch", "meissnna", "burgerma", "hoffmelo")
+smallnames = ("mahlerda", "burgerma", "hoffmelo")
+verysmallnames = ("leikerch", "meissnna")
+
+sizes = ("\\scriptsize", "\\kathisize", "\\footnotesize", "\\small")
 
 print 'Namen zu lang:'
 for pupil in j :
@@ -93,6 +96,8 @@ for pupil in j :
 	content["name"] = content["name"].replace(u"ё", '"e').replace(u"Ё", '"E')
 	if content["uid"] in smallnames:
 		content["name"] = "\LARGE "+content["name"]
+	elif content["uid"] in verysmallnames:
+		content["name"] = "\large "+content["name"]
 	if content["g8"]==1 :
 		content["g8"] = "G8"
 	elif content["g8"]==0 :
@@ -127,10 +132,17 @@ for pupil in j :
 	else :
 		content["text"] = spoiler;
 	
+	for s in sizes:
+		if content["text"].find(s) != -1 :
+			content["author"] = s+ " "+ content["author"]
+			break 
+	
 	if os.path.isfile("temp/"+pupil["uid"]+".tex") :
 		special = Template(open("temp/"+pupil["uid"]+".tex").read().decode("utf-8"))
 		content["special"] = special.substitute(content)
 		content["text"] = ""
+	
+	
 	
 	out = page.substitute(content)
 	#out = out
