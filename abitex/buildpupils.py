@@ -129,7 +129,8 @@ for pupil in j :
 	
 	if os.path.isfile("temp/"+pupil["uid"]+".tex") :
 		special = Template(open("temp/"+pupil["uid"]+".tex").read().decode("utf-8"))
-		content["text"] = special.substitute(content)
+		content["special"] = special.substitute(content)
+		content["text"] = ""
 	
 	out = page.substitute(content)
 	#out = out
