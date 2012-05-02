@@ -29,4 +29,21 @@
       - totals.each do |t|
         %td== #{t} (#{((t.to_f / summary.collection.length)*100).to_i}%)
 
+  
+  %table
+    %tr
+      %th Kurs
+      %th Kursbericht eingetragen
+
+    - Course.all.each do |c|
+      %tr[p]
+        %td.name
+          %a{ :href => "/" }= c.name
+
+        %td{ :class => (c.page.present? ? 'ok' : 'fail') }
+
+    %tr.footer
+      %td
+      %td== #{Course.where(:page_id.ne => nil).count} (#{((Course.where(:page_id.ne => nil).count.to_f / Course.count)*100).to_i}%)
+
   %p== Moderatoren: #{Person.moderator_uids.map{|uid| Person.where(uid: uid).first.try(:name) }.join(', ')}
