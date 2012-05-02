@@ -32,6 +32,8 @@
 - if page = @person.page
   == #{page.responsible.name} schreibt die Seite.
   - if current_user.can_view?(page)
+    %div
+      %em Das ist nur eine Vorschau! In der Abizeitung kann und wirds anders aussehen. Jeder hat einen anderen Bildschirm.
     - section :footer do
       %p#last-edit 
         == Version #{page.version}, zuletzt bearbeitet von
@@ -42,7 +44,11 @@
         %strong
           %a{ :href => "/pages/#{page.id}/versions" } Alle Versionen anzeigen
   
+    %h3= page.title
+    %h4= page.subtitle
     %p= markdown page.text
+    %div
+      %em= page.author_name
     
     - if current_user.can_update?(page)
       %ul.actions
@@ -53,7 +59,7 @@
         %em (Du kannst die Seite nicht bearbeiten. Entweder jemand anderes schreibt die Seite oder sie wurde bereits von einem Moderator ins Layout übernommen. Änderungswünsche müsst ihr in den Chat oder Jonas, Nora o.Ä. auf Facebook schreiben.)
 
   - else
-    %p Du darfst sie aber nicht anschauen ;)
+    %p Du darfst sie aber nicht anschauen.
 
 - else
   - unless @person == current_user
