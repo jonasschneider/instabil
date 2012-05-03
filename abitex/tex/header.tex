@@ -1,6 +1,6 @@
 %\documentclass[12pt,a4paper,DIV12]{scrartcl}	% KOMASCRIPT :>
 %\usepackage{fullpage}
-\documentclass[12pt,a4paper,DIV12,twoside]{scrartcl}	% KOMASCRIPT :>
+\documentclass[12pt,a4paper,DIV12,twoside,parskip]{scrartcl}	% KOMASCRIPT :>
 \usepackage{scrpage2}
 \usepackage[ngerman]{babel}
 \usepackage{lmodern}
@@ -38,6 +38,8 @@
 \addtokomafont{subsubsection}{\rmfamily\normalsize}
 \addtokomafont{subsection}{\rmfamily}
 \usepackage[compact]{titlesec}
+%\titlespacing{\subsubsection}{0pt}{*.7}{*.5}
+
 %\titlespacing{\subsubsection}{0pt}{*1}{*0}
 \usepackage{xltxtra}
 \newfontfamily\titlefont[Scale=1.6]{Dekar}
@@ -51,6 +53,7 @@
 \newfontfamily\Chinese{AR PL UMing CN}
 %\lefoot{\Large\textcolor{white}{\Dekar \thepage \/ ABI WAN KENOBI}}
 %\rofoot{\Large\textcolor{white}{\Dekar ABI WAN KENOBI \/ \thepage}}
-\setlength{\parskip}{0cm}
+\setlength{\parskip}{0mm}
 \setlength{\footskip}{1.2cm}
 \newcommand{\kathisize}{\fontsize{9.2pt}{11.04pt}\selectfont}
+%\renewcommand{\subsubsectionheadstartvskip}{\vspace *{-1cm}}
