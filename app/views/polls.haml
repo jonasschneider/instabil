@@ -40,7 +40,9 @@
       })
       $("#end_date").hide()
       
-    
+  %p
+    %input{ name: "poll[approval]", id: "new_poll_approval", type: 'checkbox', value: 'true' }
+    Approval Voting (jeder kann für beliebig viele Möglichkeiten ein Mal abstimmen)
     
   %p
     %input{ type: 'submit', value: 'Umfrage erstellen' }

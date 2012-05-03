@@ -28,8 +28,8 @@
           - if !@poll.serious || (@poll.vote_for(current_user).new_record? && Date.today < @poll.end_date)
             %form.voteform{ action: "/polls/#{@poll.id}/vote", method: 'post' }
               %input{ name: "vote[answer_id]", type: 'hidden', :value => answer.id }
-              - if @poll.vote_for(current_user).answer == answer
-                %input.vote-button.vote.choice{ type: 'submit', value: 'Dafür stimmst du!' }
+              - if @poll.voting_for? current_user, answer
+                %input.vote-button.vote.choice{ type: 'submit', value: "Dafür stimmst du! #{'Klick, um die Stimme zu entfernen' if @poll.approval}" }
               - else
                 %input.vote-button.vote.alternative{ type: 'submit', value: 'Dafür stimmen' }
               - if @poll.serious

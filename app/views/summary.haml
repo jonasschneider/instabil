@@ -44,6 +44,6 @@
 
     %tr.footer
       %td
-      %td== #{Course.where(:page_id.ne => nil).count} (#{((Course.where(:page_id.ne => nil).count.to_f / Course.count)*100).to_i}%)
+      %td== #{Course.where(:page_id.ne => nil).count} (#{((Course.where(:page_id.ne => nil).count.to_f / (Course.count == 0 ? 1 : Course.count) )*100).to_i}%)
 
   %p== Moderatoren: #{Person.moderator_uids.map{|uid| Person.where(uid: uid).first.try(:name) }.join(', ')}

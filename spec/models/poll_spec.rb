@@ -90,6 +90,8 @@ describe "Poll" do
         
         poll.votes.length.should == 1
         answer.vote_count.should == 1
+        poll.voting_for?(me, answer).should be_true
+        poll.voting_for?(me, another_answer).should be_false
       end
       
       it "raises when trying to vote again" do
@@ -106,6 +108,44 @@ describe "Poll" do
             poll.cast_vote! me, answer
           end.should raise_error
         end
+      end
+    end
+  end
+
+  describe "with approval set to true" do
+    before :each do
+      poll.approval = true
+      poll.save!
+    end
+    
+    describe "#cast_vote!(user, answer)" do
+      it "creates a vote" do
+        poll.cast_vote! me, answer
+        
+        poll.votes.length.should == 1
+        answer.vote_count.should == 1
+        poll.voting_for?(me, answer).should be_true
+        poll.voting_for?(me, another_answer).should be_false
+      end
+      
+      it "creates another vote when trying to vote again" do
+        poll.cast_vote! me, answer
+        poll.cast_vote! me, another_answer
+
+        poll.votes.length.should == 2
+        answer.vote_count.should == 1
+        another_answer.vote_count.should == 1
+        poll.voting_for?(me, answer).should be_true
+        poll.voting_for?(me, another_answer).should be_true
+      end
+
+      it "deletes an existing vote for the answer when trying to vote again" do
+        poll.cast_vote! me, answer
+        poll.cast_vote! me, answer
+
+        poll.votes.length.should == 0
+        answer.vote_count.should == 0
+        poll.voting_for?(me, answer).should be_false
       end
     end
   end

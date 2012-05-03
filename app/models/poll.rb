@@ -9,6 +9,7 @@ class Poll
   embeds_many :votes
   
   field :serious, type: Boolean, default: false
+  field :approval, type: Boolean, default: false
   field :end_date, type: Date
   validates_presence_of :end_date, :if => lambda { |p| p.serious }
   
@@ -19,7 +20,17 @@ class Poll
     if serious
       raise "The end date has been reached" if Date.today > end_date
     end
-    vote = vote_for(user)
+
+    if approval
+      vote = votes.find_or_initialize_by(creator_id: user.id, answer_id: answer.id)
+      unless vote.new_record?
+        vote.destroy
+        return false
+      end
+    else
+      vote = vote_for(user)
+    end
+
     if serious
       raise "You already voted" unless vote.new_record?
     end
@@ -41,5 +52,13 @@ class Poll
   
   def vote_for(user)
     votes.find_or_initialize_by(creator_id: user.id)
+  end
+
+  def voting_for?(person, answer)
+    if approval
+      votes.where(creator_id: person.uid, answer_id: answer.id).count > 0
+    else
+      vote_for(person).answer == answer
+    end
   end
 end
