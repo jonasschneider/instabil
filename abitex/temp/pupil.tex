@@ -1,13 +1,13 @@
 \makebg
 \persontitle{$name}{$geb}{Kurs ${kurs} $uid, $g8}
 \personava{none.jpg}
-\personmeta{Ich bin Meister in \textbf{$lks},
+\personmeta{\ifnum\zposy{$uid-meta}<44000000 \PackageWarning{abitex}{meta von $uid $name zu lang} \small\fi Ich bin Meister in \textbf{$lks},
 und später werd' ich mal \textbf{$zukunft}.
 Jetzt nach dem Abi \textbf{$nachabi}.
 Ohne \textbf{$lebenswichtig} hätte ich das Abi aber nicht geschafft.
 Ach, und übrigens: \textbf{$nachruf}\zsavepos{$uid-meta}
 }
-\persontext{$title \ifnum\zposy{$uid-meta}<44000000 \PackageWarning{abitex}{meta von $uid $name zu lang}\fi}{$subtitle \ifnum\zposy{$uid-tags}>\zposy{$uid-author} {\color{red} SEITE ZU LANG} \PackageWarning{abitex}{seite von $uid $name zu lang} \fi}{$text}{$special}
+\persontext{$title}{$subtitle \ifnum\zposy{$uid-tags}>\zposy{$uid-author} {\color{red} SEITE ZU LANG} \PackageWarning{abitex}{seite von $uid $name zu lang} \fi}{$text}{$special}
 \personauthorb{$author \zsavepos{$uid-author}}
 \persontagsb{\zsavepos{$uid-tags} $tags}
 \makefoot
