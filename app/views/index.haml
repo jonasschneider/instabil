@@ -89,9 +89,6 @@
 
 %h2 Chat
 %a{ name: 'chat' }
-%form{ action: '/messages', method: 'post', id: 'chat_form' }
-  %input{ type: 'text', name: 'message[body]', size: 40, maxlength: 150, placeholder: 'Nachricht hier eingeben', id: 'chat_message' }
-  %input{ type: 'submit', value: 'Senden' }
 %ul#chat
   :javascript
     function renderMessage(msg) {
@@ -99,7 +96,7 @@
         .append("<span class=author>"+msg.author+"</span>")
         .append(" <span class=time>("+msg.created_at+")</span>: ")
         .append(" <span class=message>"+msg.body+"</span>")
-      $("#chat").prepend(a);
+      $("#chat").append(a);
       return a;
     }
   
@@ -109,7 +106,7 @@
       $(el).effect("highlight", {}, 3000);
     });
     
-    var latestMessages = JSON.parse('#{Message.newest.reverse.map(&:client_attributes).to_json.gsub("'", "")}')
+    var latestMessages = JSON.parse('#{Message.newest.map(&:client_attributes).to_json.gsub("'", "")}')
     
     $('#chat_form').ajaxForm()
     
@@ -120,6 +117,10 @@
     $.each(latestMessages, function() {
       renderMessage(this)
     })
+
+%form{ action: '/messages', method: 'post', id: 'chat_form' }
+  %input{ type: 'text', name: 'message[body]', size: 40, maxlength: 150, placeholder: 'Nachricht hier eingeben', id: 'chat_message' }
+  %input{ type: 'submit', value: 'Senden' }
 
 %h2 Alle Benutzer
 %a{ name: 'users' }
