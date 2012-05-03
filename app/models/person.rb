@@ -14,7 +14,7 @@ class Person
     attr_accessor :moderator_uids
   end
 
-  self.moderator_uids = %w(schneijo kramerlu zimmerno kraifra hoffmelo wegneral cussaceg)
+  self.moderator_uids = %w(schneijo kramerlu zimmerno kraifra hoffmelo wegneral cussaceg kraussre)
 
   field :active, type: Boolean, default: true
   
