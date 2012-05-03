@@ -3,7 +3,7 @@ class Message
   include Mongoid::Timestamps
   
   CAP = 20
-  scope :newest, order_by(:created_at, :asc).limit(CAP)
+  scope :newest, order_by(:created_at, :desc).limit(CAP)
   
   field :body, type: String
   validates_length_of :body, minimum: 2, maximum: 150
