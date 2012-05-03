@@ -77,6 +77,8 @@ for pupil in j :
 	
 	content["uid"] = pupil["uid"]
 	pupillist.append(pupil["uid"])
+	if content["uid"] == os.getenv('ABITEX_SPOILER'):
+		content["text"] = 'spoilered :)'
 	#print "tex/pupils/" + pupil["uid"] + ".tex"last = True
 	last = True
 	content["name"] = ""
