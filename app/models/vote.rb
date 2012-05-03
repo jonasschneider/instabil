@@ -16,5 +16,4 @@ class Vote
   
   belongs_to :creator, class_name: 'Person', inverse_of: nil
   validates_presence_of :creator
-  validates_uniqueness_of :creator
 end
