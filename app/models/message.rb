@@ -3,7 +3,7 @@ class Message
   include Mongoid::Timestamps
   
   CAP = 20
-  scope :newest, order_by(:created_at, :desc).limit(CAP)
+  scope :newest, order_by(:created_at, :asc).limit(CAP)
   
   field :body, type: String
   validates_length_of :body, minimum: 2, maximum: 150
@@ -12,6 +12,6 @@ class Message
   validates_presence_of :author
   
   def client_attributes
-    { author: author.name, created_at: created_at.strftime('%d.%m. %H:%M'), body: CGI.escapeHTML(body) }
+    { author: author.name, created_at: created_at.strftime('%d.%m. %H:%M'), body: CGI.escapeHTML(body.gsub('\\', '')) }
   end
 end

@@ -64,6 +64,8 @@ class Instabil::App < Sinatra::Base
   end
   
   use Rack::Session::Cookie
+
+  set :haml, :format => :html5
   
   include Canable::Enforcers
   
