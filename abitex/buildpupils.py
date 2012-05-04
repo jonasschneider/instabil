@@ -39,7 +39,7 @@ def md2tex(text) :
 	return proc.communicate(text.encode("utf-8"))[0].decode("utf-8")
 
 def escape_tex(text) :
-	return text.replace(u"♥", "<3").replace(u"☺", " :) ").replace("&#3232;", u"{\\Tunga ಠ}").replace("&", "\\&").replace("#", "\\#").replace("_", "\\_").replace("^", "\^{}").replace(u"%", "\%").replace(u"λ", "$\\lambda$").replace(u"✚", u"{\\DjVu ✚}").replace(u"‿", u"{\\DjVu ‿}").replace(u"✿", u"{\\DjVu ✿}").replace(u"ё", '"e').replace(u"§nl§", u"\\\\").replace("\\textbackslash\\/LaTeX", "\\LaTeX").replace("\\textbackslash\\/vspace", "\\vspace")
+	return text.replace(u"♥", "<3").replace(u"☺", " :) ").replace("&#3232;", u"{\\Tunga ಠ}").replace("&", "\\&").replace("#", "\\#").replace("_", "\\_").replace("^", "\^{}").replace(u"%", "\%").replace(u"✚", u"{\\DjVu ✚}").replace(u"‿", u"{\\DjVu ‿}").replace(u"✿", u"{\\DjVu ✿}").replace(u"ё", '"e').replace(u"§nl§", u"\\\\").replace("\\textbackslash\\/LaTeX", "\\LaTeX").replace("\\textbackslash\\/vspace", "\\vspace")
 
 parser = OptionParser()
 parser.add_option("-s", "--spoiler", dest="spoiler", help="Spolier text", action="store_true")
@@ -122,6 +122,8 @@ for pupil in j :
 			else:
 				if t[1] == "4fa15969829ee30001000033" :
 					tags.append(u"$e^{\\mathrm{i}\\pi}=-1$; ,,schön''")
+				elif t[1] == "4f92e2c11baeb6000100007d" :
+					tags.append(escape_tex(beautiy_quotation(t[0])).replace(u"λ", "$\\lambda$"))
 				else:
 					tags.append(escape_tex(beautiy_quotation(t[0])))
 		content["tags"] = " // ".join(tags)
