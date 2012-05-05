@@ -30,6 +30,7 @@ class Course
   
   def api_attributes
     {
+      "id" => self.id,
       "fach" => Instabil::SUBJECT_MAP[self.subject],
       "weekday" => weekday_name,
       "num" => self.num,
