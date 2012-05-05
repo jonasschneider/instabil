@@ -7,3 +7,6 @@ persons:
 
 memoirs:
 	xelatex --file-line-error-style memoirs.tex
+
+kursberichte:
+	xelatex --file-line-error-style kursberichte.tex

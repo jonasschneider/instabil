@@ -13,8 +13,8 @@ for course in j :
 	page = Template(temp.decode("utf-8"))
 	if course["author"] == "" :
 		continue
-	courselist.append(course["name"])
-	print course["name"]
+	courselist.append(course["id"])
+	print course["id"]
 	#print "tex/pupils/" + pupil["uid"] + ".tex"
 	#print type(content["tags"])
 	"""if course["tags"] != None :
@@ -28,9 +28,9 @@ for course in j :
 	proc = subprocess.Popen("./md2tex.sh", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 	course["text"] = proc.communicate(course["text"].encode("utf-8"))[0].decode("utf-8")
 	out = page.substitute(course)
-	f =  open("tex/coursereports/" + course["name"] + ".tex", "w")
+	f =  open("tex/courses/" + course["id"] + ".tex", "w")
 	f.write(out.encode("utf-8"))
 print "%i Kurse, %i berichte"%(n, len(courselist))
 f =  open("tex/courses.tex", "w")
 for p in courselist :
-	f.write("\input{coursereports/" + p + ".tex}\n");
+	f.write("\input{courses/" + p + ".tex}\n");
