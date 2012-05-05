@@ -64,6 +64,8 @@ verysmallnames = ("leikerch", "meissnna")
 
 sizes = ("\\scriptsize", "\\kathisize", "\\footnotesize", "\\small")
 
+smallmeta = ("elgogoli", "ingentjo", "mahlerda", "weberha", "werrnal")
+
 print 'Namen zu lang:'
 for pupil in j :
 	page = Template(temp.decode("utf-8"))
@@ -106,6 +108,12 @@ for pupil in j :
 		content["g8"] = "G9"
 	elif content["g8"]==2 :
 		content["g8"] = "G8/G9 \\em{fixme}"
+	
+	if content["uid"] in smallmeta :
+		content["metasize"] = "\\small"
+	else :
+		content["metasize"] = ""
+	
 	content["lks"] = escape_tex(content["lks"] or "")
 	content["lebenswichtig"] = escape_tex(content["lebenswichtig"] or "")
 	content["nachruf"] = escape_tex(content["nachruf"] or "")
