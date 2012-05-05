@@ -108,11 +108,9 @@
     
     var latestMessages = JSON.parse('#{Message.newest.reverse.map(&:client_attributes).to_json.gsub("'", "")}')
     
-    $('#chat_form').ajaxForm()
-    
-    $('#chat_form').submit(function() { // immediately clear
+    $('#chat_form').ajaxForm({beforeSubmit: function() {
       $("#chat_message").val("")
-    })
+    }})
     
     $.each(latestMessages, function() {
       renderMessage(this)
