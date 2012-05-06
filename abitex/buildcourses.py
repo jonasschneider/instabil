@@ -7,11 +7,10 @@ blah = f.read()
 j = json.loads(blah)
 temp = open("temp/course.tex").read()
 n = 0
+import common
 
 def escape_tex(text) :
 	return text.replace(u"♥", "<3").replace(u"☺", " :) ").replace("&#3232;", u"{\\Tunga ಠ}").replace("&", "\\&").replace("#", "\\#").replace("_", "\\_").replace("^", "\^{}").replace(u"%", "\%").replace(u"✚", u"{\\DjVu ✚}").replace(u"‿", u"{\\DjVu ‿}").replace(u"✿", u"{\\DjVu ✿}").replace(u"ё", '"e').replace(u"§nl§", u"\\\\").replace("\\textbackslash\\/LaTeX", "\\LaTeX").replace("\\textbackslash\\/vspace", "\\vspace").replace("\\m/", "\\textbackslash m/")
-
-draft = os.path.exists('draftflag') and open('draftflag', 'r').read().strip() == "true"
 
 for course in j :
 	n+=1
@@ -33,13 +32,13 @@ for course in j :
 	course["fach"] = "GK" if course["fach"] == "GEMEINSCHAFTSKUNDE" else course["fach"]
 	course["lehrer"] = course["lehrer"].upper()
 	
-	if draft:
+	if common.drafting():
 		course["text"] = escape_tex(course["text"])
 	else:
 		proc = subprocess.Popen("./md2tex.sh", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 		course["text"] = proc.communicate(course["text"].encode("utf-8"))[0].decode("utf-8")
 
-	if draft:
+	if common.drafting():
 		course["cloud"] = "\\rule{\\textwidth}{90mm}"
 	else:
 		course["cloud"] = "\\includegraphics[width=\\textwidth]{../linked/courses/clouds/%s.png}"%course["id"]
