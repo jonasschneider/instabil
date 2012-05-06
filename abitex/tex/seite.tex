@@ -28,6 +28,15 @@
 \fi
 }
 
+\newcommand{\fancybg}{
+\checkoddpage
+\ifoddpage
+\ThisCenterWallPaper{1}{../linked/backgrounds/fancy-footer-r.pdf}
+\else
+\ThisCenterWallPaper{1}{../linked/backgrounds/fancy-footer-l.pdf}
+\fi
+}
+
 \newcommand{\persontitle}[3]{
 \setlength{\parindent}{0cm}
 \settoheight{\headheight}{\titlefont \huge {#1}}

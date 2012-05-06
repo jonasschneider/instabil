@@ -3,7 +3,7 @@
 import json, os, subprocess
 import sys
 import Image
-from PIL import ImageChops, ImageOps, ImageMath
+from PIL import ImageChops, ImageOps, ImageEnhance
 
 f = open("courses.json")
 blah = f.read()
@@ -33,4 +33,8 @@ for course in j :
     print bbox, realbox
     trimmed = noborder.crop(realbox)
 
+    mask = ImageChops.add(trimmed, bg, 1, 100)
+    mask = ImageChops.invert(ImageEnhance.Contrast(mask).enhance(30.0))
+
+    trimmed.putalpha(mask)
     trimmed.save(outfile)
