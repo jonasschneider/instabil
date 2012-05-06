@@ -1,10 +1,11 @@
 LATEX := xelatex --file-line-error-style
-all: tex/personenberichte.pdf tex/kursberichte.pdf tex/memoirs.pdf
+INCLUDES := tex/header.tex tex/seite.tex tex/generic.tex
+TARGETS := tex/personenberichte.pdf tex/kursberichte.pdf tex/memoirs.pdf
+all: $(TARGETS)
 
-pupils.json:
+fetch:
 	./fetchpupils.sh
-
-courses.json:
+	./fetchavas.py | sh
 	./fetchcourses.sh
 
 tex/pupilspages.tex: pupils.json buildpupils.py
@@ -13,23 +14,18 @@ tex/pupilspages.tex: pupils.json buildpupils.py
 tex/courses.tex: courses.json buildcourses.py
 	./buildcourses.py
 
-tex/mems.tex: memoirs.json
+tex/mems.tex: memoirs.json memoirs.py
 	./memoirs.py > tex/mems.tex
 
-tex/personenberichte.pdf: tex/pupilspages.tex tex/personenberichte.tex
+tex/personenberichte.pdf: tex/pupilspages.tex tex/personenberichte.tex tex/pupils/* $(INCLUDES)
 	cd tex; $(LATEX) personenberichte.tex; cd ..
 	cd tex; $(LATEX) personenberichte.tex | grep "Package abitex Warning"; cd ..
 
-tex/kursberichte.pdf: tex/courses.tex tex/kursberichte.tex
+tex/kursberichte.pdf: tex/courses.tex tex/kursberichte.tex tex/courses/* $(INCLUDES)
 	cd tex; $(LATEX) kursberichte.tex; cd ..
 
-tex/memoirs.pdf: tex/mems.tex tex/memoirs.tex
+tex/memoirs.pdf: tex/mems.tex tex/memoirs.tex $(INCLUDES)
 	cd tex; $(LATEX) memoirs.tex; cd ..
 
-avatars:
-	./fetchavas.py | sh
-
 deploy:
-	cp tex/personenberichte.pdf linked
-	cp tex/memoirs.pdf linked
-	cp tex/kursberichte.pdf linked
+	cp $(TARGETS) linked

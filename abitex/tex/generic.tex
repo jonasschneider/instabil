@@ -6,6 +6,7 @@
 \ThisCenterWallPaper{1}{../linked/backgrounds/tplg-1.pdf}
 \fi
 }
+
 \newcommand{\generichead}[1]{
 \settoheight{\headheight}{\LARGE \Dekar {#1}}
 \begin{textblock*}{\textwidth}(\border,8mm-\headheight)
@@ -82,3 +83,16 @@
 }
 
 
+
+\newcommand{\makefoot}{
+\begin{textblock*}{\textwidth}(\border,28.9cm)
+\flushouter
+\Large\textcolor{white}{\Dekar
+\ifoddpage
+\MakeUppercase{\generictitle} ~ \thepage
+\else
+\thepage ~ \MakeUppercase{\generictitle}
+\fi
+}
+\end{textblock*}
+}
