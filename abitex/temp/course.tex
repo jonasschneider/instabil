@@ -1,15 +1,22 @@
-\needspace{4\baselineskip}
-\subsection*{\phantom{asdf}}
+\settoheight{\tmpcloudheight}{
+%\includegraphics[width=\textwidth]{../linked/courses/clouds/$id.png}
+\vspace{90mm}
+}
+\addtolength{\tmpcloudheight}{15mm}
+\needspace{\tmpcloudheight}
+\subsection*{\phantom{asdf}}\nopagebreak
 \vspace{-8mm}
+\begin{minipage}{\linewidth}
 \coursehead{$fach ${num}H BEI $lehrer}
+\vspace{5mm}
 \nopagebreak
-\addcontentsline{toc}{subsection}{$fach ${num}h bei $lehrer}
 {\centering
 %\includegraphics[width=\textwidth]{../linked/courses/clouds/$id.png}
-\vspace{80mm}
+
+\rule{\textwidth}{90mm}
 }
-%\vspace{5mm}
-\nopagebreak
+\vspace{5mm}
+\end{minipage}
 \begin{multicols}{2}
 \noindent
 $text

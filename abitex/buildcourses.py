@@ -48,7 +48,6 @@ getsubject = lambda s:s['fach']
 
 sorted_input = reversed(sorted(j, key=getnum))
 for num,courses in itertools.groupby(sorted_input, key=getnum):
-	f.write("\section{%d-stündige Kurse}\n"%num);
 	sorted_by_subject = sorted(courses, key=getsubject)
 	for course in sorted_by_subject:
 		f.write("\input{courses/" + course["id"] + ".tex}\n");
