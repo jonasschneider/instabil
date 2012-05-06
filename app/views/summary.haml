@@ -3,6 +3,15 @@
 
 #summary
   %h1 Redaktionsübersicht
+
+  %p Zuletzt bearbeitete Personenseiten:
+  - Person.all.map{|p|p.page.try(:versions)}.compact.flatten.sort_by{|v|v.updated_at}.reverse[0..10].each do |p|
+    %li
+      = p.updated_at.strftime('%d.%m. %H:%M')
+      == :
+      %a{ href: "/pages/#{p.id}/edit"}= p.name
+      %span.wordcount== (#{p.wordcount} Wörter)
+  
   #progress
     Fortschritt
     %span== #{((totals.sum.to_f / summary.data_point_count.to_f)*100).to_i}%
