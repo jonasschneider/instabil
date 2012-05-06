@@ -1,5 +1,5 @@
 \newcommand{\coursehead}[1]{
-
+\setcounterpageref{realpage}{kurs\thenkurs}
 \settowidth{\headwidth}{\titlefont \huge {#1}}
 \parbox{\textwidth}{
 \ifodd\therealpage\setlength{\headwidth}{-\headwidth}\addtolength{\headwidth}{17.5cm}\else \addtolength{\headwidth}{-23cm} \fi
@@ -7,7 +7,7 @@
 
 \vspace*{-1.5cm}
 \noindent
-\noindent \color{white} \ifodd\therealpage\raggedleft\else\raggedright\fi \huge \titlefont #1}
+\noindent \color{white} \ifodd\therealpage\raggedleft\else\raggedright\fi \huge \titlefont #1 \label{kurs\thenkurs}} \addtocounter{nkurs}{1}
 \vspace{5mm}
 
 %important newline!
@@ -16,8 +16,8 @@
 \newcommand{\kursbericht}[4]{
 \raggedbottom
 \setcounterpageref{realpage}{kurs\thenkurs}
-\noindent\parbox{\textwidth}{\coursehead{#1 \therealpage}
-\noindent\includegraphics[width=\textwidth]{#2}\label{kurs\thenkurs}}
+\noindent\parbox{\textwidth}{\coursehead{#1}
+\noindent\includegraphics[width=\textwidth]{#2}}
 %\ifodd\pageref{kurs\thenkurs} odd \else even \fi
 \setlength{\parindent}{5mm}
 \begin{multicols}{2}
@@ -26,7 +26,7 @@
 
 \parbox{\textwidth-5mm}{\raggedleft#4}
 \vspace{2cm}
-\addtocounter{nkurs}{1}
+
 }
 
 \newcounter{nkurs}
