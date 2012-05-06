@@ -1,0 +1,33 @@
+\newcommand{\coursehead}[1]{
+
+\settowidth{\headwidth}{\titlefont \huge {#1}}
+\parbox{\textwidth}{
+\ifodd\therealpage\setlength{\headwidth}{-\headwidth}\addtolength{\headwidth}{17.5cm}\else \addtolength{\headwidth}{-23cm} \fi
+\noindent\hspace{\headwidth}\ifodd\therealpage\includegraphics{bar2.pdf}\else\includegraphics{bar.pdf}\fi
+
+\vspace*{-1.5cm}
+\noindent
+\noindent \color{white} \ifodd\therealpage\raggedleft\else\raggedright\fi \huge \titlefont #1}
+\vspace{5mm}
+
+%important newline!
+}
+
+\newcommand{\kursbericht}[4]{
+\raggedbottom
+\setcounterpageref{realpage}{kurs\thenkurs}
+\noindent\parbox{\textwidth}{\coursehead{#1 \therealpage}
+\noindent\includegraphics[width=\textwidth]{#2}\label{kurs\thenkurs}}
+%\ifodd\pageref{kurs\thenkurs} odd \else even \fi
+\setlength{\parindent}{5mm}
+\begin{multicols}{2}
+\noindent#3
+\end{multicols}
+
+\parbox{\textwidth-5mm}{\raggedleft#4}
+\vspace{2cm}
+\addtocounter{nkurs}{1}
+}
+
+\newcounter{nkurs}
+\newcounter{realpage}
