@@ -27,6 +27,9 @@ for course in j :
 		course["type"] = "vier"
 	else :
 		course["type"] = "zwei"
+	course["fach"] = course["fach"].upper()
+	course["fach"] = "GK" if course["fach"] == "GEMEINSCHAFTSKUNDE" else course["fach"]
+	course["lehrer"] = course["lehrer"].upper()
 	proc = subprocess.Popen("./md2tex.sh", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 	course["text"] = proc.communicate(course["text"].encode("utf-8"))[0].decode("utf-8")
 
