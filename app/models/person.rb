@@ -1,13 +1,9 @@
-require "mongoid_paperclip"
-require "fog/external/storage"
-require "bertrpc"
-require 'fog/external/backend/bertrpc'
-require "tmpdir"
+require 'dropbox_sdk'
+require 'base64'
 
 class Person
   include Mongoid::Document
   include Mongoid::Timestamps
-  include Mongoid::Paperclip
   include Canable::Cans
   
   class << self
@@ -32,34 +28,18 @@ class Person
   field :lebenswichtig, type: String
   field :nachruf, type: String
 
-  if ENV["FOG_STORAGE_BACKEND"]
-    STORAGE_BACKEND = (ENV["FOG_STORAGE_BACKEND"] || 'localhost:8000').split(':')
-    fog_opts = { 
-      :provider => 'external',
-      :delegate   => Fog::External::Backend::Bertrpc.new(*STORAGE_BACKEND)
-    }
-  else
-    fog_opts = {
-      :provider => 'local',
-      :local_root => Dir.mktmpdir
-    }
-  end
-  
-  has_mongoid_attached_file :avatar, :storage => :fog, :fog_credentials => fog_opts, :fog_directory => 'paperclip', 
-    :path => ':attachment/:id/:style/:filename',
-
-    :styles => {
-      :medium => "300x300#",
-      :thumb  => "50x50>" }
-  
   embeds_many :tags
-      
-  validate do
-    if avatar.present?
-      errors.add :avatar, "Bitte nur JPEGS oder PNGS. Typ = #{avatar_content_type} oder #{avatar.content_type}" unless avatar_content_type =~ /jpe?g/ || avatar_content_type =~ /png/
+
+  class << self
+    def dropbox_session
+      @dsession ||= DropboxSession.deserialize(Base64.decode64(ENV["DROPBOX_SESSION"]))
+    end
+
+    def dropbox_client
+      @dclient ||= DropboxClient.new(dropbox_session, :dropbox)
     end
   end
-
+  
   def tag_length
     tags.map{|t|t.name.length}.sum + 3 * tags.length
   end
@@ -71,9 +51,19 @@ class Person
   def meta_complete?
     meta_fields.all? { |f| v=self.send(f); !v.nil? && !v.empty? }
   end
+
+  def avatar_body
+    self.class.dropbox_client.get_file("/Lukas/abizeitung-linked/people/avatar_thumbs/#{id}.jpg")
+  rescue DropboxError
+    nil
+  end
+
+  def avatar_type
+    'image/jpg'
+  end
   
-  def avatar_url(style = :original)
-    "/people/#{id}/avatar/#{style}"
+  def avatar_url
+    "/people/#{id}/avatar"
   end
     
   field :tags, type: Array
@@ -86,7 +76,6 @@ class Person
   validates_presence_of :name
   
   validates :email, :allow_nil => true, :uniqueness => true, :format => { :with => /^([^@\s]+)@((?:[-a-z0-9]+.)+[a-z]{2,})$/i }
-    
   
   belongs_to :page
   attr_protected :uid
@@ -106,9 +95,6 @@ class Person
         "nachabi" => self.nachabi,
         "lebenswichtig" => self.lebenswichtig,
         "nachruf" => self.nachruf,
-        
-        "foto" => self.avatar_url(:medium),
-        "foto_mtime" => self.avatar.updated_at,
         
         "title" => page.try(:title) || '',
         "subtitle" => page.try(:subtitle) || '',

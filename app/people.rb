@@ -8,15 +8,14 @@ module Instabil::People
         haml :person
       end
       
-      get '/people/:uid/avatar/:style' do
+      get '/people/:uid/avatar' do
         @person = Person.find params[:uid]
-        
-        if @person.avatar.present?
-          headers 'Content-type' => @person.avatar.content_type
-          @person.avatar.to_file(params[:style])
+
+        if body = @person.avatar_body
+          headers 'Content-type' => @person.avatar_type
+          body
         else
-          headers 'Content-type' => 'image/jpeg'
-          File.open(File.join(settings.root, 'public', 'images', 'avatar.jpg'))
+          halt 404, 'User has no avatar'
         end
       end
       

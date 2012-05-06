@@ -18,9 +18,6 @@ describe "Preferences" do
       login(lukas.uid, lukas.name)
     end
     
-    let(:avatar_path) { File.join(File.dirname(__FILE__), '..', 'avatar.jpg') }
-    
-  
     describe "visiting /preferences" do
       it "shows a form for the user to edit name and email" do
         lukas.update_attributes(name: 'Asdfname', email: 'test@example.com')
@@ -38,33 +35,6 @@ describe "Preferences" do
         last_response.should have_selector form + ' input[name="person[zukunft]"][type=text]'
         last_response.should have_selector form + ' input[name="person[nachabi]"][type=text]'
         last_response.should have_selector form + ' input[name="person[lebenswichtig]"][type=text]'
-        
-        last_response.should have_selector form + ' input[name="person[avatar]"][type=file]'
-        
-        last_response.should have_selector 'img[src="'+lukas.avatar_url(:medium)+'"]'
-      end
-    end
-    
-    describe "visiting /people/<uid>/avatar/original" do
-      it "displays the avatar image by default" do
-        get "/people/kramerlu/avatar/original"
-        last_response.body.length.should == File.size(File.join(File.dirname(__FILE__), '../../app/public/images/avatar.jpg'))
-      end
-      
-      it "displays the user's avatar" do
-        lukas.avatar = Rack::Test::UploadedFile.new(avatar_path, 'avatar.jpg')
-        lukas.save!
-        get "/people/kramerlu/avatar/original"
-        last_response.body.length.should == File.size(avatar_path)
-      end
-    end
-    
-    describe "visiting /people/<uid>/avatar/medium" do
-      it "displays the user's avatar" do
-        lukas.avatar = Rack::Test::UploadedFile.new(avatar_path, 'avatar.jpg')
-        lukas.save!
-        get "/people/kramerlu/avatar/medium"
-        last_response.body.length.should == lukas.avatar.to_file(:medium).size
       end
     end
     
@@ -80,23 +50,6 @@ describe "Preferences" do
         lukas.email.should == new_email
         lukas.uid.should == old_uid
         lukas.bio.should == 'testing'
-      end
-      
-      describe "with an avatar" do
-        it "updates the avatar" do
-          f = Rack::Test::UploadedFile.new(avatar_path, 'avatar.jpg')
-          post "/preferences", person: { avatar: f }
-          lukas.reload
-          lukas.avatar.original_filename.should == 'avatar.jpg'
-          lukas.avatar.to_file.length.should == File.size(avatar_path)
-        end
-        
-        it "requires an image" do
-          f = Rack::Test::UploadedFile.new(__FILE__, 'app_spec.rb')
-          post "/preferences", person: { avatar: f }
-          lukas.reload
-          lukas.avatar.original_filename.should_not == 'app_spec.rb'
-        end
       end
       
       describe "with a bogus email" do

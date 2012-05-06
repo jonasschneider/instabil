@@ -68,8 +68,6 @@ describe "Person" do
       jonas.api_attributes['page']['zukunft'].should == 'cool'
       jonas.api_attributes['page']['nachabi'].should == nil
       jonas.api_attributes['page']['lebenswichtig'].should == nil
-      
-      jonas.api_attributes['page']['foto'].should == "/people/schneijo/avatar/medium"
     end
     
     it "returns the page text when set" do
@@ -109,23 +107,34 @@ describe "Person" do
       jonas.zug.should == 'G8/G9?'
     end
   end
-  
-  describe "#avatar" do
-    let(:avatar_path) { File.join(File.dirname(__FILE__), '..', 'avatar.jpg') }
-    
-    it "gets resized" do
-      jonas.avatar = Rack::Test::UploadedFile.new(avatar_path, 'avatar.jpg')
-      jonas.save!
-      x = Tempfile.new 'avatar'
-      x.write(jonas.avatar.to_file(:medium).read)
-      x.close
-      `identify #{x.path}`.should include('300x300')
-    end
-  
+
+  describe "avatar" do
     it "has a url" do
-      jonas.avatar = Rack::Test::UploadedFile.new(avatar_path, 'avatar.jpg')
-      jonas.save!
-      jonas.avatar_url.should include("/people/schneijo/avatar/original")
+      jonas.avatar_url.should include("/people/schneijo/avatar")
+    end
+
+    it "fetches body and type from dropbox" do
+      client = double()
+      Person.stub(:dropbox_client) { client }
+
+      client.should_receive(:get_file).with('/Lukas/abizeitung-linked/people/avatar_thumbs/schneijo.jpg').and_return('ohai')
+      jonas.avatar_body.should == 'ohai'
+      jonas.avatar_type.should == 'image/jpg'
+    end
+
+    it "returns a nil body when the file does not exist" do
+      client = double()
+      Person.stub(:dropbox_client) { client }
+
+      client.stub(:get_file) { raise DropboxError.new('a', 'b') }
+      jonas.avatar_body.should == nil
+    end
+
+    it "deserializes the session from the environment" do
+      require 'base64'
+      ENV["DROPBOX_SESSION"] = Base64.encode64('ohai')
+      DropboxSession.should_receive(:deserialize).with('ohai')
+      Person.dropbox_session
     end
   end
 

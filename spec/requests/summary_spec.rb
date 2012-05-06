@@ -37,10 +37,6 @@ describe "Instabil::Summary" do
     let(:avatar_path) { File.join(File.dirname(__FILE__), '..', 'avatar.jpg') }
 
     before :each do
-      # Anna has an avatar
-      anna.avatar = Rack::Test::UploadedFile.new(avatar_path, 'avatar.jpg')
-      anna.save!
-
       # Jonas has enough tags
       5.times do |i| 
         jonas.tags << Tag.new(name: 'Hallo '+i.to_s, author: anna)
@@ -77,11 +73,6 @@ describe "Instabil::Summary" do
     it "shows the state of page assigment" do
       last_response.body.should have_selector('tr.person#person_schneijo td.page_assigned.fail')
       last_response.body.should have_selector('tr.person#person_winteran td.page_assigned.ok')
-    end
-
-    it "shows the state of photos" do
-      last_response.body.should have_selector('tr.person#person_schneijo td.photo.fail')
-      last_response.body.should have_selector('tr.person#person_winteran td.photo.ok')
     end
 
     it "shows the state of tags" do

@@ -16,7 +16,6 @@ end
 
 project_root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 
-Paperclip.options[:log] = false
 $stdout.sync = true
 
 require File.join(project_root, 'app', 'app')
@@ -34,6 +33,7 @@ RSpec.configure do |config|
     Pusher::Channel.stub(:trigger).and_return(true)
     
     Person.moderator_uids = %w()
+    Person.stub(:dropbox_client) { s=double;s.stub(:get_file); s }
   end
   
   def app

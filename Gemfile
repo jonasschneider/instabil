@@ -18,11 +18,7 @@ gem 'fichteid-client', :git => 'git://github.com/jonasschneider/fichteid-client.
 
 gem "ernie", :group => :ernie
 
-gem "fog"
-gem "fog-external"
-gem "bertrpc"
-gem "paperclip"
-gem "mongoid-paperclip", :require => "mongoid_paperclip"
+gem 'dropbox-sdk'
 
 gem 'pusher'
 

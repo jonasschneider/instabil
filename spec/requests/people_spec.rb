@@ -17,6 +17,25 @@ describe Instabil::People do
   before :each do
     login(jonas.uid, jonas.name)
   end
+
+  describe "visiting /people/<uid>/avatar" do
+    it "displays the avatar image" do
+      Person.any_instance.should_receive(:avatar_body).and_return('asdf')
+      Person.any_instance.should_receive(:avatar_type).and_return('image/type')
+      visit "/people/schneijo/avatar"
+      last_response.body.should == 'asdf'
+      last_response.content_type.should == 'image/type'
+    end
+
+    it "404's when the avatar body is nil" do
+      Person.any_instance.should_receive(:avatar_body).and_return(nil)
+      Person.any_instance.stub(:avatar_type) { 'image/type' }
+      visit "/people/schneijo/avatar"
+      last_response.status.should == 404
+      last_response.content_type.should_not == 'image/type'
+    end
+  end
+    
   
   describe "visiting /people/<uid>" do
     describe "when there is no such user" do
@@ -33,6 +52,10 @@ describe Instabil::People do
       before :each do
         jonas.create_page text: 'bla', author: lukas
         get "/people/#{jonas.uid}"
+      end
+
+      it "shows the avatar" do
+        last_response.should have_selector 'img[src="'+jonas.avatar_url+'"]'
       end
       
       it "does show the page contents"  do
