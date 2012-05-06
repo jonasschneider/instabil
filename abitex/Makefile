@@ -1,5 +1,5 @@
 LATEX := xelatex --file-line-error-style
-INCLUDES := tex/header.tex tex/seite.tex tex/generic.tex
+INCLUDES := tex/header.tex tex/seite.tex tex/generic.tex tex/course.tex
 TARGETS := tex/personenberichte.pdf tex/kursberichte.pdf tex/memoirs.pdf
 all: $(TARGETS)
 
