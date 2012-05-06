@@ -7,11 +7,12 @@ fetch:
 	./fetchpupils.sh
 	./fetchavas.py | sh
 	./fetchcourses.sh
+	./fetchmemoirs.sh
 
-tex/pupilspages.tex: pupils.json buildpupils.py
+tex/pupilspages.tex: pupils.json buildpupils.py temp/*.tex
 	./buildpupils.py
 
-tex/courses.tex: courses.json buildcourses.py
+tex/courses.tex: courses.json buildcourses.py temp/course.tex
 	./buildcourses.py
 
 tex/mems.tex: memoirs.json memoirs.py
@@ -21,8 +22,11 @@ tex/personenberichte.pdf: tex/pupilspages.tex tex/personenberichte.tex tex/pupil
 	cd tex; $(LATEX) personenberichte.tex; cd ..
 	cd tex; $(LATEX) personenberichte.tex | grep "Package abitex Warning"; cd ..
 
-tex/kursberichte.pdf: tex/courses.tex tex/kursberichte.tex tex/courses/* $(INCLUDES)
+tex/kursberichte.pdf: tex/courses.tex tex/kursberichte.tex tex/courses/* $(INCLUDES) linked/courses/clouds/*
 	cd tex; $(LATEX) kursberichte.tex; cd ..
+
+linked/courses/clouds/*: linked/courses/raw_clouds/*
+	python2 crop_courseclouds.py
 
 tex/memoirs.pdf: tex/mems.tex tex/memoirs.tex $(INCLUDES)
 	cd tex; $(LATEX) memoirs.tex; cd ..
