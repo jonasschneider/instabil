@@ -5,6 +5,7 @@ import json, os, os.path
 from string import Template
 from optparse import OptionParser
 import subprocess
+import common
 
 def esc(foo) :
 	return foo.lower().replace("ö", "oe").replace("ß", "ss").replace("ü", "ue").replace("ä", "ae").replace(" ", "")
@@ -79,7 +80,7 @@ for pupil in j :
 	
 	content["uid"] = pupil["uid"]
 	pupillist.append(pupil["uid"])
-	if content["uid"] == os.getenv('ABITEX_SPOILER'):
+	if content["uid"] == os.getenv('ABITEX_SPOILER') and common.drafting():
 		content["text"] = 'spoilered :)'
 	#print "tex/pupils/" + pupil["uid"] + ".tex"last = True
 	last = True
