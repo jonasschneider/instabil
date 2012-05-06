@@ -30,10 +30,12 @@ for course in j :
 	course["fach"] = course["fach"].upper()
 	course["fach"] = "GK" if course["fach"] == "GEMEINSCHAFTSKUNDE" else course["fach"]
 	course["lehrer"] = course["lehrer"].upper()
-	proc = subprocess.Popen("./md2tex.sh", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-	course["text"] = proc.communicate(course["text"].encode("utf-8"))[0].decode("utf-8")
+	course["text"] = escape_tex(course["text"])
+	#proc = subprocess.Popen("./md2tex.sh", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+	#course["text"] = proc.communicate(course["text"].encode("utf-8"))[0].decode("utf-8")
 
-	course["author"] = escape_tex(course["author"])
+	if len(course["author"].strip()) > 2:
+		course["author"] = "von "+escape_tex(course["author"])
 	
 	out = page.substitute(course)
 	f =  open("tex/courses/" + course["id"] + ".tex", "w")
