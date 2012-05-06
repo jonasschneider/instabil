@@ -11,6 +11,8 @@ n = 0
 def escape_tex(text) :
 	return text.replace(u"♥", "<3").replace(u"☺", " :) ").replace("&#3232;", u"{\\Tunga ಠ}").replace("&", "\\&").replace("#", "\\#").replace("_", "\\_").replace("^", "\^{}").replace(u"%", "\%").replace(u"✚", u"{\\DjVu ✚}").replace(u"‿", u"{\\DjVu ‿}").replace(u"✿", u"{\\DjVu ✿}").replace(u"ё", '"e').replace(u"§nl§", u"\\\\").replace("\\textbackslash\\/LaTeX", "\\LaTeX").replace("\\textbackslash\\/vspace", "\\vspace").replace("\\m/", "\\textbackslash m/")
 
+draft = os.path.exists('draftflag') and open('draftflag', 'r').read().strip() == "true"
+
 for course in j :
 	n+=1
 	page = Template(temp.decode("utf-8"))
@@ -30,12 +32,19 @@ for course in j :
 	course["fach"] = course["fach"].upper()
 	course["fach"] = "GK" if course["fach"] == "GEMEINSCHAFTSKUNDE" else course["fach"]
 	course["lehrer"] = course["lehrer"].upper()
-	course["text"] = escape_tex(course["text"])
-	#proc = subprocess.Popen("./md2tex.sh", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-	#course["text"] = proc.communicate(course["text"].encode("utf-8"))[0].decode("utf-8")
+	
+	if draft:
+		course["text"] = escape_tex(course["text"])
+	else:
+		proc = subprocess.Popen("./md2tex.sh", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+		course["text"] = proc.communicate(course["text"].encode("utf-8"))[0].decode("utf-8")
 
-	if len(course["author"].strip()) > 2:
-		course["author"] = "von "+escape_tex(course["author"])
+	if draft:
+		course["cloud"] = "\\rule{\\textwidth}{90mm}"
+	else:
+		course["cloud"] = "\\includegraphics[width=\\textwidth]{../linked/courses/clouds/%s.png}"%course["id"]
+	
+	course["author"] = escape_tex(course["author"])
 	
 	out = page.substitute(course)
 	f =  open("tex/courses/" + course["id"] + ".tex", "w")
