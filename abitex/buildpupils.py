@@ -120,6 +120,7 @@ for pupil in j :
 	content["nachabi"] = escape_tex(content["nachabi"] or "")
 	content["title"] = escape_tex(content["title"] or "")
 	content["subtitle"] = escape_tex(content["subtitle"] or "")
+	content["zukunft"] = escape_tex(content["zukunft"] or "")
 	#print type(content["tags"])
 	content["geb"] = dates[content["uid"][0:8]]
 	if content["tags"] != None and not options.spoiler:
