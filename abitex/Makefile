@@ -22,10 +22,10 @@ tex/personenberichte.pdf: tex/pupilspages.tex tex/personenberichte.tex tex/pupil
 	cd tex; $(LATEX) personenberichte.tex; cd ..
 	cd tex; $(LATEX) personenberichte.tex | grep "Package abitex Warning"; cd ..
 
-tex/kursberichte.pdf: tex/courses.tex tex/kursberichte.tex tex/courses/* $(INCLUDES) linked/courses/clouds/*
+tex/kursberichte.pdf: tex/courses.tex tex/kursberichte.tex tex/courses/* $(INCLUDES) linked/courses/clouds
 	cd tex; $(LATEX) kursberichte.tex; cd ..
 
-linked/courses/clouds/*: linked/courses/raw_clouds/*
+linked/courses/clouds: linked/courses/raw_clouds/*
 	python2 crop_courseclouds.py
 
 tex/memoirs.pdf: tex/mems.tex tex/memoirs.tex $(INCLUDES)
