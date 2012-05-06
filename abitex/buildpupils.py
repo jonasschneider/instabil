@@ -111,7 +111,7 @@ for pupil in j :
 		content["g8"] = "G8/G9 \\em{fixme}"
 	
 	if content["uid"] in smallmeta :
-		content["metasize"] = "\\small"
+		content["metasize"] = "\\small \\vspace*{-1mm}"
 	else :
 		content["metasize"] = ""
 	
