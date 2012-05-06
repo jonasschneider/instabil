@@ -35,3 +35,4 @@ abitex/linked
 abitex/fetchmemoirs.sh
 abitex/tex/courses
 abitex/draftflag
+*.pyc

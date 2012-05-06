@@ -1,5 +1,5 @@
 LATEX := xelatex --file-line-error-style
-INCLUDES := tex/header.tex tex/seite.tex tex/generic.tex tex/course.tex draftflag
+INCLUDES := tex/header.tex tex/seite.tex tex/generic.tex tex/course.tex
 TARGETS := tex/personenberichte.pdf tex/kursberichte.pdf tex/memoirs.pdf
 all: $(TARGETS)
 
@@ -12,13 +12,13 @@ fetch:
 draftflag:
 	stat draftflag || echo 'false' > draftflag
 
-tex/pupilspages.tex: pupils.json buildpupils.py temp/*.tex
+tex/pupilspages.tex: pupils.json buildpupils.py temp/*.tex draftflag
 	./buildpupils.py
 
-tex/courses.tex: courses.json buildcourses.py temp/course.tex
+tex/courses.tex: courses.json buildcourses.py temp/course.tex draftflag
 	./buildcourses.py
 
-tex/mems.tex: memoirs.json memoirs.py
+tex/mems.tex: memoirs.json memoirs.py draftflag
 	./memoirs.py > tex/mems.tex
 
 tex/personenberichte.pdf: tex/pupilspages.tex tex/personenberichte.tex tex/pupils/* $(INCLUDES)
