@@ -1,37 +1,35 @@
-SRC = abi
-all: fetchpupils pupils pdf
+LATEX := xelatex --file-line-error-style
+all: tex/personenberichte.pdf tex/kursberichte.pdf tex/memoirs.pdf
 
-fast : pupils pdf
-
-dump :
-	./dump.sh
-
-fetchpupils:
+pupils.json:
 	./fetchpupils.sh
 
-pupils:
-	./buildpupils.py
-
-fetchcourses:
+courses.json:
 	./fetchcourses.sh
 
-kursberichte:
-	./buildcourses.py
-	make kursberichte -C tex 
+tex/pupilspages.tex: pupils.json buildpupils.py
+	./buildpupils.py
 
-memoirs:
+tex/courses.tex: courses.json buildcourses.py
+	./buildcourses.py
+
+tex/mems.tex: memoirs.json
 	./memoirs.py > tex/mems.tex
-	make memoirs -C tex 
- 
-pdf:
-	make persons -C tex 
+
+tex/personenberichte.pdf: tex/pupilspages.tex tex/personenberichte.tex
+	cd tex; $(LATEX) personenberichte.tex; cd ..
+	cd tex; $(LATEX) personenberichte.tex | grep "Package abitex Warning"; cd ..
+
+tex/kursberichte.pdf: tex/courses.tex tex/kursberichte.tex
+	cd tex; $(LATEX) kursberichte.tex; cd ..
+
+tex/memoirs.pdf: tex/mems.tex tex/memoirs.tex
+	cd tex; $(LATEX) memoirs.tex; cd ..
 
 avatars:
 	./fetchavas.py | sh
 
 deploy:
-	cp tex/personenberichte.pdf  linked/personenberichte.pdf
-	cp tex/memoirs.pdf  linked
-
-prevu : spoiler pdf
-	./prevu.py
+	cp tex/personenberichte.pdf linked
+	cp tex/memoirs.pdf linked
+	cp tex/kursberichte.pdf linked

@@ -11,8 +11,8 @@ n = 0
 for course in j :
 	n+=1
 	page = Template(temp.decode("utf-8"))
-	if course["author"] == "" :
-		continue
+	#if course["author"] == "" :
+	#	continue
 	courselist.append(course["id"])
 	print course["id"]
 	#print "tex/pupils/" + pupil["uid"] + ".tex"
