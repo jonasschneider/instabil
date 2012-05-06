@@ -1,13 +1,13 @@
 \newcommand{\coursehead}[1]{
 \setcounterpageref{realpage}{kurs\thenkurs}
-\settowidth{\headwidth}{\titlefont \Large {#1}}
+\settowidth{\headwidth}{\titlefont \Large \MakeUppercase{#1}}
 \parbox{\textwidth}{
 \ifodd\therealpage\setlength{\headwidth}{-\headwidth}\addtolength{\headwidth}{17.5cm}\else \addtolength{\headwidth}{-23cm} \fi
 \noindent\hspace{\headwidth}\ifodd\therealpage\includegraphics{bar2.pdf}\else\includegraphics{bar.pdf}\fi
 
 \vspace*{-1.5cm}
 \noindent
-\noindent \color{white} \ifodd\therealpage\raggedleft\else\raggedright\fi \Large \titlefont #1 \label{kurs\thenkurs}} \addtocounter{nkurs}{1}
+\noindent \color{white} \ifodd\therealpage\raggedleft\else\raggedright\fi \Large \titlefont \MakeUppercase{#1} \label{kurs\thenkurs}} \addtocounter{nkurs}{1}
 \vspace{5mm}
 
 %important newline!
