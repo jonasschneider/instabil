@@ -28,6 +28,15 @@
 \fi
 }
 
+\newcommand{\fancybg}{
+\checkoddpage
+\ifoddpage
+\ThisCenterWallPaper{1}{../linked/backgrounds/fancy-footer-r.pdf}
+\else
+\ThisCenterWallPaper{1}{../linked/backgrounds/fancy-footer-l.pdf}
+\fi
+}
+
 \newcommand{\persontitle}[3]{
 \setlength{\parindent}{0cm}
 \settoheight{\headheight}{\titlefont \huge {#1}}
@@ -113,19 +122,6 @@
 \scriptsize
 \Slab
 \textcolor{tagcolor}{\vfill #1}
-}
-\end{textblock*}
-}
-
-\newcommand{\makefoot}{
-\begin{textblock*}{\textwidth}(\border,28.9cm)
-\flushouter
-\Large\textcolor{white}{\Dekar
-\ifoddpage
-ABI WAN KENOBI \thepage
-\else
- \thepage \/ ABI WAN KENOBI
-\fi
 }
 \end{textblock*}
 }

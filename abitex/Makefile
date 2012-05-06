@@ -1,55 +1,35 @@
-SRC = abi
-all: fetchpupils pupils pdf
+LATEX := xelatex --file-line-error-style
+INCLUDES := tex/header.tex tex/seite.tex tex/generic.tex
+TARGETS := tex/personenberichte.pdf tex/kursberichte.pdf tex/memoirs.pdf
+all: $(TARGETS)
 
-fast : pupils pdf
-
-dump :
-	./dump.sh
-	
-clean:
-	rm tex/abi.toc
-	rm tex/abi.stc*
-	rm tex/abi.pdf
-	rm tex/abi.mtc*
-	rm tex/abi.aux
-	rm tex/pupils/*
-	rm tex/pupilspages.tex
-
-fetchpupils:
+fetch:
 	./fetchpupils.sh
-
-pupils:
-	./buildpupils.py
-	
-spoiler:
-	./buildpupils.py -s
-
-fetchcourses:
+	./fetchavas.py | sh
 	./fetchcourses.sh
+	./fetchmemoirs.sh
 
-courses:
+tex/pupilspages.tex: pupils.json buildpupils.py temp/*.tex
+	./buildpupils.py
+
+tex/courses.tex: courses.json buildcourses.py temp/course.tex
 	./buildcourses.py
 
-memoirs:
+tex/mems.tex: memoirs.json memoirs.py
 	./memoirs.py > tex/mems.tex
-	make memoirs -C tex 
- 
-pdf:
-	make persons -C tex 
 
-avatars:
-	./fetchavas.py | sh
+tex/personenberichte.pdf: tex/pupilspages.tex tex/personenberichte.tex tex/pupils/* $(INCLUDES)
+	cd tex; $(LATEX) personenberichte.tex; cd ..
+	cd tex; $(LATEX) personenberichte.tex | grep "Package abitex Warning"; cd ..
 
-view :
-	evince tex/abi.pdf& 2> /dev/null
-	
+tex/kursberichte.pdf: tex/courses.tex tex/kursberichte.tex tex/courses/* $(INCLUDES) linked/courses/clouds/*
+	cd tex; $(LATEX) kursberichte.tex; cd ..
+
+linked/courses/clouds/*: linked/courses/raw_clouds/*
+	python2 crop_courseclouds.py
+
+tex/memoirs.pdf: tex/mems.tex tex/memoirs.tex $(INCLUDES)
+	cd tex; $(LATEX) memoirs.tex; cd ..
+
 deploy:
-	cp tex/personenberichte.pdf  linked/personenberichte.pdf
-	cp tex/memoirs.pdf  linked
-
-missing: fetchpupils
-	./buildpupils.py | head -n -1 > users
-	./qusers.py > missing
-	
-prevu : spoiler pdf
-	./prevu.py
+	cp $(TARGETS) linked
