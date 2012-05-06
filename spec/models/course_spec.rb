@@ -16,6 +16,7 @@ describe "Course" do
         "weekday" => 'Donnerstag',
         "num" => 4,
         "lehrer" => "Kunz",
+        "id"=> course.id,
         
         "foto" => "http://image.shutterstock.com/display_pic_with_logo/195/195,1159450466,2/stock-vector-group-of-people-vector-1914678.jpg",
         
