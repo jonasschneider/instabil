@@ -2,7 +2,7 @@ source :rubygems
 
 gem "rake"
 gem "airbrake"
-gem 'racksh', :group => 'development'
+gem 'racksh'
 
 gem 'sinatra', :require => 'sinatra/base'
 gem 'haml'
