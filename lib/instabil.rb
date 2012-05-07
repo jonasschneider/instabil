@@ -17,6 +17,7 @@ module Instabil
     "wi" => "Wirtschaft",
     
     "g" => "Geschichte",
+    "gb" => "Geschichte (bili)",
     "gk" => "Gemeinschaftskunde",
     "geogr" => "Erdkunde",
     "geol" => "Geologie",
