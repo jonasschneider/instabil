@@ -89,10 +89,10 @@ print "%i Kurse"%n
 f =  open("tex/courses.tex", "w")
 
 getnum = lambda s:s['num']
-getsubject = lambda s:s['fach']
+getsortkey = lambda s:[s['fach'], s['lehrer']]
 
 sorted_input = reversed(sorted(j, key=getnum))
 for num,courses in itertools.groupby(sorted_input, key=getnum):
-	sorted_by_subject = sorted(courses, key=getsubject)
+	sorted_by_subject = sorted(courses, key=getsortkey)
 	for course in sorted_by_subject:
 		f.write("\input{courses/" + course["id"] + ".tex}\n");
