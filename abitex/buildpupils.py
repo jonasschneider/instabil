@@ -154,8 +154,8 @@ for pupil in j :
 			content["author"] = s+ " "+ content["author"]
 			break 
 	
-	if os.path.isfile("temp/"+pupil["uid"]+".tex") :
-		special = Template(open("temp/"+pupil["uid"]+".tex").read().decode("utf-8"))
+	if os.path.isfile("temp/special/"+pupil["uid"]+".tex") :
+		special = Template(open("temp/special/"+pupil["uid"]+".tex").read().decode("utf-8"))
 		content["special"] = special.substitute(content)
 		content["text"] = ""
 	
