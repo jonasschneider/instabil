@@ -23,6 +23,7 @@ gem 'pusher'
 gem 'mongoid', '< 2.3'
 gem 'bson_ext'
 
+gem 'newrelic_rpm'
 
 group :test do
   gem 'rspec', :require => 'rspec'

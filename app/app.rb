@@ -53,7 +53,11 @@ class Instabil::App < Sinatra::Base
       end
     end
   end
-  
+
+  configure :production do
+    require 'newrelic_rpm'
+  end
+
   if ENV["AIRBRAKE_API_KEY"].present?
     Airbrake.configure do |config|
       config.api_key = ENV["AIRBRAKE_API_KEY"]
