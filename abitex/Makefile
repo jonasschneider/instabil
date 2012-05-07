@@ -5,7 +5,6 @@ all: $(TARGETS)
 
 fetch:
 	./fetchpupils.sh
-	./fetchavas.py | sh
 	./fetchcourses.sh
 	./fetchmemoirs.sh
 
