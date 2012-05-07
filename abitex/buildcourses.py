@@ -9,6 +9,9 @@ temp = open("temp/course.tex").read()
 n = 0
 import common
 
+course_members = json.loads(open("course_members.json").read())
+pupils = json.loads(open("pupils.json").read())
+
 def escape_tex(text) :
 	return text.replace(u"♥", "<3").replace(u"☺", " :) ").replace("&#3232;", u"{\\Tunga ಠ}").replace("&", "\\&").replace("#", "\\#").replace("_", "\\_").replace("^", "\^{}").replace(u"%", "\%").replace(u"✚", u"{\\DjVu ✚}").replace(u"‿", u"{\\DjVu ‿}").replace(u"✿", u"{\\DjVu ✿}").replace(u"ё", '"e').replace(u"§nl§", u"\\\\").replace("\\textbackslash\\/LaTeX", "\\LaTeX").replace("\\textbackslash\\/vspace", "\\vspace").replace("\\m/", "\\textbackslash m/")
 
@@ -33,6 +36,14 @@ for course in j :
 	course["fach"] = course["fach"].upper()
 	course["fach"] = "GK" if course["fach"] == "GEMEINSCHAFTSKUNDE" else course["fach"]
 	course["lehrer"] = course["lehrer"].upper()
+
+	if course["id"] in course_members:
+		#print [x for x in ]
+		#print filter(lambda p: p["uid"] == 'kramerlu', pupils)
+
+		course["members"] = ', '.join([filter(lambda p: p["uid"] == member, pupils)[0]["name"] for member in course_members[course["id"]]])
+	else:
+		course["members"] = "FIXME: Wer ist hier drin? "+course["id"]
 	
 	if common.drafting():
 		course["text"] = escape_tex(course["text"])

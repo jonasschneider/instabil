@@ -7,14 +7,15 @@ fetch:
 	./fetchpupils.sh
 	./fetchcourses.sh
 	./fetchmemoirs.sh
+	heroku console "puts Course.all.map{|c|[c.id, c.subject, c.tags.map{|t|t.author.uid}.sort_by{rand}]}.to_json" | head -n 1 > tagauthors.json
 
 draftflag:
 	stat draftflag || echo 'false' > draftflag
 
-tex/pupilspages.tex: pupils.json buildpupils.py temp/*.tex draftflag
+tex/pupilspages.tex: pupils.json buildpupils.py temp/pupil.tex temp/special/*.tex draftflag
 	./buildpupils.py
 
-tex/courses.tex: courses.json buildcourses.py temp/course.tex linked/courses/clouds draftflag
+tex/courses.tex: courses.json buildcourses.py temp/course.tex linked/courses/clouds pupils.json course_members.json draftflag
 	./buildcourses.py
 
 tex/mems.tex: memoirs.json memoirs.py draftflag
@@ -35,3 +36,6 @@ tex/memoirs.pdf: tex/mems.tex tex/memoirs.tex $(INCLUDES)
 
 deploy:
 	cp $(TARGETS) linked
+
+course_members.json: mapcourses.py
+	python mapcourses.py > course_members.json
