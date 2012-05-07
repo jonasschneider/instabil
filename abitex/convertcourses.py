@@ -35,7 +35,7 @@ for k in f.read().split("!!newcourse!!") :
 			#print kurs + "\t" + uid
 			if uid[:2] != "zz":
 				kurse[kurs].append(uid)
-print("[")
+print("{")
 for k in kurse :
-	print('{"%s": ["%s"]},'%(k, '","'.join(kurse[k])))
-print("]")
+	print('"%s": ["%s"],'%(k, '","'.join(kurse[k])))
+print("}")
