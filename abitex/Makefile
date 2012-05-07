@@ -28,8 +28,9 @@ tex/personenberichte.pdf: tex/pupilspages.tex tex/personenberichte.tex tex/pupil
 tex/kursberichte.pdf: tex/courses.tex tex/kursberichte.tex tex/courses/* $(INCLUDES) linked/courses/clouds
 	cd tex; $(LATEX) kursberichte.tex; $(LATEX) kursberichte.tex; cd ..
 
-linked/courses/clouds: linked/courses/raw_clouds/* draftflag crop_courseclouds.py
+linked/courses/clouds: linked/courses/raw_clouds draftflag crop_courseclouds.py
 	python2 crop_courseclouds.py
+	touch linked/courses/clouds
 
 tex/memoirs.pdf: tex/mems.tex tex/memoirs.tex $(INCLUDES)
 	cd tex; $(LATEX) memoirs.tex; cd ..
@@ -38,4 +39,4 @@ deploy:
 	cp $(TARGETS) linked
 
 course_members.json: mapcourses.py
-	python mapcourses.py > course_members.json
+	python2 mapcourses.py > course_members.json
