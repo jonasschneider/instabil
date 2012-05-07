@@ -9,7 +9,7 @@ import codecs
 f = codecs.open("linked/courses/tags.csv", "w", "utf-8")
 
 def format_tag(tag):
-    return tag.replace(' ', '~')
+    return tag[0].replace(' ', '~')
 
 for course in j :
   s = ' '.join(map(format_tag, course['tags']))
