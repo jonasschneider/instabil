@@ -38,7 +38,7 @@ class Course
       
       "foto" => "http://image.shutterstock.com/display_pic_with_logo/195/195,1159450466,2/stock-vector-group-of-people-vector-1914678.jpg",
       
-      "tags" => self.tags.map{|t|t.name},
+      "tags" => self.tags.map{|t|[t.name, t.id.to_s]},
 
       "text" => (page && page.text) || "",
       "author" => (page && (page.author_name.empty? ? page.responsible.name : page.author_name)) || ""
