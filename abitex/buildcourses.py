@@ -6,6 +6,7 @@ f = open("courses.json")
 blah = f.read()
 j = json.loads(blah)
 temp = open("temp/course.tex").read()
+bericht_temp = open("temp/kursbericht.tex").read()
 n = 0
 import common
 
@@ -20,6 +21,7 @@ def removeNonAscii(s): return "".join(i for i in s if ord(i)<128)
 for course in j :
 	n+=1
 	page = Template(temp.decode("utf-8"))
+	bericht_page = Template(bericht_temp.decode("utf-8"))
 	#if course["author"] == "" :
 	#	continue
 	#print course["id"]
@@ -51,8 +53,6 @@ for course in j :
 		proc = subprocess.Popen("./md2tex.sh", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 		course["text"] = proc.communicate(course["text"].encode("utf-8"))[0].decode("utf-8")
 
-	course["authorspace"] = ""
-
 	if common.drafting():
 		if not os.path.exists('linked/courses/clouds/%s.jpg'%course["id"]):
 			print '%s: No course cloud draft'%course["id"]
@@ -70,19 +70,20 @@ for course in j :
 		if os.path.exists('linked/courses/grouppics/%s.jpg'%course["id"]):
 			course["pic"] = "{\centering \\includegraphics[width=\\textwidth]{../linked/courses/grouppics/%s.jpg}}"%course["id"] 
 		else:
-			course["pic"] = "{\centering \\rule{\\textwidth}{90mm}}"
+			course["pic"] = "{\centering \\rule{\\textwidth}{120mm}}"
 			print '%s: No course pic (%s)'% (course["id"], removeNonAscii(course["fach"]+" "+course["lehrer"]))
 		if len(course["author"].strip()) > 3:
 			# FIXME: add tag block
 			course["cloud"] = ""
-			course["authorspace"] = "\\vspace{2cm}"
 	else:
 		# FIXME: add small pics
 		course["pic"] = "\\rule{\\textwidth}{20mm}" 
 
-	course["author"] = escape_tex(course["author"])
-	
 	out = page.substitute(course)
+	if len(course["author"]) > 3:
+		course["author"] = escape_tex(course["author"])
+		out += bericht_page.substitute(course)
+
 	f =  open("tex/courses/" + course["id"] + ".tex", "w")
 	f.write(out.encode("utf-8"))
 print "%i Kurse"%n
