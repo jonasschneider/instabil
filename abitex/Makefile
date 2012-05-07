@@ -14,7 +14,7 @@ draftflag:
 tex/pupilspages.tex: pupils.json buildpupils.py temp/*.tex draftflag
 	./buildpupils.py
 
-tex/courses.tex: courses.json buildcourses.py temp/course.tex draftflag
+tex/courses.tex: courses.json buildcourses.py temp/course.tex linked/courses/clouds draftflag
 	./buildcourses.py
 
 tex/mems.tex: memoirs.json memoirs.py draftflag
@@ -27,7 +27,7 @@ tex/personenberichte.pdf: tex/pupilspages.tex tex/personenberichte.tex tex/pupil
 tex/kursberichte.pdf: tex/courses.tex tex/kursberichte.tex tex/courses/* $(INCLUDES) linked/courses/clouds
 	cd tex; $(LATEX) kursberichte.tex; $(LATEX) kursberichte.tex; cd ..
 
-linked/courses/clouds: linked/courses/raw_clouds/*
+linked/courses/clouds: linked/courses/raw_clouds/* draftflag crop_courseclouds.py
 	python2 crop_courseclouds.py
 
 tex/memoirs.pdf: tex/mems.tex tex/memoirs.tex $(INCLUDES)

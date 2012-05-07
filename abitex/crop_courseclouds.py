@@ -5,6 +5,8 @@ import sys
 import Image
 from PIL import ImageChops, ImageOps, ImageEnhance
 
+import common
+
 f = open("courses.json")
 blah = f.read()
 j = json.loads(blah)
@@ -12,7 +14,10 @@ j = json.loads(blah)
 for course in j :
   id = course['id']
   infile = 'linked/courses/raw_clouds/'+id+'.png'
-  outfile = 'linked/courses/clouds/'+id+'.png'
+  if common.drafting():
+    outfile = 'linked/courses/clouds/'+id+'.jpg'
+  else:
+    outfile = 'linked/courses/clouds/'+id+'.png'
 
   print id
 
@@ -29,12 +34,13 @@ for course in j :
     if bbox == None:
       realbox = 0, 0, noborder.size[0]-1, 100
     else:
-      realbox = 0, bbox[1], noborder.size[0]-1, bbox[3]
+      realbox = 0, bbox[1]-40, noborder.size[0]-1, bbox[3]+40
     print bbox, realbox
     trimmed = noborder.crop(realbox)
 
     mask = ImageChops.add(trimmed, bg, 1, 100)
     mask = ImageChops.invert(ImageEnhance.Contrast(mask).enhance(30.0))
 
-    trimmed.putalpha(mask)
+    if not common.drafting():
+      trimmed.putalpha(mask)
     trimmed.save(outfile)

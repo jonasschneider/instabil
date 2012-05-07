@@ -12,12 +12,14 @@ import common
 def escape_tex(text) :
 	return text.replace(u"♥", "<3").replace(u"☺", " :) ").replace("&#3232;", u"{\\Tunga ಠ}").replace("&", "\\&").replace("#", "\\#").replace("_", "\\_").replace("^", "\^{}").replace(u"%", "\%").replace(u"✚", u"{\\DjVu ✚}").replace(u"‿", u"{\\DjVu ‿}").replace(u"✿", u"{\\DjVu ✿}").replace(u"ё", '"e').replace(u"§nl§", u"\\\\").replace("\\textbackslash\\/LaTeX", "\\LaTeX").replace("\\textbackslash\\/vspace", "\\vspace").replace("\\m/", "\\textbackslash m/")
 
+def removeNonAscii(s): return "".join(i for i in s if ord(i)<128)
+
 for course in j :
 	n+=1
 	page = Template(temp.decode("utf-8"))
 	#if course["author"] == "" :
 	#	continue
-	print course["id"]
+	#print course["id"]
 	#print "tex/pupils/" + pupil["uid"] + ".tex"
 	#print type(content["tags"])
 	"""if course["tags"] != None :
@@ -38,11 +40,35 @@ for course in j :
 		proc = subprocess.Popen("./md2tex.sh", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 		course["text"] = proc.communicate(course["text"].encode("utf-8"))[0].decode("utf-8")
 
+	course["authorspace"] = ""
+
 	if common.drafting():
-		course["cloud"] = "\\rule{\\textwidth}{90mm}"
+		if not os.path.exists('linked/courses/clouds/%s.jpg'%course["id"]):
+			print '%s: No course cloud draft'%course["id"]
+			course["cloud"] = "\\rule{\\textwidth}{90mm}"
+		else:
+			course["cloud"] = "\\includegraphics[width=\\textwidth]{../linked/courses/clouds/%s.jpg}"%course["id"]
 	else:
-		course["cloud"] = "\\includegraphics[width=\\textwidth]{../linked/courses/clouds/%s.png}"%course["id"]
+		if not os.path.exists('linked/courses/clouds/%s.png'%course["id"]):
+			print '%s: No course cloud'%course["id"]
+			course["cloud"] = "\\rule{\\textwidth}{90mm}"
+		else:
+			course["cloud"] = "\\includegraphics[width=\\textwidth]{../linked/courses/clouds/%s.png}"%course["id"]
 	
+	if int(course["num"]) == 4:
+		if os.path.exists('linked/courses/grouppics/%s.jpg'%course["id"]):
+			course["pic"] = "{\centering \\includegraphics[width=\\textwidth]{../linked/courses/grouppics/%s.jpg}}"%course["id"] 
+		else:
+			course["pic"] = "{\centering \\rule{\\textwidth}{90mm}}"
+			print '%s: No course pic (%s)'% (course["id"], removeNonAscii(course["fach"]+" "+course["lehrer"]))
+		if len(course["author"].strip()) > 3:
+			# FIXME: add tag block
+			course["cloud"] = ""
+			course["authorspace"] = "\\vspace{2cm}"
+	else:
+		# FIXME: add small pics
+		course["pic"] = "\\rule{\\textwidth}{20mm}" 
+
 	course["author"] = escape_tex(course["author"])
 	
 	out = page.substitute(course)
