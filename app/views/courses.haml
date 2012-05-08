@@ -43,7 +43,8 @@
           - if course.page.present?
             %a{ href: "/courses/#{course.id}" } Kursbericht anschauen
           - else
-            %form{ action: "/pages/new?for_course=#{course.id}" }
+            %form{ action: "/pages/new" }
+              %input{ type: "hidden", name: "for_course", value: course.id}
               %button{ style: 'font-size: 200%' } Kursbericht schreiben
 
         .tags
