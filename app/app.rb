@@ -58,6 +58,8 @@ class Instabil::App < Sinatra::Base
     require 'newrelic_rpm'
   end
 
+  set :airbrake, false
+
   if ENV["AIRBRAKE_API_KEY"].present?
     Airbrake.configure do |config|
       config.api_key = ENV["AIRBRAKE_API_KEY"]
@@ -65,6 +67,7 @@ class Instabil::App < Sinatra::Base
     
     use Airbrake::Rack
     enable :raise_errors
+    set :airbrake, true
   end
   
   use Rack::Session::Cookie
@@ -117,6 +120,24 @@ class Instabil::App < Sinatra::Base
       haml :index
     else
       haml :splash, :layout => false
+    end
+  end
+
+  class OverrideException < Exception
+  end
+
+  post "/override_login" do
+    authenticate!
+    halt 403 unless current_user.moderator?
+    user = Person.find params["login_as"]
+    if user
+      msg = "#{current_user.uid} logged in as #{user.uid}"
+      puts "LOGIN OVERRIDE: "+msg
+      if settings.airbrake
+        Airbrake.notify(OverrideException.new(msg))
+      end
+      warden.set_user user
+      redirect '/'
     end
   end
   
