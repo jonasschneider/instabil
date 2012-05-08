@@ -17,30 +17,9 @@ for l in open("dates").readlines() :
 	firstname = m[4]
 	dates[esc(lastname)[0:6]+esc(firstname)[0:2]]=m[0]
 
-def beautiy_quotation(text) :
-	quotation  = ","
-	out = ""
-	text = text.replace(u"—", "--")
-
-	text = text.replace("&nbsp;", "\\/")
-	for c in text :
-		if c != '"' :
-			out += c
-		else :
-			if quotation == "," :
-				out += quotation*2
-				quotation = "'"
-			else :
-				out += quotation*2
-				quotation = ","
-	return out
-
 def md2tex(text) :
 	proc = subprocess.Popen("./md2tex.sh", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 	return proc.communicate(text.encode("utf-8"))[0].decode("utf-8")
-
-def escape_tex(text) :
-	return text.replace(u"♥", "<3").replace(u"☺", " :) ").replace("&#3232;", u"{\\Tunga ಠ}").replace("&", "\\&").replace("#", "\\#").replace("_", "\\_").replace("^", "\^{}").replace(u"%", "\%").replace(u"✚", u"{\\DjVu ✚}").replace(u"‿", u"{\\DjVu ‿}").replace(u"✿", u"{\\DjVu ✿}").replace(u"ё", '"e').replace(u"§nl§", u"\\\\").replace("\\textbackslash\\/LaTeX", "\\LaTeX").replace("\\textbackslash\\/vspace", "\\vspace").replace("\\m/", "\\textbackslash m/")
 
 parser = OptionParser()
 parser.add_option("-s", "--spoiler", dest="spoiler", help="Spolier text", action="store_true")
@@ -55,10 +34,6 @@ else:
 	temp = open("temp/pupil.tex").read()
 pupillist = []
 emails = 0
-
-fixes = {"4f8b0655146fa40001000014" : "{\\Chinese %s}",
-"4f9d12f52ca3a7000100004a" : "{\\Chinese %s}",
-"4f96b816079d0500010000fd":"{\\Fixed %s}"}
 
 smallnames = ("mahlerda", "burgerma", "hoffmelo")
 verysmallnames = ("leikerch", "meissnna")
@@ -96,7 +71,7 @@ for pupil in j :
 	if content["author"] == "":
 		content["author"] = "Dieser Text wurde von ganz vielen geschrieben... "
 	else :
-		content["author"] = escape_tex(content["author"])
+		content["author"] = common.escape_tex(content["author"])
 	content["name"]=content["name"].upper()
 	content["name"] = content["name"].replace(u"ё", '"e').replace(u"Ё", '"E')
 	if content["uid"] in smallnames:
@@ -115,34 +90,17 @@ for pupil in j :
 	else :
 		content["metasize"] = ""
 	
-	content["lks"] = escape_tex(content["lks"] or "")
-	content["lebenswichtig"] = escape_tex(content["lebenswichtig"] or "")
-	content["nachruf"] = escape_tex(content["nachruf"] or "")
-	content["nachabi"] = escape_tex(content["nachabi"] or "")
-	content["title"] = escape_tex(content["title"] or "")
-	content["subtitle"] = escape_tex(content["subtitle"] or "")
-	content["zukunft"] = escape_tex(content["zukunft"] or "")
+	content["lks"] = common.escape_tex(content["lks"] or "")
+	content["lebenswichtig"] = common.escape_tex(content["lebenswichtig"] or "")
+	content["nachruf"] = common.escape_tex(content["nachruf"] or "")
+	content["nachabi"] = common.escape_tex(content["nachabi"] or "")
+	content["title"] = common.escape_tex(content["title"] or "")
+	content["subtitle"] = common.escape_tex(content["subtitle"] or "")
+	content["zukunft"] = common.escape_tex(content["zukunft"] or "")
 	#print type(content["tags"])
 	content["geb"] = dates[content["uid"][0:8]]
-	if content["tags"] != None and not options.spoiler:
-		tags = []
-		for t in content["tags"] :
-			if t[1] in fixes :
-				tags.append(beautiy_quotation(fixes[t[1]]%escape_tex(t[0])))
-			else:
-				if t[1] == "4fa15969829ee30001000033" :
-					tags.append(u"$e^{\\mathrm{i}\\pi}=-1$; ,,schön''")
-				elif t[1] == "4f92e2c11baeb6000100007d" :
-					tags.append(escape_tex(beautiy_quotation(t[0])).replace(u"λ", "$\\lambda$"))
-				else:
-					tags.append(escape_tex(beautiy_quotation(t[0])))
-		content["tags"] = " // ".join(tags)
-		 
-		 
+	content["tags"] = common.format_tags(content["tags"])
 	
-	else : 
-		content["tags"] = "Hier kommen Tags hin!"
-	#content["tags"] = content["tags"].replace("%", "\\%")
 	if content["text"] != None:
 		proc = subprocess.Popen("./md2tex.sh", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 		content["text"] = proc.communicate(content["text"].encode("utf-8"))[0].decode("utf-8")

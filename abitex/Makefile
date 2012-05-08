@@ -12,13 +12,13 @@ fetch:
 draftflag:
 	stat draftflag || echo 'false' > draftflag
 
-tex/pupilspages.tex: pupils.json buildpupils.py temp/pupil.tex temp/special/*.tex draftflag
+tex/pupilspages.tex: pupils.json buildpupils.py temp/pupil.tex temp/special/*.tex draftflag common.py
 	./buildpupils.py
 
-tex/courses.tex: courses.json buildcourses.py temp/course.tex linked/courses/clouds pupils.json course_members.json draftflag
+tex/courses.tex: courses.json buildcourses.py temp/course.tex linked/courses/clouds pupils.json course_members.json linked/courses/grouppics/* draftflag common.py
 	./buildcourses.py
 
-tex/mems.tex: memoirs.json memoirs.py draftflag
+tex/mems.tex: memoirs.json memoirs.py draftflag common.py
 	./memoirs.py > tex/mems.tex
 
 tex/personenberichte.pdf: tex/pupilspages.tex tex/personenberichte.tex tex/pupils/* $(INCLUDES)

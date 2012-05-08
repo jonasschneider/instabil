@@ -13,9 +13,6 @@ import common
 course_members = json.loads(open("course_members.json").read())
 pupils = json.loads(open("pupils.json").read())
 
-def escape_tex(text) :
-	return text.replace(u"♥", "<3").replace(u"☺", " :) ").replace("&#3232;", u"{\\Tunga ಠ}").replace("&", "\\&").replace("#", "\\#").replace("_", "\\_").replace("^", "\^{}").replace(u"%", "\%").replace(u"✚", u"{\\DjVu ✚}").replace(u"‿", u"{\\DjVu ‿}").replace(u"✿", u"{\\DjVu ✿}").replace(u"ё", '"e').replace(u"§nl§", u"\\\\").replace("\\textbackslash\\/LaTeX", "\\LaTeX").replace("\\textbackslash\\/vspace", "\\vspace").replace("\\m/", "\\textbackslash m/")
-
 def removeNonAscii(s): return "".join(i for i in s if ord(i)<128)
 
 for course in j :
@@ -48,7 +45,7 @@ for course in j :
 		course["members"] = "FIXME: Wer ist hier drin? "+course["id"]
 	
 	if common.drafting():
-		course["text"] = escape_tex(course["text"])
+		course["text"] = common.escape_tex(course["text"])
 	else:
 		proc = subprocess.Popen("./md2tex.sh", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 		course["text"] = proc.communicate(course["text"].encode("utf-8"))[0].decode("utf-8")
@@ -58,30 +55,29 @@ for course in j :
 			print '%s: No course cloud draft'%course["id"]
 			course["cloud"] = "\\rule{\\textwidth}{90mm}"
 		else:
-			course["cloud"] = "\\includegraphics[width=\\textwidth]{../linked/courses/clouds/%s.jpg}"%course["id"]
+			course["cloud"] = "{\\centering \\includegraphics[width=\\textwidth]{../linked/courses/clouds/%s.jpg}}"%course["id"]
 	else:
 		if not os.path.exists('linked/courses/clouds/%s.png'%course["id"]):
 			print '%s: No course cloud'%course["id"]
 			course["cloud"] = "\\rule{\\textwidth}{90mm}"
 		else:
-			course["cloud"] = "\\includegraphics[width=\\textwidth]{../linked/courses/clouds/%s.png}"%course["id"]
+			course["cloud"] = "{\\centering \\includegraphics[width=\\textwidth]{../linked/courses/clouds/%s.png}}"%course["id"]
 	
 	if int(course["num"]) == 4:
 		if os.path.exists('linked/courses/grouppics/%s.jpg'%course["id"]):
-			course["pic"] = "{\centering \\includegraphics[width=\\textwidth]{../linked/courses/grouppics/%s.jpg}}"%course["id"] 
+			course["pic"] = "\\includegraphics[width=\\textwidth]{../linked/courses/grouppics/%s.jpg}"%course["id"] 
 		else:
-			course["pic"] = "{\centering \\rule{\\textwidth}{120mm}}"
+			course["pic"] = "\\rule{\\textwidth}{120mm}"
 			print '%s: No course pic (%s)'% (course["id"], removeNonAscii(course["fach"]+" "+course["lehrer"]))
 		if len(course["author"].strip()) > 3:
-			# FIXME: add tag block
-			course["cloud"] = ""
+			course["cloud"] = "\kurstags{%s}"%common.format_tags(course["tags"])
 	else:
 		# FIXME: add small pics
 		course["pic"] = "\\rule{\\textwidth}{20mm}" 
 
 	out = page.substitute(course)
 	if len(course["author"]) > 3:
-		course["author"] = escape_tex(course["author"])
+		course["author"] = common.escape_tex(course["author"])
 		out += bericht_page.substitute(course)
 
 	f =  open("tex/courses/" + course["id"] + ".tex", "w")

@@ -1,5 +1,5 @@
 #!python
-import json, os, subprocess, itertools, common
+import json, os, subprocess, itertools, common, sys
 from string import Template
 course_members = json.loads(open("linked/courses/loe_coursemembers.json").read())
 course_authors = json.loads(open("tagauthors.json").read())
@@ -35,6 +35,5 @@ for course, subject, authors in course_authors:
     #print '%s (%s) is probably %s with %d%%'%(course, subject, guess, authenticity)
     found[course] = course_members[guess]
   else:
-    a=0
-    #print '%s (%s) has no matches'%(course, subject)
+    print >> sys.stderr, '%s (%s) has no matches'%(course, subject)
 print json.dumps(found)
