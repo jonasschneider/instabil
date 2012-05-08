@@ -15,7 +15,7 @@ draftflag:
 tex/pupilspages.tex: pupils.json buildpupils.py temp/pupil.tex temp/special/*.tex draftflag common.py
 	./buildpupils.py
 
-tex/courses.tex: courses.json buildcourses.py temp/course.tex linked/courses/clouds pupils.json course_members.json linked/courses/grouppics/* draftflag common.py
+tex/courses.tex: courses.json buildcourses.py temp/course.tex linked/courses/clouds pupils.json course_members.json linked/courses/grouppics draftflag common.py
 	./buildcourses.py
 
 tex/mems.tex: memoirs.json memoirs.py draftflag common.py
@@ -25,7 +25,7 @@ tex/personenberichte.pdf: tex/pupilspages.tex tex/personenberichte.tex tex/pupil
 	cd tex; $(LATEX) personenberichte.tex; cd ..
 	cd tex; $(LATEX) personenberichte.tex | grep "Package abitex Warning"; cd ..
 
-tex/kursberichte.pdf: tex/courses.tex tex/kursberichte.tex tex/courses/* $(INCLUDES) linked/courses/clouds
+tex/kursberichte.pdf: tex/courses.tex tex/kursberichte.tex tex/courses/* $(INCLUDES) linked/courses/clouds linked/courses/grouppics
 	cd tex; $(LATEX) kursberichte.tex; $(LATEX) kursberichte.tex; cd ..
 
 linked/courses/clouds: linked/courses/raw_clouds draftflag crop_courseclouds.py
@@ -37,6 +37,11 @@ tex/memoirs.pdf: tex/mems.tex tex/memoirs.tex $(INCLUDES)
 
 deploy:
 	cp $(TARGETS) linked
+
+linked/courses/grouppics: linked/courses/raw_grouppics/*
+	#convert <input> -colorspace Gray <output>
+	for i in linked/courses/raw_grouppics/* ; do NEW=`echo $$i | sed 's/raw_grouppics/grouppics/g'`; convert $$i -colorspace Gray -brightness-contrast 5x25 -resize 50% $$NEW; done
+	touch linked/courses/grouppics
 
 course_members.json: mapcourses.py
 	python2 mapcourses.py > course_members.json
