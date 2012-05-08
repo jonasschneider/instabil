@@ -55,13 +55,13 @@ for course in j :
 			print '%s: No course cloud draft'%course["id"]
 			course["cloud"] = "\\rule{\\textwidth}{90mm}"
 		else:
-			course["cloud"] = "{\\centering \\includegraphics[width=\\textwidth]{../linked/courses/clouds/%s.jpg}}"%course["id"]
+			course["cloud"] = "{\\centering \\includegraphics[width=\\textwidth]{../linked/courses/clouds/%s.jpg}}\\vspace{2mm}"%course["id"]
 	else:
 		if not os.path.exists('linked/courses/clouds/%s.png'%course["id"]):
 			print '%s: No course cloud'%course["id"]
 			course["cloud"] = "\\rule{\\textwidth}{90mm}"
 		else:
-			course["cloud"] = "{\\centering \\includegraphics[width=\\textwidth]{../linked/courses/clouds/%s.png}}"%course["id"]
+			course["cloud"] = "{\\centering \\includegraphics[width=\\textwidth]{../linked/courses/clouds/%s.png}}\\vspace{4mm}"%course["id"]
 	
 	if int(course["num"]) == 4:
 		if os.path.exists('linked/courses/grouppics/%s.jpg'%course["id"]):
