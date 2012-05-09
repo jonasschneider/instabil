@@ -53,7 +53,7 @@ class Person
   end
 
   def avatar_body
-    self.class.dropbox_client.get_file("/Lukas/abizeitung-linked/people/avatar_thumbs/#{id}.jpg")
+    self.class.dropbox_client.get_file("/Abizeitung/people/avatar_thumbs/#{id}.jpg")
   rescue DropboxError
     nil
   end
