@@ -43,5 +43,9 @@ linked/courses/grouppics: linked/courses/raw_grouppics/*
 	for i in linked/courses/raw_grouppics/* ; do NEW=`echo $$i | sed 's/raw_grouppics/grouppics/g'`; convert $$i -colorspace Gray -brightness-contrast 5x25 -resize 50% $$NEW; done
 	touch linked/courses/grouppics
 
+linked/people/avatar_thumbs:
+	for i in linked/people/avatars/* ; do echo $$i; NEW=`echo $$i | sed 's/avatars/avatar_thumbs/g'`; convert $$i -resize 600x600 $$NEW; done
+	touch linked/people/avatar_thumbs
+
 course_members.json: mapcourses.py
 	python2 mapcourses.py > course_members.json
