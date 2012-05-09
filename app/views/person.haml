@@ -5,7 +5,11 @@
 
 %h1= @person.name
 %h2== Kurs K2.#{@person.kurs}, #{@person.zug}
-%img{ src: @person.avatar_url }
+
+- if @person == current_user
+  %p Dein Bild für die Abizeitung:
+  %p
+    %img{ src: @person.avatar_url }
 
 %h2 Steckbrief
 %p
