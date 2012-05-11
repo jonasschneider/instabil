@@ -4,8 +4,12 @@
     %a{ :href => "/pages/#{page.id}/edit" } Seite bearbeiten
   == - 
   %a{ :href => "/courses" } Zurück zu den anderen Kursen
-  
+
+  %h3= page.title
+  %h4= page.subtitle
   %p= markdown page.text
+  %div
+    %em= page.author_name
   
   - section :footer do
     %p#last-edit 
