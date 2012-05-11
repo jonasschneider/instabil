@@ -45,7 +45,8 @@ smallmeta = ("elgogoli", "ingentjo", "mahlerda", "weberha", "werrnal", "wolffrda
 print 'Namen zu lang:'
 for pupil in j :
 	page = Template(temp.decode("utf-8"))
-	
+
+
 	content = pupil["page"]
 	content["special"] = ""
 	
@@ -89,8 +90,11 @@ for pupil in j :
 		content["metasize"] = "\\small \\vspace*{-1mm}"
 	else :
 		content["metasize"] = ""
+
+	content["avatar"] = "none.jpg"
+	if os.path.isfile('tex/processed_peopleavatars/'+content["uid"]+'.jpg'):
+		content["avatar"] = 'processed_peopleavatars/'+content["uid"]+'.jpg'
 	
-	content["ava"] = "../linked/people/avatars/%s.jpg"%content["uid"] if os.path.isfile("linked/people/avatars/%s.jpg"%content["uid"]) else "none.jpg"
 	content["lks"] = common.escape_tex(content["lks"] or "")
 	content["lebenswichtig"] = common.escape_tex(content["lebenswichtig"] or "")
 	content["nachruf"] = common.escape_tex(content["nachruf"] or "")

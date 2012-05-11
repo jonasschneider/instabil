@@ -21,7 +21,7 @@ tex/courses.tex: courses.json buildcourses.py temp/course.tex linked/courses/clo
 tex/mems.tex: memoirs.json memoirs.py draftflag common.py
 	./memoirs.py > tex/mems.tex
 
-tex/personenberichte.pdf: tex/pupilspages.tex tex/personenberichte.tex tex/pupils/* $(INCLUDES)
+tex/personenberichte.pdf: tex/pupilspages.tex tex/personenberichte.tex tex/pupils/* $(INCLUDES) tex/processed_peopleavatars
 	cd tex; $(LATEX) personenberichte.tex; cd ..
 	cd tex; $(LATEX) personenberichte.tex | grep "Package abitex Warning"; cd ..
 
@@ -39,13 +39,19 @@ deploy:
 	cp $(TARGETS) linked
 
 linked/courses/grouppics: linked/courses/raw_grouppics/*
-	#convert <input> -colorspace Gray <output>
 	for i in linked/courses/raw_grouppics/* ; do NEW=`echo $$i | sed 's/raw_grouppics/grouppics/g'`; convert $$i -colorspace Gray -brightness-contrast 5x25 -resize 50% $$NEW; done
 	touch linked/courses/grouppics
 
 linked/people/avatar_thumbs:
+	rm linked/people/avatar_thumbs/*
 	for i in linked/people/avatars/* ; do echo $$i; NEW=`echo $$i | sed 's/avatars/avatar_thumbs/g'`; convert $$i -resize 600x600 $$NEW; done
 	touch linked/people/avatar_thumbs
+
+tex/processed_peopleavatars: linked/people/avatars/*
+	mkdir tex/processed_peopleavatars; true
+	rm tex/processed_peopleavatars/*; true
+	for i in `ls linked/people/avatars`; do echo $$i; NEW="tex/processed_peopleavatars/$$i"; convert linked/people/avatars/$$i -colorspace Gray -level-colors "#222222","#bbbbbb" +level-colors "#404040", $$NEW; done
+	touch tex/processed_peopleavatars
 
 course_members.json: mapcourses.py
 	python2 mapcourses.py > course_members.json
