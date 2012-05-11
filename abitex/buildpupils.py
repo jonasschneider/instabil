@@ -40,7 +40,7 @@ verysmallnames = ("leikerch", "meissnna")
 
 sizes = ("\\scriptsize", "\\kathisize", "\\footnotesize", "\\small")
 
-smallmeta = ("elgogoli", "ingentjo", "mahlerda", "weberha", "werrnal", "wolffrda", "reinhaca", "kramerlu", "meissnna")
+smallmeta = ("elgogoli", "ingentjo", "mahlerda", "weberha", "werrnal", "wolffrda", "reinhaca", "kramerlu", "meissnna", "mercanze")
 
 print 'Namen zu lang:'
 for pupil in j :
