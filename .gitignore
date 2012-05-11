@@ -36,3 +36,4 @@ abitex/fetchmemoirs.sh
 abitex/tex/courses
 abitex/draftflag
 *.pyc
+abitex/tex/processed_peopleavatars/
