@@ -90,6 +90,7 @@ for pupil in j :
 	else :
 		content["metasize"] = ""
 	
+	content["ava"] = "../linked/people/avatars/%s.jpg"%content["uid"] if os.path.isfile("linked/people/avatars/%s.jpg"%content["uid"]) else "none.jpg"
 	content["lks"] = common.escape_tex(content["lks"] or "")
 	content["lebenswichtig"] = common.escape_tex(content["lebenswichtig"] or "")
 	content["nachruf"] = common.escape_tex(content["nachruf"] or "")
