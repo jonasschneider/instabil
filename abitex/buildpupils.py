@@ -40,7 +40,7 @@ verysmallnames = ("leikerch", "meissnna")
 
 sizes = ("\\scriptsize", "\\kathisize", "\\footnotesize", "\\small")
 
-smallmeta = ("elgogoli", "ingentjo", "mahlerda", "weberha", "werrnal")
+smallmeta = ("elgogoli", "ingentjo", "mahlerda", "weberha", "werrnal", "wolffrda", "reinhaca", "kramerlu", "meissnna")
 
 print 'Namen zu lang:'
 for pupil in j :
@@ -73,7 +73,7 @@ for pupil in j :
 	else :
 		content["author"] = common.escape_tex(content["author"])
 	content["name"]=content["name"].upper()
-	content["name"] = content["name"].replace(u"ё", '"e').replace(u"Ё", '"E')
+	content["name"] = content["name"].replace(ur"ё", '"e').replace(u"Ё", '"E')
 	if content["uid"] in smallnames:
 		content["name"] = "\LARGE "+content["name"]
 	elif content["uid"] in verysmallnames:
