@@ -1,6 +1,6 @@
 LATEX := xelatex --file-line-error-style
-INCLUDES := tex/header.tex tex/seite.tex tex/generic.tex tex/course.tex
-TARGETS := tex/personenberichte.pdf tex/kursberichte.pdf tex/memoirs.pdf
+INCLUDES := tex/header.tex tex/seite.tex tex/generic.tex tex/course.tex tex/poll.tex
+TARGETS := tex/personenberichte.pdf tex/kursberichte.pdf tex/memoirs.pdf tex/umfragen.pdf
 all: $(TARGETS)
 
 fetch:
@@ -21,12 +21,18 @@ tex/courses.tex: courses.json buildcourses.py temp/course.tex linked/courses/clo
 tex/mems.tex: memoirs.json memoirs.py draftflag common.py
 	./memoirs.py > tex/mems.tex
 
+tex/polls.tex: nicknames results.poll buildpolls.py temp/poll.tex
+	./buildpolls.py > tex/polls.tex
+
 tex/personenberichte.pdf: tex/pupilspages.tex tex/personenberichte.tex tex/pupils/* $(INCLUDES) tex/processed_peopleavatars
 	cd tex; $(LATEX) personenberichte.tex; cd ..
 	cd tex; $(LATEX) personenberichte.tex | grep "Package abitex Warning"; cd ..
 
 tex/kursberichte.pdf: tex/courses.tex tex/kursberichte.tex tex/courses/* $(INCLUDES) linked/courses/clouds linked/courses/grouppics
 	cd tex; $(LATEX) kursberichte.tex; $(LATEX) kursberichte.tex; cd ..
+
+tex/umfragen.pdf: tex/umfragen.tex tex/polls.tex
+	cd tex; $(LATEX) umfragen.tex; cd ..
 
 linked/courses/clouds: linked/courses/raw_clouds draftflag crop_courseclouds.py
 	python2 crop_courseclouds.py

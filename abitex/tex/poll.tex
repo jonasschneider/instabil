@@ -1,0 +1,18 @@
+\usepackage{tikz}
+
+\newcommand{\platzdrei}[3]{
+\draw[fill=lightgray] (0,0) rectangle (1,.5) +(-.5,0) node[above] {\includegraphics[width=1.5cm]{#3}};
+\draw (.5,.2) node[above] {\large 3} node[below=-6pt] {\footnotesize (#2)};
+\node[below] at (.5,0) {\parbox{1.9cm}{\centering \footnotesize #1}};
+}
+
+\newcommand{\platzeins}[3]{
+\draw[fill=lightgray] (1,0) rectangle (2,1) +(-.5,0) node[above] {\includegraphics[width=1.5cm]{#3}};
+\draw (1.5,.2) node[above] {\LARGE 1} node[below=-6pt] {\footnotesize (#2)};
+\node[below] at (1.5,0) {\parbox{1.9cm}{\centering \footnotesize #1}};
+}
+\newcommand{\platzzwei}[3]{
+\draw[fill=lightgray] (2,0) rectangle (3,.6)  +(-.5,0) node[above] {\includegraphics[width=1.5cm]{#3}};
+\draw (2.5,.2) node[above] {\Large 2} node[below=-6pt] {\footnotesize (#2)};
+\node[below] at (2.5,0) {\parbox{1.9cm}{\centering \footnotesize #1}};
+}
