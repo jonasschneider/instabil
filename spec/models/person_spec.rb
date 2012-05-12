@@ -117,7 +117,7 @@ describe "Person" do
       client = double()
       Person.stub(:dropbox_client) { client }
 
-      client.should_receive(:get_file).with('/Lukas/abizeitung-linked/people/avatar_thumbs/schneijo.jpg').and_return('ohai')
+      client.should_receive(:get_file).with('/Abizeitung/people/avatar_thumbs/schneijo.jpg').and_return('ohai')
       jonas.avatar_body.should == 'ohai'
       jonas.avatar_type.should == 'image/jpg'
     end
