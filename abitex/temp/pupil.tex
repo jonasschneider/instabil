@@ -1,15 +1,15 @@
 \makebg
-\persontitle{$name}{$geb}{Kurs ${kurs} $uid, $g8}
-\personava{$avatar}
-\personmeta{\ifnum\zposy{$uid-meta}<43560360 \PackageWarning{abitex}{meta von $uid $name zu lang}\fi $metasize Ich bin Meister in \textbf{$lks},
-und später werd' ich mal \textbf{$zukunft}.
-Jetzt nach dem Abi \textbf{$nachabi}.
-Ohne \textbf{$lebenswichtig} hätte ich das Abi aber nicht geschafft.
-Ach, und übrigens: \textbf{$nachruf}\zsavepos{$uid-meta}
+\persontitle{#name}{#geb}{Kurs #{kurs} #uid, #g8}
+\personava{#avatar}
+\personmeta{\ifnum\zposy{#uid-meta}<43560360 \PackageWarning{abitex}{meta von #uid #name zu lang}\fi #metasize Ich bin Meister in \textbf{#lks},
+und später werd' ich mal \textbf{#zukunft}.
+Jetzt nach dem Abi \textbf{#nachabi}.
+Ohne \textbf{#lebenswichtig} hätte ich das Abi aber nicht geschafft.
+Ach, und übrigens: \textbf{#nachruf}\zsavepos{#uid-meta}
 }
-\persontext{$title}{$subtitle \ifnum\zposy{$uid-tags}>\zposy{$uid-author} {\color{red} SEITE ZU LANG} \PackageWarning{abitex}{seite von $uid $name zu lang} \fi}{$text}{$special}
-\personauthorb{$author\zsavepos{$uid-author}}
-\persontagsb{\zsavepos{$uid-tags} $tags}
+\persontext{#title}{#subtitle \ifnum\zposy{#uid-tags}>\zposy{#uid-author} {\color{red} SEITE ZU LANG} \PackageWarning{abitex}{seite von #uid #name zu lang} \fi}{#text}{#special}
+\personauthorb{#author\zsavepos{#uid-author}}
+\persontagsb{\zsavepos{#uid-tags} #tags}
 \makefoot
 \newpage
 

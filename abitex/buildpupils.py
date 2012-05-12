@@ -43,8 +43,12 @@ sizes = ("\\scriptsize", "\\kathisize", "\\footnotesize", "\\small")
 smallmeta = ("elgogoli", "ingentjo", "mahlerda", "weberha", "werrnal", "wolffrda", "reinhaca", "kramerlu", "meissnna", "mercanze")
 
 print 'Namen zu lang:'
+
+class TeXTemplate(Template) :
+	delimiter = "#"
+
 for pupil in j :
-	page = Template(temp.decode("utf-8"))
+	page = TeXTemplate(temp.decode("utf-8"))
 
 
 	content = pupil["page"]
@@ -118,7 +122,7 @@ for pupil in j :
 			break 
 	
 	if os.path.isfile("temp/special/"+pupil["uid"]+".tex") :
-		special = Template(open("temp/special/"+pupil["uid"]+".tex").read().decode("utf-8"))
+		special = TeXTemplate(open("temp/special/"+pupil["uid"]+".tex").read().decode("utf-8"))
 		content["special"] = special.substitute(content)
 		content["text"] = ""
 	

@@ -15,10 +15,13 @@ pupils = json.loads(open("pupils.json").read())
 
 def removeNonAscii(s): return "".join(i for i in s if ord(i)<128)
 
+class TeXTemplate(Template) :
+	delimiter = "#"
+
 for course in j :
 	n+=1
-	page = Template(temp.decode("utf-8"))
-	bericht_page = Template(bericht_temp.decode("utf-8"))
+	page = TeXTemplate(temp.decode("utf-8"))
+	bericht_page = TeXTemplate(bericht_temp.decode("utf-8"))
 	#if course["author"] == "" :
 	#	continue
 	#print course["id"]
