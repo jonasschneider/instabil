@@ -17,12 +17,12 @@ def sortpoll(p) :
 	#p["results"] = p["results"][]
 	return p
 
-lines = open("results.poll").readlines()
+lines = open("linked/umfragen.poll").readlines()
 polls = []
 
 
 nicknames = {}
-for l in open("nicknames").readlines() :
+for l in open("linked/nicknames").readlines() :
 	z= tuple(map(str.strip, filter(lambda z: z!="",l.split("\t"))))
 	nicknames[z[0]] = z[1]
 
