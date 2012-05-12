@@ -34,8 +34,7 @@ describe "Instabil::Courses" do
     it "shows a link to create the course page if there is none" do
       course
       visit '/courses'
-      last_response.body.should have_selector "a[href='/pages/new?for_course=#{course.id}']"
-      last_response.body.should_not have_selector "a[href='/courses/#{course.id}']"
+      last_response.body.should include("Kursbericht schreiben")
     end
 
     it "shows a link to remove a tag by the user" do
