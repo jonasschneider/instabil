@@ -63,6 +63,9 @@ for pupil in j :
 	if content["uid"] == os.getenv('ABITEX_SPOILER') and common.drafting():
 		content["text"] = 'spoilered :)'
 	#print "tex/pupils/" + pupil["uid"] + ".tex"last = True
+	
+	content["uidhint"] = " "+content["uid"] if common.drafting() else ""
+	
 	last = True
 	content["name"] = ""
 	for c in pupil["name"] :
@@ -100,6 +103,11 @@ for pupil in j :
 		content["avatar"] = 'processed_peopleavatars/'+content["uid"]+'.jpg'
 	
 	content["lks"] = common.escape_tex(content["lks"] or "")
+	if content["lks"][0:6] == '(IM!) ':
+		content["meisterpraep"] = "im"
+		content["lks"] = content["lks"][6:-1]
+	else:
+		content["meisterpraep"] = "in"
 	content["lebenswichtig"] = common.escape_tex(content["lebenswichtig"] or "")
 	content["nachruf"] = common.escape_tex(content["nachruf"] or "")
 	content["nachabi"] = common.escape_tex(content["nachabi"] or "")
