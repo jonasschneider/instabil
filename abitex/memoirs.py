@@ -17,12 +17,14 @@ def beautiy_quotation(text) :
 	text = text.replace("<i>", "\\emph{")
 	text = text.replace("<em>", "\\emph{")
 	text = text.replace("<b>", "\\textbf{")
+	text = text.replace("<tt>", "\\texttt{")
 	text = text.replace("<strong>", "\\textbf{")
 	text = text.replace("<h3>", "\\textsc{")
 	
 	text = text.replace("</em>", "}")
 	text = text.replace("</i>", "}")
 	text = text.replace("</b>", "}")
+	text = text.replace("</tt>", "}")
 	text = text.replace("</strong>", "}")
 	text = text.replace("</h3>", "}")
 	text = text.replace("—", "--")
@@ -70,7 +72,7 @@ def parse_memoir(mem) :
 				if line.split("]")[1][0] != "(":
 					print "\\say{"+p+"}{"+beautiy_quotation(line.split("]")[1].strip())+"}"
 				else :
-					print "\\saya{"+p+"}{"+line.split("]")[1].split(")")[0][1:]+"}{"+beautiy_quotation(line.split("]")[1].strip().split(")")[1].strip())+"}"
+					print "\\saya{"+p+"}{("+line.split("]")[1].split(")")[0][1:]+")}{"+beautiy_quotation(line.split("]")[1].strip().split(")")[1].strip())+"}"
 				
 			else :
 				print "\\raggedleft ,,"+beautiy_quotation(line.split("]")[1].strip())+"{}`` \\textsc{\\footnotesize "+p+"}\\\\"
