@@ -22,7 +22,7 @@ polls = []
 
 
 nicknames = {}
-for l in open("linked/nicknames").readlines() :
+for l in open("linked/people/nicknames").readlines() :
 	z= tuple(map(str.strip, filter(lambda z: z!="",l.split("\t"))))
 	nicknames[z[0]] = z[1]
 

@@ -21,7 +21,7 @@ tex/courses.tex: courses.json buildcourses.py temp/course.tex linked/courses/clo
 tex/mems.tex: memoirs.json memoirs.py draftflag common.py
 	./memoirs.py > tex/mems.tex
 
-tex/polls.tex: linked/nicknames linked/umfragen.poll buildpolls.py temp/poll.tex
+tex/polls.tex: linked/people/nicknames linked/umfragen.poll buildpolls.py temp/poll.tex
 	python2 buildpolls.py > tex/polls.tex
 
 tex/personenberichte.pdf: tex/pupilspages.tex tex/personenberichte.tex tex/pupils/* $(INCLUDES) tex/processed_peopleavatars
