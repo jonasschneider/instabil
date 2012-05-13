@@ -1,5 +1,9 @@
 module Instabil
   WEEKDAYS = %w(Montag Dienstag Mittwoch Donnerstag Freitag)
+
+  def self.frozen?
+    ENV["FROZEN"] == "true"
+  end
   
   SUBJECT_MAP = {
     "d" => "Deutsch",

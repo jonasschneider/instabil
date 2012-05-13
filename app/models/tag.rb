@@ -12,6 +12,10 @@ class Tag
   
   embedded_in :person
 
+  def creatable_by?(user)
+    !Instabil.frozen?
+  end
+
   def destroyable_by?(user)
     author == user or person == user
   end

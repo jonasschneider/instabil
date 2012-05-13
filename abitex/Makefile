@@ -18,7 +18,7 @@ tex/pupilspages.tex: pupils.json buildpupils.py temp/pupil.tex temp/special/*.te
 tex/courses.tex: courses.json buildcourses.py temp/course.tex linked/courses/clouds pupils.json course_members.json linked/courses/grouppics draftflag common.py
 	./buildcourses.py
 
-tex/mems.tex: memoirs.json memoirs.py draftflag common.py
+tex/mems.tex: memoirs.py draftflag common.py
 	./memoirs.py > tex/mems.tex
 
 tex/polls.tex: linked/people/nicknames linked/umfragen.poll buildpolls.py temp/poll.tex

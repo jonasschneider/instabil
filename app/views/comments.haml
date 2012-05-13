@@ -9,12 +9,16 @@
 %p
   %strong Du siehst nur die Kommentare, die du selber geschrieben hast, und die, die für dich sind!
 
-%p
-  Du kannst hier bis zum <strong>13. Mai</strong> Kommentare schreiben. Danach hat dann noch jeder bis zum <strong>16. Mai</strong>
-  Zeit, seine eigenen Kommentare ggf. zu löschen.
+- if Instabil.frozen?
+  - targets = [current_user]
+- else
+  - targets = Person.order_by([:uid, :asc])
+  %p
+    Du kannst hier bis zum <strong>13. Mai</strong> Kommentare schreiben. Danach hat dann noch jeder bis zum <strong>16. Mai</strong>
+    Zeit, seine eigenen Kommentare ggf. zu löschen.
 
 %table
-  - Person.order_by([:uid, :asc]).each do |p|
+  - targets.each do |p|
     %tr[p]
       %td
         %a{ :href => "/people/#{p.uid}" }= p.name
@@ -39,6 +43,7 @@
                 = t.name
                 %form.ajax_deletetag{ action: "/people/#{p.uid}/untag/#{t.id}", method: 'post' }
                   %input{ type: 'submit', value: 'Löschen' }
-          %form.ajaxtag{ action: "/people/#{p.uid}/tags", method: 'post' }
-            %input.tagname{ name: 'tag[name]', type: 'text' }
-            %input{ type: 'submit', value: 'Hinzufügen' }
+          - if current_user.can_create?(p.tags.build)
+            %form.ajaxtag{ action: "/people/#{p.uid}/tags", method: 'post' }
+              %input.tagname{ name: 'tag[name]', type: 'text' }
+              %input{ type: 'submit', value: 'Hinzufügen' }

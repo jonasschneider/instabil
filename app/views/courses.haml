@@ -1,7 +1,8 @@
 %h1 Kursberichte
 %p
-  Hier kannst du Kursberichte und Kommentare zu deinen Kursen eintragen.
+  Hier kannst du Kursberichte schreiben.
   Wenn dein Kurs noch nicht aufgeführt ist, erstell ihn einfach!
+  (Die Kurskommentare sind jetzt ausgeblendet.)
 
 - [4, 2].each do |num|
   - name = num == 4 ? 'Vierstündig' : 'Zweistündig'
@@ -47,17 +48,18 @@
               %input{ type: "hidden", name: "for_course", value: course.id}
               %button{ style: 'font-size: 200%' } Kursbericht schreiben
 
-        .tags
-          - course.tags.each do |tag|
-            %span.tag
-              = tag.name
-              
-              - if current_user.can_destroy? tag
-                %form.ajax_deletetag{ action: "/courses/#{course.id}/untag/#{tag.id}", method: 'post' }
-                  %input{ type: 'submit', value: 'Löschen' }
-
-        %form.ajaxtag{ action: "/courses/#{course.id}/tags", method: 'post' }
-          %input.tagname{ name: 'tag[name]', type: 'text' }
-          %input{ type: 'submit', value: 'Kommentar hinzufügen' }
+        - if !Instabil.frozen? || current_user.moderator?
+          .tags
+            - course.tags.each do |tag|
+              %span.tag
+                = tag.name
+                
+                - if current_user.can_destroy? tag
+                  %form.ajax_deletetag{ action: "/courses/#{course.id}/untag/#{tag.id}", method: 'post' }
+                    %input{ type: 'submit', value: 'Löschen' }
+          - if current_user.can_create?(course.tags.build)
+            %form.ajaxtag{ action: "/courses/#{course.id}/tags", method: 'post' }
+              %input.tagname{ name: 'tag[name]', type: 'text' }
+              %input{ type: 'submit', value: 'Kommentar hinzufügen' }
   %br
   %br

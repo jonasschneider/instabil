@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
-import re,json
+import re,json,random
 
 memoirfiles = ("linked/memoirs/alle.json", "linked/memoirs/jonas.json")
 
@@ -10,6 +10,7 @@ for mf in memoirfiles :
 	for m in json.loads(open(mf).read()) :
 		memoirs.append(m)
 
+random.shuffle(memoirs)
 
 def beautiy_quotation(text) :
 	quotation  = ","
@@ -97,5 +98,3 @@ for n in memoirs :
 	"""if i == 10:
 		break
 	i+=1"""
-
-
