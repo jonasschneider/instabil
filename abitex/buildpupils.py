@@ -102,7 +102,7 @@ for pupil in j :
 	if os.path.isfile('tex/processed_peopleavatars/'+content["uid"]+'.jpg'):
 		content["avatar"] = 'processed_peopleavatars/'+content["uid"]+'.jpg'
 	
-	content["lks"] = common.escape_tex(content["lks"].strip() or "")
+	content["lks"] = common.escape_tex(content["lks"] or "").strip()
 	if content["lks"][0:6] == '(IM!) ':
 		content["meisterpraep"] = "im"
 		content["lks"] = content["lks"][6:-1]
