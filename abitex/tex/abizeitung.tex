@@ -1,0 +1,28 @@
+\input{header}
+\begin{document}
+
+Vorwort
+\newpage
+
+\renewcommand{\generictitle}{Die Padawane}
+\input{pupilspages.tex}
+
+
+\renewcommand{\generictitle}{Kursberichte}
+\newlength{\tmpcloudheight}
+\AddEverypageHook{\fancybg \makefoot}
+\input{courses.tex}
+
+
+\renewcommand{\generictitle}{Memoiren}
+\begin{multicols}{2}
+\input{mems}
+\end{multicols}
+
+\renewcommand{\generictitle}{Umfragen}
+\begin{multicols}{2}
+\centering
+
+\input{../linked/impressum}
+
+\end{document}
