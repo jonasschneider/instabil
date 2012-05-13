@@ -41,6 +41,7 @@ verysmallnames = ("leikerch", "meissnna")
 sizes = ("\\scriptsize", "\\kathisize", "\\footnotesize", "\\small")
 
 smallmeta = ("elgogoli", "ingentjo", "mahlerda", "weberha", "werrnal", "wolffrda", "reinhaca", "kramerlu", "meissnna", "mercanze")
+verysmallmeta = ("weilerki")
 
 print 'Namen zu lang:'
 
@@ -95,6 +96,8 @@ for pupil in j :
 	
 	if content["uid"] in smallmeta :
 		content["metasize"] = "\\small \\vspace*{-1mm}"
+	elif content["uid"] in verysmallmeta :
+		content["metasize"] = "\\kathisize \\vspace*{-1mm}"
 	else :
 		content["metasize"] = ""
 
