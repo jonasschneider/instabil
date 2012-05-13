@@ -24,6 +24,7 @@ module Instabil::People
         @person = Person.find(params[:uid])
         @tag = @person.tags.build params[:tag]
         @tag.author = current_user
+        enforce_create_permission(@tag)
         
         if @tag.save
           Pusher[@person.uid].trigger :tagged, name: @tag.name

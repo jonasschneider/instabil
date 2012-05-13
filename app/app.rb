@@ -225,6 +225,8 @@ class Instabil::App < Sinatra::Base
     @course = Course.find params[:id]
     @tag = @course.tags.build params[:tag]
     @tag.author = current_user
+
+    enforce_create_permission(@tag)
     
     if @tag.save
       redirect "/courses"

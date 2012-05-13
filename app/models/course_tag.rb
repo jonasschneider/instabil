@@ -12,6 +12,10 @@ class CourseTag
 
   embedded_in :course
 
+  def creatable_by?(user)
+    !Instabil.frozen?
+  end
+
   def destroyable_by?(user)
     author == user or user.moderator?
   end
