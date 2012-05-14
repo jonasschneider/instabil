@@ -1,28 +1,32 @@
 \input{header}
+\usepackage{pdfpages}
+%\usepackage{everyshi}
 \begin{document}
-
+\AddEverypageHook{{\makegbg \makefoot}}
 Vorwort
+%\section{\phantom{Die Padawane}}
 \newpage
 
-\renewcommand{\generictitle}{Die Padawane}
-\input{pupilspages.tex}
+%\renewcommand{\generictitle}{\section}
+%\input{pupilspages.tex}
+
+\renewcommand{\generictitle}{die padawane}
+\includepdf[pages=2-20]{personenberichte.pdf}
+%\renewcommand{\generictitle}{Kursberichte}
+%\newlength{\tmpcloudheight}
+
+%\input{courses.tex}
 
 
-\renewcommand{\generictitle}{Kursberichte}
-\newlength{\tmpcloudheight}
-\AddEverypageHook{\fancybg \makefoot}
-\input{courses.tex}
+%\renewcommand{\generictitle}{Memoiren}
+%\begin{multicols}{2}
+%\input{mems}
+%\end{multicols}
 
+%\renewcommand{\generictitle}{Umfragen}
+%\begin{multicols}{2}
+%\centering
 
-\renewcommand{\generictitle}{Memoiren}
-\begin{multicols}{2}
-\input{mems}
-\end{multicols}
-
-\renewcommand{\generictitle}{Umfragen}
-\begin{multicols}{2}
-\centering
-
-\input{../linked/impressum}
+%\input{../linked/impressum}
 
 \end{document}

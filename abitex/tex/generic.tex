@@ -96,3 +96,13 @@
 }
 \end{textblock*}
 }
+
+
+\newcommand{\makegbg}{
+\checkoddpage
+\ifoddpage
+\ThisCenterWallPaper{1}{../linked/backgrounds/generic-footer-r.pdf}
+\else
+\ThisCenterWallPaper{1}{../linked/backgrounds/generic-footer-l.pdf}
+\fi
+}
