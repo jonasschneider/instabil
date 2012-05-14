@@ -2,14 +2,14 @@
 \usepackage{pdfpages}
 %\usepackage{everyshi}
 \begin{document}
-\AddEverypageHook{{\makegbg \makefoot}}
+\AddEverypageHook{\ifnum\value{usegfc}=1 \makegbg \makefoot \fi}
 \input{../linked/vorwort.tex}
 %\section{\phantom{Die Padawane}}
 \newpage
 
 %\renewcommand{\generictitle}{\section}
 %\input{pupilspages.tex}
-
+\gfon
 \renewcommand{\generictitle}{die padawane}
 \includepdf[pages=2-20]{personenberichte.pdf}
 %\renewcommand{\generictitle}{Kursberichte}
