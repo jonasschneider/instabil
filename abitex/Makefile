@@ -51,9 +51,9 @@ linked/courses/grouppics: linked/courses/raw_grouppics/*
 	for i in linked/courses/raw_grouppics/* ; do NEW=`echo $$i | sed 's/raw_grouppics/grouppics/g'`; convert $$i -colorspace Gray -brightness-contrast 5x25 -resize 50% $$NEW; done
 	touch linked/courses/grouppics
 
-linked/people/avatar_thumbs:
+linked/people/avatar_thumbs: linked/people/avatars/*
 	rm linked/people/avatar_thumbs/*
-	for i in linked/people/avatars/* ; do echo $$i; NEW=`echo $$i | sed 's/avatars/avatar_thumbs/g'`; convert $$i -resize 600x600 $$NEW; done
+	for i in linked/people/avatars/* ; do echo $$i; NEW=`echo $$i | sed 's/avatars/avatar_thumbs/g'`; convert $$i -resize 300x300 $$NEW; done
 	touch linked/people/avatar_thumbs
 
 tex/processed_peopleavatars: linked/people/avatars/*
