@@ -8,24 +8,25 @@
   - name = num == 4 ? 'Vierstündig' : 'Zweistündig'
 
   %h2== #{name}e Kurse
-  %form{ action: '/courses', method: 'post' }
-    %input{ type: 'hidden', name: 'course[num]', value: num }
-    .course
-      .metaform
-        %select.dataz{ name: 'course[subject]' }
-          %option{ value: '' } (Fach)
-          - Instabil::SUBJECT_MAP.each do |k, v|
-            %option{ value: k }= v
-        == #{name.downcase} bei Herr/Frau
-        = succeed ',' do
-          %input.dataz{ name: 'course[teacher]', placeholder: 'z.B. Schürer' }
-        = num == 4 ? 'Doppelstunde am' : 'erste Stunde in der Woche am'
-        %select.dataz{ name: 'course[weekday]' }
-          %option{ value: '' } (Wochentag)
-          - Instabil::WEEKDAYS.each_with_index do |d, i|
-            %option{ value: i }= d
-        %br
-        %input.dataz{ type: 'submit', value: "Als #{name}en Kurs eintragen" }
+  - unless Instabil.frozen?
+    %form{ action: '/courses', method: 'post' }
+      %input{ type: 'hidden', name: 'course[num]', value: num }
+      .course
+        .metaform
+          %select.dataz{ name: 'course[subject]' }
+            %option{ value: '' } (Fach)
+            - Instabil::SUBJECT_MAP.each do |k, v|
+              %option{ value: k }= v
+          == #{name.downcase} bei Herr/Frau
+          = succeed ',' do
+            %input.dataz{ name: 'course[teacher]', placeholder: 'z.B. Schürer' }
+          = num == 4 ? 'Doppelstunde am' : 'erste Stunde in der Woche am'
+          %select.dataz{ name: 'course[weekday]' }
+            %option{ value: '' } (Wochentag)
+            - Instabil::WEEKDAYS.each_with_index do |d, i|
+              %option{ value: i }= d
+          %br
+          %input.dataz{ type: 'submit', value: "Als #{name}en Kurs eintragen" }
 
   - Course.where(num: num).group_by{|c|c.subject}.sort_by{|x|x[0]}.each do |fach, courses|
     %h4.subject= Instabil::SUBJECT_MAP[fach]
