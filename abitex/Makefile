@@ -7,6 +7,8 @@ fetch:
 	./fetchpupils.sh
 	./fetchcourses.sh
 	./fetchmemoirs.sh
+
+tagauthors.json:
 	heroku console "puts Course.all.map{|c|[c.id, c.subject, c.tags.map{|t|t.author.uid}.sort_by{rand}]}.to_json" | head -n 1 > tagauthors.json
 
 draftflag:

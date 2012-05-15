@@ -65,6 +65,10 @@ for course in j :
 			course["cloud"] = "\\rule{\\textwidth}{90mm}"
 		else:
 			course["cloud"] = "{\\centering \\includegraphics[width=\\textwidth]{../linked/courses/clouds/%s.png}}\\vspace{4mm}"%course["id"]
+
+	if len(course["author"].strip()) > 3:
+		# no cloud for courses with report
+		course["cloud"] = "\kurstags{%s}"%common.format_tags(course["tags"])		
 	
 	if int(course["num"]) == 4:
 		if os.path.exists('linked/courses/grouppics/%s.jpg'%course["id"]):
@@ -72,8 +76,6 @@ for course in j :
 		else:
 			course["pic"] = "\\rule{\\textwidth}{120mm}"
 			print '%s: No course pic (%s)'% (course["id"], removeNonAscii(course["fach"]+" "+course["lehrer"]))
-		if len(course["author"].strip()) > 3:
-			course["cloud"] = "\kurstags{%s}"%common.format_tags(course["tags"])
 	else:
 		# FIXME: add small pics
 		course["pic"] = "\\rule{\\textwidth}{20mm}" 
