@@ -23,6 +23,7 @@ module Instabil
     "g" => "Geschichte",
     "gb" => "Geschichte (bili)",
     "gk" => "Gemeinschaftskunde",
+    "gkb" => "Gemeinschaftskunde (bili)",
     "geogr" => "Erdkunde",
     "geol" => "Geologie",
     
