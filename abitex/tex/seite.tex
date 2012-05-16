@@ -29,6 +29,17 @@
 \fi
 }
 
+\newlength{\rborder}
+
+\newcommand{\setrborder}{
+\checkoddpage
+\ifoddpage
+\setlength{\rborder}{\border+\bcor}
+\else
+\setlength{\rborder}{\border}
+\fi
+}
+
 \newcommand{\genericbg}{
 %\checkoddpage
 %\ifoddpage
@@ -41,14 +52,14 @@
 \newcommand{\persontitle}[3]{
 \setlength{\parindent}{0cm}
 \settoheight{\headheight}{\titlefont \huge {#1}}
-\begin{textblock*}{\textwidth}(\border,2cm-\headheight)
+\begin{textblock*}{\textwidth}(\rborder,2cm-\headheight)
 \flushouter
 \textcolor{white}{\titlefont \huge {#1}}
 \end{textblock*}
 \settowidth{\headwidth}{\titlefont \huge {#1}}
 
 
-\begin{textblock*}{\textwidth}(\border,2.2cm)
+\begin{textblock*}{\textwidth}(\rborder,2.2cm)
 \flushouter
 \parbox{\headwidth}{
 \flushouter
@@ -56,7 +67,7 @@
 }
 \end{textblock*}
 
-\begin{textblock*}{\textwidth}(\border,2.2cm)
+\begin{textblock*}{\textwidth}(\rborder,2.2cm)
 \flushouter
 \parbox{\headwidth}{
 \flushinner
@@ -66,14 +77,14 @@
 }
 
 \newcommand{\personava}[1]{
-\begin{textblock*}{\textwidth}(\border,8mm)
+\begin{textblock*}{\textwidth}(\rborder,8mm)
 \flushinner
 \parbox[top][5cm][b]{4.2cm}{\includegraphics[width=4.2cm]{#1}}
 \end{textblock*}
 }
 
 \newcommand{\personmeta}[1]{
-\begin{textblock*}{\textwidth}(\border,3.2cm)
+\begin{textblock*}{\textwidth}(\rborder,3.2cm)
 \flushouter
 \parbox{13cm}{
 #1 \\
@@ -82,7 +93,7 @@
 }
 
 \newcommand{\persontext}[4]{
-\begin{textblock*}{\textwidth}(\border+5mm,6.8cm)
+\begin{textblock*}{\textwidth}(\rborder,6.7cm)
 \flushouter
 \large{#1}
 
@@ -90,7 +101,7 @@
 \small{\emph{#2}}\\
 \end{textblock*}
 \null
-\begin{textblock*}{\textwidth}(\border,7.5cm)
+\begin{textblock*}{\textwidth}(\rborder,7.3cm)
 %\parbox[top][17cm][t]{\textwidth}{
 \setlength{\parindent}{5mm}
 \begin{multicols}{2}
@@ -113,7 +124,7 @@
 \end{textblock*}
 }
 \newcommand{\persontagsb}[1]{
-\begin{textblock*}{\textwidth}(\border,8.7cm)
+\begin{textblock*}{\textwidth}(\rborder,8.7cm)
 
 \parbox[top][19.8cm][t]{\textwidth}{
 \vspace{1em}

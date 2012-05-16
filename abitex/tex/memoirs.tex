@@ -1,7 +1,9 @@
 \input{header}
 \begin{document}
 
-\AddEverypageHook{\makebgg \makefoot}
+\ghon
+\AddEverypageHook{\ifnum\value{usegenericheaderc}=1 \makegbg \makefoot \generichead{\generictitle} \fi}
+
 
 \renewcommand{\generictitle}{Memoiren}
 \begin{multicols}{2}
