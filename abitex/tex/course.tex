@@ -14,22 +14,6 @@
 %important newline!
 }
 
-\newcommand{\kursbericht}[4]{
-\raggedbottom
-\setcounterpageref{realpage}{kurs\thenkurs}
-\noindent\parbox{\textwidth}{\coursehead{#1}
-\noindent\includegraphics[width=\textwidth]{#2}}
-%\ifodd\pageref{kurs\thenkurs} odd \else even \fi
-\setlength{\parindent}{5mm}
-\begin{multicols}{2}
-\noindent#3
-\end{multicols}
-
-\parbox{\textwidth-5mm}{\raggedleft#4}
-\vspace{2cm}
-
-}
-
 \newcommand{\kurstags}[1]{
 \parbox{\textwidth}{\scriptsize \Slab \textcolor{tagcolor}{\vfill #1 }}
 }
