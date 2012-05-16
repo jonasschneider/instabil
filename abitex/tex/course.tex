@@ -14,11 +14,14 @@
 %important newline!
 }
 
-\newcommand{\kurstitle}[2]{{\large #1}\\
-\par\noindent
-{\noindent
-\emph{#2}}\\
-\\}
+\newcommand{\kurstitle}[2]{
+\noindent {\large #1\null}
+
+\vspace{0.2cm}
+
+{\noindent \small \emph{#2\null}}
+\vspace{0.4cm}
+}
 
 \newcommand{\kurstags}[1]{
   \parbox{\textwidth}{\scriptsize \Slab \textcolor{tagcolor}{\vfill #1 }}

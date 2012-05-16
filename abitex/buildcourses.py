@@ -64,7 +64,6 @@ for course in j :
 		else:
 			course["cloud"] = "{\\centering \\includegraphics[width=\\textwidth]{../linked/courses/clouds/%s.png}}\\vspace{4mm}"%course["id"]
 
-	
 	if int(course["num"]) == 4:
 		if os.path.exists('linked/courses/grouppics/%s.jpg'%course["id"]):
 			course["pic"] = "\\includegraphics[width=\\textwidth]{../linked/courses/grouppics/%s.jpg}"%course["id"] 
@@ -82,6 +81,12 @@ for course in j :
 	out = page.substitute(course)
 	if len(course["text"]) > 3 or len(course["author"]) > 3:
 		course["author"] = common.escape_tex(course["author"])
+
+		if len(course["title"]) > 2 or len(course["subtitle"]) > 2:
+			course["embeddedtitle"] = "\\kurstitle{%s}{%s}\n"%(course["title"], course["subtitle"])
+		else:
+			course["embeddedtitle"] = ""
+
 		out += bericht_page.substitute(course)
 
 	f =  open("tex/courses/" + course["id"] + ".tex", "w")
