@@ -2,7 +2,7 @@
 \usepackage{pdfpages}
 %\usepackage{everyshi}
 \begin{document}
-\AddEverypageHook{\ifnum\value{usegfc}=1 \makegbg \makefoot \fi}
+\AddEverypageHook{\ifnum\value{usegfc}=1 \makegbg \makefoot \else \makecontinuousfoot \fi}
 
 \title{ABI WAN KENOBI}
 \subtitle{\vspace{1cm}Möge G8 mit dir sein!}
@@ -12,12 +12,13 @@
 \thispagestyle{empty}
 \newpage
 
-\newcommand{\mychapter}[1]{
-  \renewcommand{\generictitle}{#1}
+\newcommand{\mychapter}[2]{
+  \renewcommand{\generictitle}{#2}
   \cleardoublepage
   \gfoff
-  #1
-  \newpage
+  \ThisCenterWallPaper{1}{../linked/backgrounds/chapters/{#1}.pdf}
+  ~~
+  \clearpage
   \gfon
 }
 
@@ -29,16 +30,15 @@
 
 Inhaltsverzeichnis
 
-
-\mychapter{Die Padawane}
+\mychapter{1}{Die Padawane}
 \includepdf[pages=2-20]{personenberichte.pdf}
 
 
-\mychapter{Die Jedi-Akademien}
-\includepdf[pages=2-20]{kursberichte.pdf}
+\mychapter{2}{Die Jedi-Akademien}
+\includepdf[pages=2-19]{kursberichte.pdf}
 
 
-\mychapter{Imperial News}
+\mychapter{3}{Imperial News}
 %\renewcommand{\generictitle}{Memoiren}
 \begin{multicols}{2}
 \input{mems}
