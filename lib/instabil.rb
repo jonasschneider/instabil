@@ -25,6 +25,7 @@ module Instabil
     "gk" => "Gemeinschaftskunde",
     "gkb" => "Gemeinschaftskunde (bili)",
     "geogr" => "Erdkunde",
+    "geogrb" => "Erdkunde (bili)",
     "geol" => "Geologie",
     
     "s" => "Sport",
