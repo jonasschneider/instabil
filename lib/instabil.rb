@@ -2,7 +2,11 @@ module Instabil
   WEEKDAYS = %w(Montag Dienstag Mittwoch Donnerstag Freitag)
 
   def self.frozen?
-    ENV["FROZEN"] == "true"
+    ENV["FROZEN"] == "true" || locked?
+  end
+  
+  def self.locked?
+    ENV["LOCKED"] == "true"
   end
   
   SUBJECT_MAP = {

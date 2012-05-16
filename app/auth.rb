@@ -24,8 +24,12 @@ module Instabil::Auth
 
       use Warden::Manager do |manager|
         manager.failure_app = Proc.new do |env|
+          if Instabil.locked?
+            [302, { 'Location' => '/', 'Content-Type'=> 'text/plain' }, ['']]
+          else
             [302, { 'Location' => '/auth/fichteid', 'Content-Type'=> 'text/plain' }, ['Log in please.']]
           end
+        end
       end
       
       Warden::Manager.serialize_into_session do |user|
@@ -80,7 +84,11 @@ module Instabil::Auth
       end
       
       get '/auth/fichteid/callback' do
-        authenticate_with_info! env['omniauth.auth'].info
+        if Instabil.locked?
+          redirect '/'
+        else
+          authenticate_with_info! env['omniauth.auth'].info
+        end
       end
       
       get '/logout' do
