@@ -14,8 +14,14 @@
 %important newline!
 }
 
+\newcommand{\kurstitle}[2]{{\large #1}\\
+\par\noindent
+{\noindent
+\emph{#2}}\\
+\\}
+
 \newcommand{\kurstags}[1]{
-\parbox{\textwidth}{\scriptsize \Slab \textcolor{tagcolor}{\vfill #1 }}
+  \parbox{\textwidth}{\scriptsize \Slab \textcolor{tagcolor}{\vfill #1 }}
 }
 
 \newcounter{nkurs}
