@@ -40,7 +40,8 @@ linked/courses/clouds: linked/courses/raw_clouds draftflag crop_courseclouds.py
 	python2 crop_courseclouds.py
 	touch linked/courses/clouds
 
-tex/abizeitung.pdf:
+tex/abizeitung.pdf: tex/abizeitung.tex
+	# $(TARGETS)
 	cd tex; $(LATEX) abizeitung.tex; cd ..
 
 tex/memoirs.pdf: tex/mems.tex tex/memoirs.tex $(INCLUDES)

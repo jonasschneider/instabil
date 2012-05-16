@@ -23,6 +23,8 @@ describe "Course" do
         "tags" => [],
 
         "text" => "",
+        "subtitle" => "",
+        "title" => "",
         "author" => ""
       }
     end

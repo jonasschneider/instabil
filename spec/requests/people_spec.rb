@@ -54,9 +54,9 @@ describe Instabil::People do
         get "/people/#{jonas.uid}"
       end
 
-      it "shows the avatar" do
-        last_response.should have_selector 'img[src="'+jonas.avatar_url+'"]'
-      end
+      #it "shows the avatar" do
+      #  last_response.should have_selector 'img[src="'+jonas.avatar_url+'"]'
+      #end
       
       it "does show the page contents"  do
         last_response.body.should_not include("bla")

@@ -66,9 +66,6 @@ for course in j :
 		else:
 			course["cloud"] = "{\\centering \\includegraphics[width=\\textwidth]{../linked/courses/clouds/%s.png}}\\vspace{4mm}"%course["id"]
 
-	if len(course["author"].strip()) > 3:
-		# no cloud for courses with report
-		course["cloud"] = "\kurstags{%s}"%common.format_tags(course["tags"])		
 	
 	if int(course["num"]) == 4:
 		if os.path.exists('linked/courses/grouppics/%s.jpg'%course["id"]):
@@ -78,10 +75,14 @@ for course in j :
 			print '%s: No course pic (%s)'% (course["id"], removeNonAscii(course["fach"]+" "+course["lehrer"]))
 	else:
 		# FIXME: add small pics
-		course["pic"] = "\\rule{\\textwidth}{20mm}" 
+		course["pic"] = "\\rule{\\textwidth}{20mm}"
+
+	if len(course["text"]) > 400:
+		# no cloud for courses with long report
+		course["cloud"] = "\kurstags{%s}"%common.format_tags(course["tags"])		
 
 	out = page.substitute(course)
-	if len(course["author"]) > 3:
+	if len(course["text"]) > 3 or len(course["author"]) > 3:
 		course["author"] = common.escape_tex(course["author"])
 		out += bericht_page.substitute(course)
 

@@ -3,26 +3,36 @@
 %\usepackage{everyshi}
 \begin{document}
 \AddEverypageHook{\ifnum\value{usegfc}=1 \makegbg \makefoot \fi}
-\input{../linked/vorwort.tex}
-%\section{\phantom{Die Padawane}}
+
+%\addtokomafont{title}{\normalfont}
+\addtokomafont{title}{\rmfamily}
+\title{Abi Wan Kenobi --- Möge G8 mit dir sein!}
+\author{Abitur 2012 am Fichte-Gymnasium Karlsruhe}
+\date{Juni 2012}
+\maketitle
 \newpage
 
-%\renewcommand{\generictitle}{\section}
-%\input{pupilspages.tex}
-\gfon
+\input{../linked/impressum.tex}
+\newpage
 
+\input{../linked/vorwort.tex}
+\newpage
+
+Inhaltsverzeichnis
+
+\renewcommand{\generictitle}{die padawane}
 \cleardoublepage
 Die Padawane
 \newpage
-
-\renewcommand{\generictitle}{die padawane}
+\gfon
 \includepdf[pages=2-20]{personenberichte.pdf}
 
-\cleardoublepage
-Die Jedi-Schulen
-\newpage
 
-\renewcommand{\generictitle}{die jedi-schulen}
+\renewcommand{\generictitle}{die jedi-akademien}
+\cleardoublepage
+\newpage
+Die Jedi-Akademien
+
 \includepdf[pages=2-20]{kursberichte.pdf}
 %\renewcommand{\generictitle}{Kursberichte}
 %\newlength{\tmpcloudheight}

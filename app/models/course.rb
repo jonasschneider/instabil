@@ -40,6 +40,9 @@ class Course
       
       "tags" => self.tags.map{|t|[t.name, t.id.to_s]},
 
+      "title" => (page && page.title) || "",
+      "subtitle" => (page && page.subtitle) || "",
+
       "text" => (page && page.text) || "",
       "author" => (page && (page.author_name.empty? ? page.responsible.name : page.author_name)) || ""
     }
