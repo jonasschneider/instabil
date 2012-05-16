@@ -40,12 +40,10 @@ for course in j :
 	course["lehrer"] = course["lehrer"].upper()
 
 	if course["id"] in course_members:
-		#print [x for x in ]
-		#print filter(lambda p: p["uid"] == 'kramerlu', pupils)
-
 		course["members"] = ', '.join([filter(lambda p: p["uid"] == member, pupils)[0]["name"] for member in course_members[course["id"]]])
 	else:
 		course["members"] = "FIXME: Wer ist hier drin? "+course["id"]
+		print '%s: No course list (%s)'% (course["id"], removeNonAscii(course["fach"]+" "+course["lehrer"]))
 	
 	if common.drafting():
 		course["text"] = common.escape_tex(course["text"])
@@ -92,7 +90,7 @@ print "%i Kurse"%n
 f =  open("tex/courses.tex", "w")
 
 getnum = lambda s:s['num']
-getsortkey = lambda s:[s['fach'], s['lehrer']]
+getsortkey = lambda s:[('0' if s['fach'] == 'MATHE' else ('1' if s['fach'] == 'DEUTSCH' else s['fach'])) , s['lehrer']]
 
 sorted_input = reversed(sorted(j, key=getnum))
 for num,courses in itertools.groupby(sorted_input, key=getnum):
