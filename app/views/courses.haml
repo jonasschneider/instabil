@@ -4,6 +4,9 @@
   Wenn dein Kurs noch nicht aufgeführt ist, erstell ihn einfach!
   (Die Kurskommentare sind jetzt ausgeblendet.)
 
+  - if Instabil.frozen? && current_user.moderator? && !params["show_comments"]
+    %strong
+      %a{ href: '/courses?show_comments=true' } Alle Kommentare anzeigen
 - [4, 2].each do |num|
   - name = num == 4 ? 'Vierstündig' : 'Zweistündig'
 
@@ -49,7 +52,7 @@
               %input{ type: "hidden", name: "for_course", value: course.id}
               %button{ style: 'font-size: 200%' } Kursbericht schreiben
 
-        - if !Instabil.frozen? || current_user.moderator?
+        - if !Instabil.frozen? || (current_user.moderator? && params["show_comments"])
           .tags
             - course.tags.each do |tag|
               %span.tag
