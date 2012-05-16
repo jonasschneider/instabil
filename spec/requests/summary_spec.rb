@@ -94,9 +94,6 @@ describe "Instabil::Summary" do
       last_response.body.should have_selector('tr.person#person_schneijo td.metadata.fail')
       last_response.body.should have_selector('tr.person#person_winteran td.metadata.ok')
     end
-
-
-    it "shows info about the courses"
   end
 
   context "/comments" do
