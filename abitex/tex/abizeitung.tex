@@ -12,6 +12,15 @@
 \thispagestyle{empty}
 \newpage
 
+\newcommand{\mychapter}[1]{
+  \renewcommand{\generictitle}{#1}
+  \cleardoublepage
+  \gfoff
+  #1
+  \newpage
+  \gfon
+}
+
 \input{../linked/impressum.tex}
 \newpage
 
@@ -20,35 +29,23 @@
 
 Inhaltsverzeichnis
 
-\renewcommand{\generictitle}{die padawane}
-\cleardoublepage
-Die Padawane
-\newpage
-\gfon
+
+\mychapter{Die Padawane}
 \includepdf[pages=2-20]{personenberichte.pdf}
 
 
-\renewcommand{\generictitle}{die jedi-akademien}
-\cleardoublepage
-\newpage
-Die Jedi-Akademien
-
+\mychapter{Die Jedi-Akademien}
 \includepdf[pages=2-20]{kursberichte.pdf}
-%\renewcommand{\generictitle}{Kursberichte}
-%\newlength{\tmpcloudheight}
-
-%\input{courses.tex}
 
 
+\mychapter{Imperial News}
 %\renewcommand{\generictitle}{Memoiren}
-%\begin{multicols}{2}
-%\input{mems}
-%\end{multicols}
+\begin{multicols}{2}
+\input{mems}
+\end{multicols}
 
 %\renewcommand{\generictitle}{Umfragen}
 %\begin{multicols}{2}
 %\centering
-
-%\input{../linked/impressum}
 
 \end{document}
