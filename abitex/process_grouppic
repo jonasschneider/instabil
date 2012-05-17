@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+require 'rubygems'
 require 'exifr'
 
 def run(cmd)
@@ -7,7 +8,8 @@ def run(cmd)
 end
 
 old = ARGV[0]
-newf = old.gsub('raw_grouppics', 'grouppics')
+
+newf = old.gsub('linked/courses/raw_grouppics', 'tex/grouppics')
 
 by_nora = EXIFR::JPEG.new(old).model.downcase["canon"].nil?
 

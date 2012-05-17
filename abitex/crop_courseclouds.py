@@ -15,13 +15,12 @@ for course in j :
   id = course['id']
   infile = 'linked/courses/raw_clouds/'+id+'.png'
   if common.drafting():
-    outfile = 'linked/courses/clouds/'+id+'.jpg'
+    outfile = 'tex/courseclouds/'+id+'.jpg'
   else:
-    outfile = 'linked/courses/clouds/'+id+'.png'
+    outfile = 'tex/courseclouds/'+id+'.png'
 
   print id
 
-  #if not os.path.isfile(outfile) or os.stat(infile).st_mtime > os.stat(outfile).st_mtime:
   im = Image.open(infile)
   im = im.convert('L')
   s = im.size

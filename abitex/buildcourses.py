@@ -48,21 +48,21 @@ for course in j :
 	course["text"] = common.escape_tex(course["text"])
 
 	if common.drafting():
-		if not os.path.exists('linked/courses/clouds/%s.jpg'%course["id"]):
+		if not os.path.exists('tex/courseclouds/%s.jpg'%course["id"]):
 			print '%s: No course cloud draft'%course["id"]
 			course["cloud"] = "\\rule{\\textwidth}{90mm}"
 		else:
-			course["cloud"] = "{\\centering \\includegraphics[width=\\textwidth]{../linked/courses/clouds/%s.jpg}}\\vspace{2mm}"%course["id"]
+			course["cloud"] = "{\\centering \\includegraphics[width=\\textwidth]{courseclouds/%s.jpg}}\\vspace{2mm}"%course["id"]
 	else:
-		if not os.path.exists('linked/courses/clouds/%s.png'%course["id"]):
+		if not os.path.exists('tex/courseclouds/%s.png'%course["id"]):
 			print '%s: No course cloud'%course["id"]
 			course["cloud"] = "\\rule{\\textwidth}{90mm}"
 		else:
-			course["cloud"] = "{\\centering \\includegraphics[width=\\textwidth]{../linked/courses/clouds/%s.png}}\\vspace{4mm}"%course["id"]
+			course["cloud"] = "{\\centering \\includegraphics[width=\\textwidth]{courseclouds/%s.png}}\\vspace{4mm}"%course["id"]
 
 	if int(course["num"]) == 4:
-		if os.path.exists('linked/courses/grouppics/%s.jpg'%course["id"]):
-			course["pic"] = "\\includegraphics[width=\\textwidth]{../linked/courses/grouppics/%s.jpg}"%course["id"] 
+		if os.path.exists('tex/grouppics/%s.jpg'%course["id"]):
+			course["pic"] = "\\includegraphics[width=\\textwidth]{grouppics/%s.jpg}"%course["id"] 
 		else:
 			course["pic"] = "\\rule{\\textwidth}{120mm}"
 			print '%s: No course pic (%s)'% (course["id"], removeNonAscii(course["fach"]+" "+course["lehrer"]))

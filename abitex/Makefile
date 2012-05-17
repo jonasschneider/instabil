@@ -2,6 +2,9 @@ LATEX := xelatex --file-line-error-style
 INCLUDES := tex/header.tex tex/seite.tex tex/generic.tex tex/course.tex tex/poll.tex
 TARGETS := tex/personenberichte.pdf tex/kursberichte.pdf tex/memoirs.pdf tex/umfragen.pdf
 all: $(TARGETS)
+ROOT := $(shell pwd)
+
+latex = $(LATEX) $(1) | $(ROOT)/progress.rb
 
 fetch:
 	./fetchpupils.sh
@@ -17,7 +20,7 @@ draftflag:
 tex/pupilspages.tex: pupils.json buildpupils.py temp/pupil.tex temp/special/*.tex draftflag common.py
 	./buildpupils.py
 
-tex/courses.tex: courses.json buildcourses.py temp/course.tex temp/kursbericht.tex linked/courses/clouds pupils.json course_members.json linked/courses/grouppics draftflag common.py
+tex/courses.tex: courses.json buildcourses.py temp/course.tex temp/kursbericht.tex linked/courses/clouds pupils.json course_members.json tex/grouppics draftflag common.py
 	./buildcourses.py
 
 tex/mems.tex: memoirs.py draftflag common.py linked/memoirs/*.json
@@ -27,18 +30,21 @@ tex/polls.tex: linked/people/nicknames linked/umfragen.poll buildpolls.py temp/p
 	python2 buildpolls.py > tex/polls.tex
 
 tex/personenberichte.pdf: tex/pupilspages.tex tex/personenberichte.tex tex/pupils/* $(INCLUDES) tex/processed_peopleavatars
-	cd tex; $(LATEX) personenberichte.tex; cd ..
+	cd tex; $(call latex,personenberichte.tex) ; cd ..
 	cd tex; $(LATEX) personenberichte.tex | grep "Package abitex Warning"; cd ..
 
-tex/kursberichte.pdf: tex/courses.tex tex/kursberichte.tex tex/courses/* $(INCLUDES) linked/courses/clouds linked/courses/grouppics
-	cd tex; $(LATEX) kursberichte.tex; $(LATEX) kursberichte.tex; cd ..
+tex/kursberichte.pdf: tex/courses.tex tex/kursberichte.tex tex/courses/* $(INCLUDES) tex/courseclouds tex/grouppics
+	cd tex; $(call latex,kursberichte.tex); $(call latex,kursberichte.tex); cd ..
 
 tex/umfragen.pdf: tex/umfragen.tex tex/polls.tex
 	cd tex; $(LATEX) umfragen.tex; cd ..
 
-linked/courses/clouds: linked/courses/raw_clouds draftflag crop_courseclouds.py
+tex/courseclouds: linked/courses/raw_clouds draftflag crop_courseclouds.py
+	mkdir tex/courseclouds; true
+	rm tex/courseclouds/*; true
+
 	python2 crop_courseclouds.py
-	touch linked/courses/clouds
+	touch tex/courseclouds
 
 tex/abizeitung.pdf: tex/abizeitung.tex tex/mems.tex
 	# $(TARGETS)
@@ -50,9 +56,11 @@ tex/memoirs.pdf: tex/mems.tex tex/memoirs.tex $(INCLUDES)
 deploy:
 	cp $(TARGETS) linked
 
-linked/courses/grouppics: linked/courses/raw_grouppics/* process_grouppic
+tex/grouppics: linked/courses/raw_grouppics/* process_grouppic
+	mkdir tex/grouppics; true
+	rm tex/grouppics/*; true
 	for i in linked/courses/raw_grouppics/* ; do ./process_grouppic $$i; done
-	touch linked/courses/grouppics
+	touch tex/grouppics
 
 tex/processed_peopleavatars: linked/people/avatars/*
 	mkdir tex/processed_peopleavatars; true

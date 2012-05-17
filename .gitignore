@@ -35,6 +35,8 @@ contrib/allusers
 abitex/linked
 abitex/fetchmemoirs.sh
 abitex/tex/courses
+abitex/tex/courseclouds/
 abitex/draftflag
 *.pyc
 abitex/tex/processed_peopleavatars/
+abitex/tex/grouppics/
