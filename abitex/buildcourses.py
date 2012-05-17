@@ -45,11 +45,7 @@ for course in j :
 		course["members"] = "FIXME: Wer ist hier drin? "+course["id"]
 		print '%s: No course list (%s)'% (course["id"], removeNonAscii(course["fach"]+" "+course["lehrer"]))
 	
-	if common.drafting():
-		course["text"] = common.escape_tex(course["text"])
-	else:
-		proc = subprocess.Popen("./md2tex.sh", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-		course["text"] = proc.communicate(course["text"].encode("utf-8"))[0].decode("utf-8")
+	course["text"] = common.escape_tex(course["text"])
 
 	if common.drafting():
 		if not os.path.exists('linked/courses/clouds/%s.jpg'%course["id"]):

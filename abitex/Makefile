@@ -20,7 +20,7 @@ tex/pupilspages.tex: pupils.json buildpupils.py temp/pupil.tex temp/special/*.te
 tex/courses.tex: courses.json buildcourses.py temp/course.tex temp/kursbericht.tex linked/courses/clouds pupils.json course_members.json linked/courses/grouppics draftflag common.py
 	./buildcourses.py
 
-tex/mems.tex: memoirs.py draftflag common.py
+tex/mems.tex: memoirs.py draftflag common.py linked/memoirs/*.json
 	./memoirs.py > tex/mems.tex
 
 tex/polls.tex: linked/people/nicknames linked/umfragen.poll buildpolls.py temp/poll.tex
@@ -40,7 +40,7 @@ linked/courses/clouds: linked/courses/raw_clouds draftflag crop_courseclouds.py
 	python2 crop_courseclouds.py
 	touch linked/courses/clouds
 
-tex/abizeitung.pdf: tex/abizeitung.tex
+tex/abizeitung.pdf: tex/abizeitung.tex tex/mems.tex
 	# $(TARGETS)
 	cd tex; $(LATEX) abizeitung.tex; cd ..
 
