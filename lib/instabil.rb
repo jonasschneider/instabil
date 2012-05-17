@@ -28,8 +28,8 @@ module Instabil
     "gb" => "Geschichte (bili)",
     "gk" => "Gk",
     "gkb" => "Gk (bili)",
-    "geogr" => "Erdkunde",
-    "geogrb" => "Erdkunde (bili)",
+    "geo" => "Erdkunde",
+    "geob" => "Erdkunde (bili)",
     "geol" => "Geologie",
     
     "s" => "Sport",
