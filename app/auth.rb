@@ -70,10 +70,13 @@ module Instabil::Auth
         unless user.name 
           user.name = info.name
         end
-        
+
         user.save!
-        
-        warden.set_user user
+
+        if !Instabil.locked? || user.moderator?
+          warden.set_user user
+        end
+
         redirect "/"
       end
       
@@ -84,11 +87,7 @@ module Instabil::Auth
       end
       
       get '/auth/fichteid/callback' do
-        if Instabil.locked?
-          redirect '/'
-        else
-          authenticate_with_info! env['omniauth.auth'].info
-        end
+        authenticate_with_info! env['omniauth.auth'].info
       end
       
       get '/logout' do
