@@ -24,7 +24,7 @@ describe "Instabil::Courses" do
       select 'Erdkunde'
       click_button 'Als vierstündigen Kurs eintragen'
       c=Course.first
-      c.subject.should == 'geogr'
+      c.subject.should == 'geo'
       c.num.should == 4
       c.weekday.should == 0
       c.teacher.should == 'Schürer'
