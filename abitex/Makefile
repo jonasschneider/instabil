@@ -50,8 +50,8 @@ tex/memoirs.pdf: tex/mems.tex tex/memoirs.tex $(INCLUDES)
 deploy:
 	cp $(TARGETS) linked
 
-linked/courses/grouppics: linked/courses/raw_grouppics/*
-	for i in linked/courses/raw_grouppics/* ; do NEW=`echo $$i | sed 's/raw_grouppics/grouppics/g'`; convert $$i -colorspace Gray -brightness-contrast 5x25 -resize 50% $$NEW; done
+linked/courses/grouppics: linked/courses/raw_grouppics/* process_grouppic
+	for i in linked/courses/raw_grouppics/* ; do ./process_grouppic $$i; done
 	touch linked/courses/grouppics
 
 tex/processed_peopleavatars: linked/people/avatars/*

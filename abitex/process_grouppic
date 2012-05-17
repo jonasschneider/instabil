@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+require 'exifr'
+
+def run(cmd)
+  puts cmd
+  system(cmd)
+end
+
+old = ARGV[0]
+newf = old.gsub('raw_grouppics', 'grouppics')
+
+by_nora = EXIFR::JPEG.new(old).model.downcase["canon"].nil?
+
+if by_nora
+  run "convert #{old} -colorspace Gray -resize 50% #{newf}"
+else
+  run "convert #{old} -colorspace Gray -brightness-contrast 5x25 -resize 50% #{newf}"
+end
