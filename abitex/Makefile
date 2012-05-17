@@ -20,7 +20,7 @@ draftflag:
 tex/pupilspages.tex: pupils.json buildpupils.py temp/pupil.tex temp/special/*.tex draftflag common.py
 	./buildpupils.py
 
-tex/courses.tex: courses.json buildcourses.py temp/course.tex temp/kursbericht.tex linked/courses/clouds pupils.json course_members.json tex/grouppics draftflag common.py
+tex/courses.tex: courses.json buildcourses.py temp/course.tex temp/kursbericht.tex tex/courseclouds pupils.json course_members.json tex/grouppics draftflag common.py
 	./buildcourses.py
 
 tex/mems.tex: memoirs.py draftflag common.py linked/memoirs/*.json

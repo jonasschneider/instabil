@@ -67,8 +67,8 @@ for course in j :
 			course["pic"] = "\\rule{\\textwidth}{120mm}"
 			print '%s: No course pic (%s)'% (course["id"], removeNonAscii(course["fach"]+" "+course["lehrer"]))
 	else:
-		# FIXME: add small pics
-		course["pic"] = "\\rule{\\textwidth}{20mm}"
+		avas = ["\includegraphics[height=18mm]{processed_peopleavatars/%s.jpg}\-"%member for member in sorted(course_members[course["id"]])]
+		course["pic"] = ''.join(avas)
 
 	if len(course["text"]) > 400:
 		# no cloud for courses with long report
