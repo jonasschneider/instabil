@@ -67,7 +67,7 @@ for course in j :
 			course["pic"] = "\\rule{\\textwidth}{120mm}"
 			print '%s: No course pic (%s)'% (course["id"], removeNonAscii(course["fach"]+" "+course["lehrer"]))
 	else:
-		avas = ["\includegraphics[height=18mm]{processed_peopleavatars/%s.jpg}\-"%member for member in sorted(course_members[course["id"]])]
+		avas = ["\includegraphics[height=18mm]{processed_peopleavatars/%s.jpg}\\textcolor{white}{\-}"%member for member in sorted(course_members[course["id"]])]
 		course["pic"] = ''.join(avas)
 
 	if len(course["text"]) > 400:

@@ -82,7 +82,7 @@ for pupil in j :
 	else :
 		content["author"] = common.escape_tex(content["author"])
 	content["name"]=content["name"].upper()
-	content["name"] = content["name"].replace(ur"ё", '"e').replace(u"Ё", '"E')
+	content["name"] = content["name"].replace(ur"ё", '"e').replace(u"Ё", '"E').replace(u"Ề", u"Ê\\hspace{-4mm}\\raisebox{2.5mm}{`}\\hspace{1.5mm}")
 	if content["uid"] in smallnames:
 		content["name"] = "\LARGE "+content["name"]
 	elif content["uid"] in verysmallnames:
