@@ -40,7 +40,7 @@ for course in j :
 	course["lehrer"] = course["lehrer"].upper()
 
 	if course["id"] in course_members:
-		course["members"] = ', '.join([filter(lambda p: p["uid"] == member, pupils)[0]["name"] for member in course_members[course["id"]]])
+		course["members"] = ', '.join([filter(lambda p: p["uid"] == member, pupils)[0]["name"] for member in sorted(course_members[course["id"]])])
 	else:
 		course["members"] = "FIXME: Wer ist hier drin? "+course["id"]
 		print '%s: No course list (%s)'% (course["id"], removeNonAscii(course["fach"]+" "+course["lehrer"]))
