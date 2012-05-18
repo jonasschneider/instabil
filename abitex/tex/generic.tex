@@ -95,10 +95,17 @@
 \begin{textblock*}{\textwidth}(\rborder,28.9cm)
 \flushouter
 \Large\textcolor{white}{\Dekar
+\thepage
+}
+\end{textblock*}
+
+\begin{textblock*}{\textwidth}(\rborder,28.9cm)
+\flushouter
+\Large\textcolor{white}{\Dekar
 \ifoddpage
-\MakeUppercase{\generictitle} ~ \thepage
+\MakeUppercase{\generictitle} ~ \hspace{7mm}
 \else
-\thepage ~ \MakeUppercase{\generictitle}
+\hspace{7mm} ~ \MakeUppercase{\generictitle}
 \fi
 }
 \end{textblock*}
