@@ -1,17 +1,13 @@
 \newcommand{\makebgg}{
-\checkoddpage
-\ifoddpage
-\ThisCenterWallPaper{1}{../linked/backgrounds/tplg-2.pdf}
-\else
-\ThisCenterWallPaper{1}{../linked/backgrounds/tplg-1.pdf}
-\fi
+\ThisCenterWallPaper{1}{../linked/backgrounds/generic-header.pdf}
 }
 
 \newcommand{\generichead}[1]{
+\setrborder
 \settoheight{\headheight}{\LARGE \Dekar {#1}}
-\begin{textblock*}{\textwidth}(\border,8mm-\headheight)
+\begin{textblock*}{\textwidth}(\rborder,9mm-\headheight)
 \flushouter
-\LARGE \Dekar \color{white} #1
+\LARGE \Dekar \color{white} \MakeUppercase{#1}
 \end{textblock*}
 }
 
@@ -28,6 +24,7 @@
 \newcommand{\gfoff}{\setcounter{usegfc}{0}}
 
 \newcommand{\generictitle}{f!xme}
+\newcommand{\realtitle}{f!xme}
 
 \newcommand{\ornament}{
 \vspace*{-8mm}

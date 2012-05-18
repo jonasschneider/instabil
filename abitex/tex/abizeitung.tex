@@ -2,7 +2,7 @@
 \usepackage{pdfpages}
 %\usepackage{everyshi}
 \begin{document}
-\AddEverypageHook{\ifnum\value{usegfc}=1 \makegbg \makefoot \else \makecontinuousfoot \fi}
+\AddEverypageHook{{\ifnum\value{usegfc}=1 \makegbg \makefoot \else \makecontinuousfoot \fi} {\ifnum\value{usegenericheaderc}=1 \makebgg \generichead{\realtitle} \fi}}
 
 \title{ABI WAN KENOBI}
 \subtitle{\vspace{1cm}Möge G8 mit dir sein!}
@@ -40,6 +40,8 @@ Inhaltsverzeichnis
 
 \mychapter{3}{Imperial News}
 %\renewcommand{\generictitle}{Memoiren}
+\ghon
+\renewcommand{\realtitle}{Memoiren}
 \begin{multicols}{2}
 \input{mems}
 \end{multicols}
