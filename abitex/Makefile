@@ -27,7 +27,7 @@ tex/mems.tex: memoirs.py draftflag common.py linked/memoirs/*.json
 	./memoirs.py > tex/mems.tex
 
 tex/polls.tex: linked/people/nicknames linked/umfragen.poll buildpolls.py temp/poll.tex
-	python2 buildpolls.py > tex/polls.tex
+	python buildpolls.py > tex/polls.tex
 
 tex/personenberichte.pdf: tex/pupilspages.tex tex/personenberichte.tex tex/pupils/* $(INCLUDES) tex/processed_peopleavatars
 	cd tex; $(call latex,personenberichte.tex) ; cd ..
@@ -45,7 +45,7 @@ tex/courseclouds: linked/courses/raw_clouds draftflag crop_courseclouds.py
 	python2 crop_courseclouds.py
 	touch tex/courseclouds
 
-tex/abizeitung.pdf: tex/abizeitung.tex tex/mems.tex
+tex/abizeitung.pdf: tex/abizeitung.tex tex/mems.tex tex/generic.tex
 	# $(TARGETS)
 	cd tex; $(LATEX) abizeitung.tex; cd ..
 
