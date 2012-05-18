@@ -31,7 +31,6 @@ tex/polls.tex: linked/people/nicknames linked/umfragen.poll buildpolls.py temp/p
 
 tex/personenberichte.pdf: tex/pupilspages.tex tex/personenberichte.tex tex/pupils/* $(INCLUDES) tex/processed_peopleavatars
 	cd tex; $(call latex,personenberichte.tex) ; cd ..
-	cd tex; $(LATEX) personenberichte.tex | grep "Package abitex Warning"; cd ..
 
 tex/kursberichte.pdf: tex/courses.tex tex/kursberichte.tex tex/courses/* $(INCLUDES) tex/courseclouds tex/grouppics
 	cd tex; $(call latex,kursberichte.tex); $(call latex,kursberichte.tex); cd ..
