@@ -37,9 +37,14 @@ for course in j :
   print bbox, realbox
   trimmed = noborder.crop(realbox)
 
-  mask = ImageChops.add(trimmed, bg, 1, 100)
-  mask = ImageChops.invert(ImageEnhance.Contrast(mask).enhance(30.0))
+  wanted_width = 1.8 * im.size[1]
+  padding = int(max(0, wanted_width-trimmed.size[0]))
 
-  if not common.drafting():
-    trimmed.putalpha(mask)
-  trimmed.save(outfile)
+  print 'want', wanted_width, 'got', trimmed.size[0], 'padding by', padding
+
+  padded = Image.new(trimmed.mode, (trimmed.size[0]+padding, trimmed.size[1]), 'white')
+  padded.paste(trimmed, (padding / 2, 0))
+
+  
+  out = padded
+  out.save(outfile)
