@@ -52,7 +52,7 @@ def parse_line(line) :
 	speaker = None
 	ad = None
 	begin = 0
-	onespeaker = False
+	quote = False
 	if line[0] == "[" : #someone said something, dialogue
 		begin = line.find("]")+1
 		speaker = line[1:begin-1]
@@ -68,18 +68,22 @@ def parse_line(line) :
 			print("\\saya{%s}{(%s)}{%s}"%(speaker, ad, text))
 	elif line[0] == "(" : #comment
 		print("\\emph{\\footnotesize (%s)}\\\\"%beautify_quotation(line[1:-1].strip()))
-	else:
+	elif line[0] == "\"" : #quote
 		print("{%s}\\\\"%beautify_quotation(line.strip()))
-		onespeaker = True
+		quote = True
+	else: #statement
+		print("{%s}\\\\"%beautify_quotation(line.strip()))
+	return quote
 
 
 for t in memoirs :
 	#print(t)
 	print("\parbox{\\columnwidth}{")
+	quote = False
 	for line in t["text"].splitlines() :
 		if len(line) > 0:
-			parse_line(line)
-	if t["person"] != "" and t["person"] != "Jonas" :
+			quote = parse_line(line)
+	if quote :
 		print("\\vspace*{-2em} \\begin{flushright} \\textsc{\\footnotesize --\\/%s}\\end{flushright}"%t["person"])
 
 	print("\\ornament }")
