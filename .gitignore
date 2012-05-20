@@ -11,11 +11,11 @@ abitex/*.pdf
 abitex/tex/*.pdf
 abitex/tex/pupils/*
 abitex/tex/coursereports/*
-abitex/tex/abi.maf
-abitex/tex/abi.stc*
-abitex/tex/abi.mtc*
-abitex/tex/abi.out
-abitex/tex/abi.toc
+abitex/tex/abizeitung.maf
+abitex/tex/abizeitung.stc*
+abitex/tex/abizeitung.mtc*
+abitex/tex/abizeitung.out
+abitex/tex/abizeitung.toc
 abitex/tex/avatars/*
 abitex/.lastavafetch
 abitex/tex/rev.tex
@@ -40,3 +40,8 @@ abitex/draftflag
 *.pyc
 abitex/tex/processed_peopleavatars/
 abitex/tex/grouppics/
+
+abitex/photostack/*.png
+abitex/photostack/*.pdf
+abitex/photostack/*.svg
+abitex/studienfahrten

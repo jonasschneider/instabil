@@ -26,8 +26,11 @@ tex/courses.tex: courses.json buildcourses.py temp/course.tex temp/kursbericht.t
 tex/mems.tex: memoirs.py draftflag common.py linked/memoirs/*.json
 	./memoirs.py > tex/mems.tex
 
-tex/polls.tex: linked/people/nicknames linked/umfragen.poll buildpolls.py temp/poll.tex
+tex/polls.tex: linked/people/nicknames linked/umfragen.poll buildpolls.py pollscommon.py temp/poll.tex
 	python buildpolls.py > tex/polls.tex
+	
+tex/polls-teacher.tex: linked/lehrer.nicks linked/lehrer.poll buildpolls.py pollscommon.py temp/poll-teacher.tex
+	python buildpolls-teacher.py > tex/polls-teacher.tex
 
 tex/personenberichte.pdf: tex/pupilspages.tex tex/personenberichte.tex tex/pupils/* $(INCLUDES) tex/processed_peopleavatars
 	cd tex; $(call latex,personenberichte.tex) ; cd ..
@@ -45,7 +48,7 @@ tex/courseclouds: linked/courses/raw_clouds draftflag crop_courseclouds.py
 	python2 crop_courseclouds.py
 	touch tex/courseclouds
 
-tex/abizeitung.pdf: tex/abizeitung.tex tex/mems.tex tex/generic.tex
+tex/abizeitung.pdf: tex/abizeitung.tex tex/mems.tex tex/generic.tex tex/polls.tex tex/polls-teacher.tex
 	# $(TARGETS)
 	cd tex; $(LATEX) abizeitung.tex; cd ..
 
