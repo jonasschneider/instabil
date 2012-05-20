@@ -15,11 +15,18 @@
 \newcommand{\mychapter}[2]{
   \gfoff
   \renewcommand{\generictitle}{#2}
+  
   \cleardoublepage
   \ThisCenterWallPaper{1}{../linked/backgrounds/chapters/{#1}.pdf}
+  \hiddensection{#2}
   ~~
   \clearpage
   \gfon
+}
+
+\newcommand{\mysection}[1]{
+	\renewcommand{\realtitle}{#1}
+	\hiddensubsection{#1}
 }
 
 \input{../linked/impressum.tex}
@@ -28,11 +35,15 @@
 \input{../linked/vorwort.tex}
 \newpage
 
-Inhaltsverzeichnis
+\tableofcontents
 
 \mychapter{1}{Die Padawane}
 \includepdf[pages=2-20]{personenberichte.pdf}
+\ghon
+\renewcommand{\realtitle}{Gefallene Krieger}
 \input{../linked/people/abgetretene.tex}
+\newpage
+\ghoff
 
 \mychapter{2}{Die Jedi-Akademien}
 \includepdf[pages=2-20]{kursberichte.pdf}
@@ -41,12 +52,20 @@ Inhaltsverzeichnis
 \mychapter{3}{Imperial News}
 %\renewcommand{\generictitle}{Memoiren}
 \ghon
-\renewcommand{\realtitle}{Memoiren}
+\mysection{Memoiren}
 \setlength{\columnsep}{2\columnsep}
 \begin{multicols}{2}
 \input{mems}
 \end{multicols}
 \setlength{\columnsep}{.5\columnsep}
+\vspace*{2cm}
+\includegraphics[width=\textwidth]{../linked/extracontent/ads/BC_Anz180x125_sw.pdf}
+
+\newpage
+\mysection{Umfragen}
+\begin{multicols}{2}
+\input{polls}
+\end{multicols}
 %\renewcommand{\generictitle}{Umfragen}
 %\begin{multicols}{2}
 %\centering

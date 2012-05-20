@@ -1,16 +1,20 @@
 \parbox{\columnwidth}{
-\noindent\begin{minipage}{\columnwidth}\noindent\centering
-%\parbox[center][4cm][b]{\columnwidth}{
-\parbox[center][1cm][b]{\columnwidth}{
-\centering
- #{caption} \\ 
- {\footnotesize \it #{lol}}}
-
+\noindent\begin{minipage}[top][5.5cm][c]{\columnwidth}\noindent\centering
+\vfill
+%\noindent\begin{minipage}{\columnwidth}\noindent\centering
+\parbox[center][4.8cm][c]{\columnwidth}{
+\vfill
 \begin{tikzpicture}[yscale=2, xscale=2.8]
 \platzeins{ #{name1}}{#{n1}}{#{ava1}}
 \platzzwei{#{name2}}{#{n2}}{#{ava2}}
 \platzdrei{#{name3}}{#{n3}}{#{ava3}}
-\end{tikzpicture}%}
+\end{tikzpicture}}
+
+%\vspace*{-5mm} #{caption} \\
+%\parbox[top][7mm][t]{\columnwidth}{\centering
+#{caption} \\
+{\footnotesize \it #{lol}}%}
 \end{minipage}
-\vspace*{10mm}
+\vspace*{3mm}
+\ornament
 }

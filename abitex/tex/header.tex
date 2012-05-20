@@ -67,6 +67,10 @@
 \setlength{\footskip}{1.2cm}
 \newcommand{\kathisize}{\fontsize{9.2pt}{11.04pt}\selectfont}
 %\renewcommand{\subsubsectionheadstartvskip}{\vspace *{-1cm}}
+\usepackage{hyperref}
+\newcommand{\hiddensection}[1]{\phantomsection \addtocounter{section}{1} \addcontentsline{toc}{section}{\protect\numberline{\thesection}{#1}}}
+\newcommand{\hiddensubsection}[1]{\phantomsection \addtocounter{subsection}{1} \addcontentsline{toc}{subsection}{\protect\numberline{\thesection}{#1}}}
+
 \selectlanguage{ngerman}
 \makeatletter
 \let\rc@refused\refused
