@@ -1,12 +1,16 @@
 #!/usr/bin/env python
-
+# -*- coding: utf-8 -*-
 import re,json,random
 
 memoirfiles = ("linked/memoirs/alle.json", "linked/memoirs/jonas.json")
 
+import codecs
+
 memoirs = []
 for mf in memoirfiles :
-	for m in json.loads(open(mf).read()) :
+	f = codecs.open(mf, "r", "utf-8")
+	s = f.read()
+	for m in json.loads(s) :
 		memoirs.append(m)
 
 #random.shuffle(memoirs)
