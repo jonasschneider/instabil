@@ -1,8 +1,12 @@
 \input{header}
 \usepackage{pdfpages}
 %\usepackage{everyshi}
+%\usepackage{draftwatermark}
+
 \begin{document}
-\AddEverypageHook{{\ifnum\value{usegfc}=1 \makegbg \makefoot \else \makecontinuousfoot \fi} {\ifnum\value{usegenericheaderc}=1 \makebgg \generichead{\realtitle} \fi}}
+\AddEverypageHook{{\ifnum\value{usegfc}=1 \makegbg \makefoot \else \makecontinuousfoot \fi} {\ifnum\value{usegenericheaderc}=1 \makebgg \generichead{\realtitle} \fi} 
+%\begin{textblock*}{\paperwidth}(0pt, 0pt)\noindent\includegraphics{../linked/backgrounds/draft.pdf}\end{textblock*}
+}
 
 \title{ABI WAN KENOBI}
 \subtitle{\vspace{1cm}Möge G8 mit dir sein!}
@@ -71,6 +75,11 @@
 \begin{multicols}{2}
 \input{polls-teacher}
 \end{multicols}
+
+\newpage
+\mysection{Meta}
+\setlength{\parindent}{5mm}
+\input{../linked/extracontent/meta.tex}
 %\renewcommand{\generictitle}{Umfragen}
 %\begin{multicols}{2}
 %\centering
