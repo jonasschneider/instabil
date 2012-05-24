@@ -40,8 +40,8 @@ verysmallnames = ("leikerch", "meissnna")
 
 sizes = ("\\scriptsize", "\\kathisize", "\\footnotesize", "\\small")
 
-smallmeta = ("elgogoli", "ingentjo", "mahlerda", "weberha", "werrnal", "wolffrda", "reinhaca", "kramerlu", "meissnna", "mercanze", "winteran", "broderti", "blumesi", "brassro")
-verysmallmeta = ("weilerki")
+smallmeta = ("elgogoli", "ingentjo", "mahlerda", "weberha", "werrnal", "wolffrda", "reinhaca", "schoepre", "werrnal", "meissnna", "mercanze", "winteran", "broderti", "blumesi", "brassro")
+verysmallmeta = ("weilerki", "kramerlu")
 
 print 'Namen zu lang:'
 
