@@ -45,3 +45,5 @@ abitex/photostack/*.png
 abitex/photostack/*.pdf
 abitex/photostack/*.svg
 abitex/studienfahrten
+abitex/tex/polls-teacher.tex
+*.out
