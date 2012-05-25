@@ -48,7 +48,7 @@ tex/courseclouds: linked/courses/raw_clouds draftflag crop_courseclouds.py
 	python2 crop_courseclouds.py
 	touch tex/courseclouds
 
-tex/abizeitung.pdf: tex/abizeitung.tex tex/mems.tex tex/generic.tex tex/polls.tex tex/polls-teacher.tex
+tex/abizeitung.pdf: tex/abizeitung.tex tex/mems.tex tex/generic.tex tex/polls.tex tex/polls-teacher.tex linked/imperial_news.tex
 	# $(TARGETS)
 	cd tex; $(LATEX) abizeitung.tex; cd ..
 
