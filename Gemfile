@@ -20,7 +20,7 @@ gem 'dropbox-sdk'
 
 gem 'pusher'
 
-gem 'mongoid', '< 2.3'
+gem 'mongoid'
 gem 'bson_ext'
 
 gem 'newrelic_rpm'

@@ -42,7 +42,7 @@ describe "Instabil::Courses" do
       visit '/courses'
       last_response.body.should have_selector("form[action='/courses/#{course.id}/untag/#{course.tags.first.id}'][method=post]")
       click_button 'Löschen'
-      course.reload.tags.should == []
+      course.reload.tags.scoped.should == []
     end
 
     it "shows no link to remove a tag by another user" do

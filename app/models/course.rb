@@ -27,7 +27,7 @@ class Course
   def name
     "#{subject_name} #{num == 4 ? 'vier' : 'zwei'}stündig bei #{teacher}, #{num == 4 ? 'Doppelstunde am' : 'erste Stunde in der Woche am'} #{weekday_name}"
   end
-  
+
   def api_attributes
     {
       "id" => self.id,
@@ -38,7 +38,7 @@ class Course
       
       "foto" => "http://image.shutterstock.com/display_pic_with_logo/195/195,1159450466,2/stock-vector-group-of-people-vector-1914678.jpg",
       
-      "tags" => self.tags.map{|t|[t.name, t.id.to_s]},
+      "tags" => self.tags.scoped.map{|t|[t.name, t.id.to_s]},
 
       "title" => (page && page.title) || "",
       "subtitle" => (page && page.subtitle) || "",

@@ -1,6 +1,7 @@
 class CourseTag
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Paranoia
 
   field :name, type: String
 

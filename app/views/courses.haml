@@ -54,7 +54,7 @@
 
         - if !Instabil.frozen? || (current_user.moderator? && params["show_comments"])
           .tags
-            - course.tags.each do |tag|
+            - course.tags.scoped.each do |tag|
               %span.tag
                 = tag.name
                 
