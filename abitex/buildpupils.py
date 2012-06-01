@@ -105,18 +105,20 @@ for pupil in j :
 	if os.path.isfile('tex/processed_peopleavatars/'+content["uid"]+'.jpg'):
 		content["avatar"] = 'processed_peopleavatars/'+content["uid"]+'.jpg'
 	
-	content["lks"] = common.escape_tex(content["lks"] or "").strip()
+	content["lks"] = common.escape_tex(content["lks"] or "\censor*{7}").strip()
 	if content["lks"][0:6] == '(IM!) ':
 		content["meisterpraep"] = "im"
 		content["lks"] = content["lks"][6:-1]
 	else:
 		content["meisterpraep"] = "in"
-	content["lebenswichtig"] = common.escape_tex(content["lebenswichtig"] or "")
-	content["nachruf"] = common.escape_tex(content["nachruf"] or "")
-	content["nachabi"] = common.escape_tex(content["nachabi"] or "")
+	content["lebenswichtig"] = common.escape_tex(content["lebenswichtig"] or "\censor*{7}")
+	content["nachruf"] = common.escape_tex(content["nachruf"] or "\censor*{7}")
+	content["nachabi"] = common.escape_tex(content["nachabi"] or "\censor*{7}")
+	content["zukunft"] = common.escape_tex(content["zukunft"] or "\censor*{7}")
+	
 	content["title"] = common.escape_tex(content["title"] or "")
 	content["subtitle"] = common.escape_tex(content["subtitle"] or "")
-	content["zukunft"] = common.escape_tex(content["zukunft"] or "")
+	
 	#print type(content["tags"])
 	content["geb"] = dates[content["uid"][0:8]]
 	content["tags"] = common.format_tags(content["tags"])
