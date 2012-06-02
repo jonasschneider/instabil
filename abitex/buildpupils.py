@@ -43,8 +43,6 @@ sizes = ("\\scriptsize", "\\kathisize", "\\footnotesize", "\\small")
 smallmeta = ("elgogoli", "ingentjo", "mahlerda", "weberha", "werrnal", "wolffrda", "reinhaca", "schoepre", "werrnal", "meissnna", "mercanze", "winteran", "broderti", "blumesi", "brassro")
 verysmallmeta = ("weilerki", "kramerlu")
 
-print 'Namen zu lang:'
-
 class TeXTemplate(Template) :
 	delimiter = "#"
 
@@ -108,7 +106,7 @@ for pupil in j :
 	content["lks"] = common.escape_tex(content["lks"] or "\censor*{7}").strip()
 	if content["lks"][0:6] == '(IM!) ':
 		content["meisterpraep"] = "im"
-		content["lks"] = content["lks"][6:-1]
+		content["lks"] = content["lks"][6:-1] + content["lks"][-1]
 	else:
 		content["meisterpraep"] = "in"
 	content["lebenswichtig"] = common.escape_tex(content["lebenswichtig"] or "\censor*{7}")
