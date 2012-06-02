@@ -13,7 +13,7 @@ for mf in memoirfiles :
 	for m in json.loads(s) :
 		memoirs.append(m)
 
-#random.shuffle(memoirs)
+random.shuffle(memoirs)
 
 def beautify_quotation(text) :
 	quotation  = ","
