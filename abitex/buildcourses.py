@@ -1,6 +1,6 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
-import json, os, subprocess, itertools
+import json, os, subprocess, itertools, re
 from string import Template
 f = open("courses.json")
 blah = f.read()
@@ -45,7 +45,9 @@ for course in j :
 		course["members"] = "FIXME: Wer ist hier drin? "+course["id"]
 		print '%s: No course list (%s)'% (course["id"], removeNonAscii(course["fach"]+" "+course["lehrer"]))
 	
-	course["text"] = common.escape_tex(course["text"])
+	p = re.compile('\s\*(.*?)\*', re.VERBOSE)
+
+	course["text"] = p.sub(r'\\emph{\1}',common.escape_tex(course["text"]))
 
 	if common.drafting():
 		if not os.path.exists('tex/courseclouds/%s.jpg'%course["id"]):
