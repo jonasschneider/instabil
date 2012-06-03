@@ -2,7 +2,8 @@
 \usepackage{pdfpages}
 %\usepackage{everyshi}
 %\usepackage{draftwatermark}
-
+\addtokomafont{sectionentry}{\normalfont\bf}
+\addtokomafont{section}{\normalfont\bf}
 \begin{document}
 \AddEverypageHook{{\ifnum\value{usegfc}=1 \makegbg \makefoot \else \makecontinuousfoot \fi} {\ifnum\value{usegenericheaderc}=1 \makebgg \generichead{\realtitle} \fi} 
 %\begin{textblock*}{\paperwidth}(0pt, 0pt)\noindent\includegraphics{../linked/backgrounds/draft.pdf}\end{textblock*}
