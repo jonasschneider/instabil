@@ -49,18 +49,11 @@ for course in j :
 
 	course["text"] = p.sub(r'\\emph{\1}',common.escape_tex(course["text"]))
 
-	if common.drafting():
-		if not os.path.exists('tex/courseclouds/%s.jpg'%course["id"]):
-			print '%s: No course cloud draft'%course["id"]
-			course["cloud"] = "\\rule{\\textwidth}{90mm}"
-		else:
-			course["cloud"] = "{\\centering \\includegraphics[width=\\textwidth]{courseclouds/%s.jpg}}\\vspace{2mm}"%course["id"]
+	if not os.path.exists('tex/courseclouds/%s.jpg'%course["id"]):
+		print '%s: No course cloud'%course["id"]
+		course["cloud"] = "\\rule{\\textwidth}{90mm}"
 	else:
-		if not os.path.exists('tex/courseclouds/%s.png'%course["id"]):
-			print '%s: No course cloud'%course["id"]
-			course["cloud"] = "\\rule{\\textwidth}{90mm}"
-		else:
-			course["cloud"] = "{\\centering \\includegraphics[width=\\textwidth]{courseclouds/%s.png}}\\vspace{4mm}"%course["id"]
+		course["cloud"] = "{\\centering \\includegraphics[width=\\textwidth]{courseclouds/%s.jpg}}\\vspace{2mm}"%course["id"]
 
 	if int(course["num"]) == 4:
 		if os.path.exists('tex/grouppics/%s.jpg'%course["id"]):

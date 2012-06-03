@@ -21,7 +21,7 @@ tex/pupilspages.tex: pupils.json buildpupils.py temp/pupil.tex temp/special/*.te
 	./buildpupils.py
 
 tex/courses.tex: courses.json buildcourses.py temp/course.tex temp/kursbericht.tex tex/courseclouds pupils.json course_members.json tex/grouppics draftflag common.py
-	./buildcourses.py
+	#./buildcourses.py
 
 tex/mems.tex: memoirs.py draftflag common.py linked/memoirs/*.json
 	./memoirs.py > tex/mems.tex
@@ -41,7 +41,7 @@ tex/kursberichte.pdf: tex/courses.tex tex/kursberichte.tex tex/courses/* $(INCLU
 tex/umfragen.pdf: tex/umfragen.tex tex/polls.tex
 	cd tex; $(LATEX) umfragen.tex; cd ..
 
-tex/courseclouds: linked/courses/raw_clouds draftflag crop_courseclouds.py
+tex/courseclouds: linked/courses/raw_clouds crop_courseclouds.py
 	mkdir tex/courseclouds; true
 	rm tex/courseclouds/*; true
 

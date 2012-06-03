@@ -14,10 +14,7 @@ j = json.loads(blah)
 for course in j :
   id = course['id']
   infile = 'linked/courses/raw_clouds/'+id+'.png'
-  if common.drafting():
-    outfile = 'tex/courseclouds/'+id+'.jpg'
-  else:
-    outfile = 'tex/courseclouds/'+id+'.png'
+  outfile = 'tex/courseclouds/'+id+'.jpg'
 
   print id
 
